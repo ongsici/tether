@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-export default function Layout({ }) {
+export default function Layout() {
 //   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
 //   const handleUpload = () => {
