@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import axios from "axios";
+
 import './AppBar.css'; // Import the CSS file
 
 const pages = ['Flights', 'Itinerary', 'Weather'];
@@ -10,7 +12,18 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    axios.get("/.auth/me")
+      .then((response) => {
+        if (response.data.clientPrincipal) {
+          setUser(response.data.clientPrincipal); // Azure provides user details
+        }
+      })
+      .catch(() => setUser(null));
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -28,14 +41,12 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const handleLogoutClick = () => {
-    console.log("Logout clicked");
-    setIsLoggedIn(false); 
+  const handleLoginClick = () => {
+    window.location.href = "/.auth/login/google"; // Change to Google, Twitter, etc.
   };
 
-  const handleLoginClick = () => {
-    console.log("Login clicked");
-    setIsLoggedIn(true);   
+  const handleLogoutClick = () => {
+    window.location.href = "/.auth/logout";
   };
 
   const handleNavigation = (setting) => {
@@ -109,7 +120,7 @@ function ResponsiveAppBar() {
 
           {/* User Login/Avatar */}
           <Box sx={{ flexGrow: 0 }}>
-            {isLoggedIn ? (
+            {user ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} className="avatar-button">
                   <Avatar alt="User" src="/static/images/avatar/2.jpg" />
@@ -124,7 +135,7 @@ function ResponsiveAppBar() {
               </Button>
             )}
 
-            {isLoggedIn && (
+            {user && (
               <Menu
                 sx={{ mt: '45px' }}
                 anchorEl={anchorElUser}
