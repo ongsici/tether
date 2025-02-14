@@ -1,0 +1,15 @@
+{
+    "routes": [
+      {
+        "route": "/.auth/*",
+        "allowedRoles": ["authenticated"]
+      }
+    ],
+    "auth": {
+      "identityProviders": {
+        "github": {},
+        "google": {}
+      }
+    }
+  }
+  
