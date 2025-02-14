@@ -42,7 +42,7 @@ function ResponsiveAppBar() {
   };
 
   const handleLoginClick = () => {
-    window.location.href = "/.auth/login/google"; // Change to Google, Twitter, etc.
+    window.location.href = "/.auth/login/github";
   };
 
   const handleLogoutClick = () => {
