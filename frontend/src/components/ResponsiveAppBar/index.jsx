@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { login, logout, fetchUser } from "../../utils/auth";  
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import axios from "axios";
+// import axios from "axios";
 
 import './AppBar.css'; // Import the CSS file
 
@@ -12,17 +13,18 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
+
   useEffect(() => {
-    axios.get("/.auth/me")
-      .then((response) => {
-        if (response.data.clientPrincipal) {
-          setUser(response.data.clientPrincipal); // Azure provides user details
-        }
-      })
-      .catch(() => setUser(null));
+    async function getUser() {
+      const userData = await fetchUser();
+      setUser(userData);
+    }
+    getUser();
+
+    const interval = setInterval(getUser, 3000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleOpenNavMenu = (event) => {
@@ -41,17 +43,9 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const handleLoginClick = () => {
-    window.location.href = "/.auth/login/github";
-  };
-
-  const handleLogoutClick = () => {
-    window.location.href = "/.auth/logout";
-  };
-
   const handleNavigation = (setting) => {
     if (setting === 'Logout') {
-      handleLogoutClick();
+      logout();
     }
   };
 
@@ -128,7 +122,7 @@ function ResponsiveAppBar() {
               </Tooltip>
             ) : (
               <Button 
-                onClick={handleLoginClick} 
+                onClick={login} 
                 className="login-button"
               >
                 Login
