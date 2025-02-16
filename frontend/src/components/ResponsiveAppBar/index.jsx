@@ -31,6 +31,10 @@ function ResponsiveAppBar() {
       setUser(userData);
     }
     getUser();
+    
+    // Periodically check for login status updates (alternative to full page reload)
+    const interval = setInterval(getUser, 3000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleOpenNavMenu = (event) => {
