@@ -15,15 +15,6 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(null);
 
-  // useEffect(() => {
-  //   axios.get("/.auth/me")
-  //     .then((response) => {
-  //       if (response.data.clientPrincipal) {
-  //         setUser(response.data.clientPrincipal); // Azure provides user details
-  //       }
-  //     })
-  //     .catch(() => setUser(null));
-  // }, []);
 
   useEffect(() => {
     async function getUser() {
@@ -31,8 +22,7 @@ function ResponsiveAppBar() {
       setUser(userData);
     }
     getUser();
-    
-    // Periodically check for login status updates (alternative to full page reload)
+
     const interval = setInterval(getUser, 3000);
     return () => clearInterval(interval);
   }, []);
@@ -52,14 +42,6 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  // const handleLoginClick = () => {
-  //   window.location.href = "/.auth/login/github";
-  // };
-
-  // const handleLogoutClick = () => {
-  //   window.location.href = "/.auth/logout";
-  // };
 
   const handleNavigation = (setting) => {
     if (setting === 'Logout') {

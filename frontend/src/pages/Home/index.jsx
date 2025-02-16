@@ -8,18 +8,19 @@ function Home() {
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
-    travelDate: "",
+    departDate: "",
+    returnDate: "",
     includeItinerary: false,
     includeWeather: false,
   });
 
   useEffect(() => {
-      async function getUser() {
-        const userData = await fetchUser();
-        setUser(userData);
-      }
-      getUser();
-    }, []);
+    async function getUser() {
+      const userData = await fetchUser();
+      setUser(userData);
+    }
+    getUser();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,19 +38,21 @@ function Home() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4, textAlign: "center" }}>
+    <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
+      <div className="background-overlay"></div>
+      <Box className="content-box">
       {user ? (
-        // After login: Show search form
         <>
-          <Typography variant="h4" sx={{ mb: 2 }}>Plan Your Travel</Typography>
+          <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Box className="search-box">
             <TextField
               label="Source"
               name="source"
               value={searchParams.source}
               onChange={handleInputChange}
               fullWidth
+              className="input-field"
             />
             <TextField
               label="Destination"
@@ -57,23 +60,35 @@ function Home() {
               value={searchParams.destination}
               onChange={handleInputChange}
               fullWidth
+              className="input-field"
             />
             <TextField
-              label="Travel Date"
-              name="travelDate"
+              label="Departure Date"
+              name="departDate"
               type="date"
               InputLabelProps={{ shrink: true }}
-              value={searchParams.travelDate}
+              value={searchParams.departDate}
               onChange={handleInputChange}
               fullWidth
+              className="input-field"
             />
-            {/* Optional checkboxes */}
+            <TextField
+              label="Return Date"
+              name="returnDate"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              value={searchParams.returnDate}
+              onChange={handleInputChange}
+              fullWidth
+              className="input-field"
+            />
             <FormControlLabel
               control={
                 <Checkbox
                   checked={searchParams.includeItinerary}
                   onChange={handleCheckboxChange}
                   name="includeItinerary"
+                  className="checkbox"
                 />
               }
               label="Include Itinerary Suggestions"
@@ -84,34 +99,30 @@ function Home() {
                   checked={searchParams.includeWeather}
                   onChange={handleCheckboxChange}
                   name="includeWeather"
+                  className="checkbox"
                 />
               }
               label="Include Weather Forecast"
             />
-            <Button variant="contained" color="primary" onClick={handleSearch}>
+            <Button variant="contained" className="search-button" onClick={handleSearch}>
               Search Flights
             </Button>
           </Box>
         </>
       ) : (
-        // Before login: Show product description
         <>
-          <Typography variant="h3">Welcome to TETHER</Typography>
-          <Typography variant="h6" sx={{ my: 2 }}>
+          <Typography variant="h3" className="welcome-title">Welcome to TETHER</Typography>
+          <Typography variant="h6" className="description-text">
             Your AI-powered travel planner. Easily search flights, plan your itinerary, and get weather forecasts.
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={login} 
-          >
+          <Button className="login-button" onClick={login}>
             Login to Start
           </Button>
         </>
       )}
+      </Box>
     </Container>
   );
 }
 
 export default Home;
-
