@@ -65,7 +65,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/"
             className="app-bar-logo"
           >
             TETHER
