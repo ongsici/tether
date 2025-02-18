@@ -53,6 +53,11 @@ function ResponsiveAppBar() {
   const handlePageNavigation = (page) => {
     if (page === 'Flights') {
       navigate('/flights'); 
+    } else if (page === 'Itinerary') {
+      navigate('/itinerary');
+    }
+    else if (page === 'Weather') {
+      navigate('/weather');
     }
   };
 
