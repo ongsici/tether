@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
+import Footer from "../../components/Footer";
 import "./Home.css";
 
 function Home() {
@@ -121,6 +122,7 @@ function Home() {
         </>
       )}
       </Box>
+      <Footer />{/* Include the Footer component */}
     </Container>
   );
 }
