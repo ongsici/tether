@@ -3,7 +3,7 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 import MenuIcon from '@mui/icons-material/Menu';
 import { login, logout, fetchUser } from "../../utils/auth";  
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-// import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 import './AppBar.css'; // Import the CSS file
 
@@ -14,6 +14,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); 
 
 
   useEffect(() => {
@@ -46,6 +47,12 @@ function ResponsiveAppBar() {
   const handleNavigation = (setting) => {
     if (setting === 'Logout') {
       logout();
+    }
+  };
+
+  const handlePageNavigation = (page) => {
+    if (page === 'Flights') {
+      navigate('/flights'); 
     }
   };
 
@@ -92,7 +99,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => { handlePageNavigation(page); handleCloseNavMenu(); }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -104,7 +111,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageNavigation(page)}
                 sx={{ my: 2 }}
               >
                 {page}
