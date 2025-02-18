@@ -3,7 +3,7 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 import MenuIcon from '@mui/icons-material/Menu';
 import { login, logout, fetchUser } from "../../utils/auth";  
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-// import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 import './AppBar.css'; // Import the CSS file
 
@@ -14,6 +14,7 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); 
 
 
   useEffect(() => {
@@ -49,6 +50,16 @@ function ResponsiveAppBar() {
     }
   };
 
+  const handlePageNavigation = (page) => {
+    if (page === 'Flights') {
+      navigate('/flights'); 
+    } else if (page === 'Itinerary') {
+      navigate('/itinerary');
+    } else if (page === 'Weather') {
+      navigate('/weather');
+    }
+  };
+
   return (
     <AppBar position="static" className="app-bar">
       <Container maxWidth="xl">
@@ -58,7 +69,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/"
             className="app-bar-logo"
           >
             TETHER
@@ -92,7 +103,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => { handlePageNavigation(page); handleCloseNavMenu(); }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -104,7 +115,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageNavigation(page)}
                 sx={{ my: 2 }}
               >
                 {page}
