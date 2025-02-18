@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Flights from "./pages/Flights"; 
 import Itinerary from "./pages/Itinerary";  
 import Weather from "./pages/Weather";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/weather" element={<Weather />} />
           <Route path="/" element={<Home />} />
       </Routes>
+      <Footer /> {/* Include the Footer component */}
     </Router>
 
   );

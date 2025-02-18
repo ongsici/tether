@@ -55,8 +55,7 @@ function ResponsiveAppBar() {
       navigate('/flights'); 
     } else if (page === 'Itinerary') {
       navigate('/itinerary');
-    }
-    else if (page === 'Weather') {
+    } else if (page === 'Weather') {
       navigate('/weather');
     }
   };

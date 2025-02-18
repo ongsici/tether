@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Button, TextField, Box } from "@mui/material";
 import { fetchUser } from "../../utils/auth";
-import Footer from "../../components/Footer";
 import "./Flights.css";
 
 function Flights() {
@@ -87,7 +86,6 @@ function Flights() {
         </>
       )}
       </Box>
-      <Footer />{/* Include the Footer component */}
     </Container>
   );
 }
