@@ -1,0 +1,1 @@
+# script to automate deployment of weather microservice to Azure

@@ -1,0 +1,1 @@
+# script to start microservice locally

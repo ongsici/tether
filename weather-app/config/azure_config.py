@@ -1,0 +1,1 @@
+# Azure-specific configurations (e.g. connection strings, resource names)
