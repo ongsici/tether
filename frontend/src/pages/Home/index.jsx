@@ -40,8 +40,7 @@ function Home() {
       });
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -85,7 +84,7 @@ function Home() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.departDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
             />
@@ -95,7 +94,7 @@ function Home() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.returnDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
             />
