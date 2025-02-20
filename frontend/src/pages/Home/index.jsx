@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box } from "@mui/material";
+import Papa from "papaparse";
+import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
 // import Footer from "../../components/Footer";
 import "./Home.css";
 
 function Home() {
   const [user, setUser] = useState(null);
+  const [cities, setCities] = useState([]);
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -21,6 +23,21 @@ function Home() {
       setUser(userData);
     }
     getUser();
+  }, []);
+
+  useEffect(() => {
+    // Load city list from CSV file
+    fetch("../../assets/cities.csv")
+      .then(response => response.text())
+      .then(csv => {
+        Papa.parse(csv, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (result) => {
+            setCities(result.data.map(row => `${row.cities} (${row.countries})`));
+          },
+        });
+      });
   }, []);
 
   const handleInputChange = (e) => {
@@ -47,21 +64,20 @@ function Home() {
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
           <Box className="search-box">
-            <TextField
-              label="Source"
-              name="source"
+            <Autocomplete
+              freeSolo
+              options={cities}
               value={searchParams.source}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+              onInputChange={(event, newValue) => handleInputChange("source", newValue)}
+              renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
             />
-            <TextField
-              label="Destination"
-              name="destination"
+
+            <Autocomplete
+              freeSolo
+              options={cities}
               value={searchParams.destination}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+              onInputChange={(event, newValue) => handleInputChange("destination", newValue)}
+              renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
             <TextField
               label="Departure Date"
