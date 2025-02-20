@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
+// import Papa from "papaparse";
 import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
 // import Footer from "../../components/Footer";
@@ -26,17 +26,10 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    // Load city list from CSV file
-    fetch("../../assets/cities.csv")
-      .then(response => response.text())
-      .then(csv => {
-        Papa.parse(csv, {
-          header: true,
-          skipEmptyLines: true,
-          complete: (result) => {
-            setCities(result.data.map(row => `${row.cities} (${row.countries})`));
-          },
-        });
+    fetch("/cities.json")
+      .then(response => response.json())
+      .then(data => {
+        setCities(data.map(row => `${row.city} (${row.country})`));
       });
   }, []);
 

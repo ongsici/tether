@@ -1,0 +1,23 @@
+[
+    { "city": "New York", "country": "USA" },
+    { "city": "London", "country": "UK" },
+    { "city": "Tokyo", "country": "Japan" },
+    { "city": "Paris", "country": "France" },
+    { "city": "Berlin", "country": "Germany" },
+    { "city": "Sydney", "country": "Australia" },
+    { "city": "Rome", "country": "Italy" },
+    { "city": "Beijing", "country": "China" },
+    { "city": "Moscow", "country": "Russia" },
+    { "city": "Istanbul", "country": "Turkey" },
+    { "city": "Cairo", "country": "Egypt" },
+    { "city": "Cape Town", "country": "South Africa" },
+    { "city": "Rio de Janeiro", "country": "Brazil" },
+    { "city": "Mexico City", "country": "Mexico" },
+    { "city": "Toronto", "country": "Canada" },
+    { "city": "Buenos Aires", "country": "Argentina" },
+    { "city": "Mumbai", "country": "India" },
+    { "city": "Seoul", "country": "South Korea" },
+    { "city": "Bangkok", "country": "Thailand" },
+    { "city": "Dubai", "country": "UAE" }
+  ]
+  
