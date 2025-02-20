@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import Papa from "papaparse";
-import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete } from "@mui/material";
+import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
 // import Footer from "../../components/Footer";
 import "./Home.css";
@@ -13,6 +13,7 @@ function Home() {
     destination: "",
     departDate: "",
     returnDate: "",
+    numTravellers: 1,
     includeItinerary: false,
     includeWeather: false,
   });
@@ -91,6 +92,21 @@ function Home() {
               fullWidth
               className="input-field"
             />
+            <FormControl fullWidth className="input-field">
+                <InputLabel id="travellers-label">Number of Travellers</InputLabel>
+                <Select
+                  labelId="travellers-label"
+                  value={searchParams.numTravellers}
+                  onChange={(e) => handleInputChange("numTravellers", e.target.value)}
+                  label="Number of Travellers"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                    <MenuItem key={num} value={num}>
+                      {num} {num > 1 ? "Travellers" : "Traveller"}
+                    </MenuItem>
+                  ))}
+                </Select>
+            </FormControl>
             <FormControlLabel
               control={
                 <Checkbox
