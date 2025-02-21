@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import './AppBar.css'; // Import the CSS file
 
 const pages = ['Flights', 'Itinerary', 'Weather'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -27,6 +27,14 @@ function ResponsiveAppBar() {
     const interval = setInterval(getUser, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  const getInitials = (name) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,6 +55,8 @@ function ResponsiveAppBar() {
   const handleNavigation = (setting) => {
     if (setting === 'Logout') {
       logout();
+    } else if (setting === 'Dashboard') {
+      navigate('/dashboard');
     }
   };
 
@@ -128,7 +138,9 @@ function ResponsiveAppBar() {
             {user ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} className="avatar-button">
-                  <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                  <Avatar sx={{ bgcolor: "grey.500", color: "white" }}>
+                    {user?.userDetails ? getInitials(user.userDetails) : "?"}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
             ) : (

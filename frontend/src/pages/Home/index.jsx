@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box } from "@mui/material";
+// import Papa from "papaparse";
+import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
 // import Footer from "../../components/Footer";
 import "./Home.css";
 
 function Home() {
   const [user, setUser] = useState(null);
+  const [cities, setCities] = useState([]);
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
     departDate: "",
     returnDate: "",
+    numTravellers: 1,
     includeItinerary: false,
     includeWeather: false,
   });
@@ -23,8 +26,15 @@ function Home() {
     getUser();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  useEffect(() => {
+    fetch("/cities.json")
+      .then(response => response.json())
+      .then(data => {
+        setCities(data.map(row => `${row.city} (${row.country})`));
+      });
+  }, []);
+
+  const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -47,21 +57,20 @@ function Home() {
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
           <Box className="search-box">
-            <TextField
-              label="Source"
-              name="source"
+            <Autocomplete
+              freeSolo
+              options={cities}
               value={searchParams.source}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+              onInputChange={(event, newValue) => handleInputChange("source", newValue)}
+              renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
             />
-            <TextField
-              label="Destination"
-              name="destination"
+
+            <Autocomplete
+              freeSolo
+              options={cities}
               value={searchParams.destination}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+              onInputChange={(event, newValue) => handleInputChange("destination", newValue)}
+              renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
             <TextField
               label="Departure Date"
@@ -69,7 +78,7 @@ function Home() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.departDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
             />
@@ -79,10 +88,25 @@ function Home() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.returnDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
             />
+            <FormControl fullWidth className="input-field">
+                <InputLabel id="travellers-label">Number of Travellers</InputLabel>
+                <Select
+                  labelId="travellers-label"
+                  value={searchParams.numTravellers}
+                  onChange={(e) => handleInputChange("numTravellers", e.target.value)}
+                  label="Number of Travellers"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                    <MenuItem key={num} value={num}>
+                      {num} {num > 1 ? "Travellers" : "Traveller"}
+                    </MenuItem>
+                  ))}
+                </Select>
+            </FormControl>
             <FormControlLabel
               control={
                 <Checkbox
