@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-// import Papa from "papaparse";
 import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
-// import Footer from "../../components/Footer";
 import "./Home.css";
 
 function Home() {
   const [user, setUser] = useState(null);
   const [cities, setCities] = useState([]);
+  const [cityData, setCityData] = useState([]);
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -34,6 +33,11 @@ function Home() {
       });
   }, []);
 
+  const getCityCode = (cityName) => {
+    const cityObj = cityData.find(row => `${row.city} (${row.country})` === cityName);
+    return cityObj ? cityObj.code : "";
+  };
+
   const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
@@ -44,8 +48,42 @@ function Home() {
   };
 
   const handleSearch = () => {
-    console.log("Search initiated with:", searchParams);
-    // Call backend API to get search results
+    const requestBody = {
+      flights: {
+        source: getCityCode(searchParams.source),
+        destination: getCityCode(searchParams.destination),
+        departureDate: searchParams.departDate,
+        returnDate: searchParams.returnDate,
+        numTravellers: searchParams.numTravellers.toString(),
+      },
+    };
+    
+    if (searchParams.includeItinerary) {
+      requestBody.itinerary = {
+        destination: getCityCode(searchParams.destination),
+        startDate: searchParams.departDate,
+        endDate: searchParams.returnDate,
+      };
+    }
+
+    if (searchParams.includeWeather) {
+      requestBody.weather = {
+        destination: getCityCode(searchParams.destination),
+        startDate: searchParams.departDate,
+        endDate: searchParams.returnDate,
+      };
+    }
+
+    console.log("API Request:", JSON.stringify(requestBody, null, 2));
+    
+    fetch("/api/travel-search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    })
+      .then(response => response.json())
+      .then(data => console.log("Response:", data))
+      .catch(error => console.error("Error:", error));
   };
 
   return (
@@ -102,7 +140,7 @@ function Home() {
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                     <MenuItem key={num} value={num}>
-                      {num} {num > 1 ? "Travellers" : "Traveller"}
+                      {num}
                     </MenuItem>
                   ))}
                 </Select>
