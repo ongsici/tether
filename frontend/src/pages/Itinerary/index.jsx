@@ -1,33 +1,51 @@
-import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, TextField, Box } from "@mui/material";
-import { fetchUser } from "../../utils/auth";
+import React, { useState } from "react";
+import { Container, Typography, Button, TextField, Box, Autocomplete } from "@mui/material";
+import useFetchUser from "../../hooks/useFetchUser";
+import useFetchCities from "../../hooks/useFetchCities";
+import { getTodayDate } from "../../utils/helpers";
+import { searchTravel } from "../../utils/api";
 import "./Itinerary.css";
 
 function Itinerary() {
-  const [user, setUser] = useState(null);
+  const user = useFetchUser();
+  const cities = useFetchCities(); 
   const [searchParams, setSearchParams] = useState({
     destination: "",
     departDate: "",
     returnDate: "",
   });
 
-  useEffect(() => {
-    async function getUser() {
-      const userData = await fetchUser();
-      setUser(userData);
-    }
-    getUser();
-  }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSearch = () => {
-    console.log("Search initiated with:", searchParams);
-    // Call backend API to get search results
-  };
+  const handleSearch = async () => {
+    
+      const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
+      
+      if (!destinationCity || !searchParams.departDate || !searchParams.returnDate ) {
+        alert("Please select valid source and destination.");
+        return;
+      }
+      
+      const requestBody = {
+        flights: {
+          destination: destinationCity,
+          departureDate: searchParams.departDate,
+          returnDate: searchParams.returnDate,
+        },
+      };
+      
+      console.log("API Request:", JSON.stringify(requestBody, null, 2));
+  
+      const data = await searchTravel(requestBody);
+      if (data) {
+        console.log("Response:", data);
+      } else {
+        console.error("Failed to fetch travel data");
+      }
+    };
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
@@ -36,25 +54,29 @@ function Itinerary() {
       {user ? (
         <>
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
-
+          
           <Box className="search-box">
-            <TextField
-              label="Destination"
-              name="destination"
-              value={searchParams.destination}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+            <Autocomplete
+              freeSolo
+              options={cities}
+              getOptionLabel={(option) => `${option.city} (${option.country})`}
+              value={searchParams.destination || null}
+              onChange={(event, newValue) => handleInputChange("destination", newValue)}
+              renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
+
             <TextField
               label="Departure Date"
               name="departDate"
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.departDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
+              inputProps={{
+                min: getTodayDate(),
+              }}
             />
             <TextField
               label="Return Date"
@@ -62,10 +84,14 @@ function Itinerary() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.returnDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
+              inputProps={{
+                min: searchParams.departDate || getTodayDate(),  
+              }}
             />
+          
             <Button variant="contained" className="search-button" onClick={handleSearch}>
               Search Itinerary
             </Button>
