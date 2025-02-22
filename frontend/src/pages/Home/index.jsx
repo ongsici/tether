@@ -98,21 +98,22 @@ function Home() {
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
           <Box className="search-box">
+    
             <Autocomplete
               freeSolo
               options={cities}
-              getOptionLabel={(option) => `${option.city} (${option.country})`}
-              value={searchParams.source}
-              onChange={(event, newValue) => handleInputChange("source", newValue)}
+              getOptionLabel={(option) => `${option.city} (${option.country})`}  // Format displayed in the dropdown
+              value={searchParams.source || null}  // Ensure the value is a full city object or null
+              onChange={(event, newValue) => handleInputChange("source", newValue)}  // Handle object change
               renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
             />
 
             <Autocomplete
               freeSolo
               options={cities}
-              getOptionLabel={(option) => `${option.city} (${option.country})`}
-              value={searchParams.destination}
-              onChange={(event, newValue) => handleInputChange("destination", newValue)}
+              getOptionLabel={(option) => `${option.city} (${option.country})`}  // Format displayed in the dropdown
+              value={searchParams.destination || null}  // Ensure the value is a full city object or null
+              onChange={(event, newValue) => handleInputChange("destination", newValue)}  // Handle object change
               renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
             <TextField
