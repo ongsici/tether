@@ -43,8 +43,8 @@ function Home() {
 
   const handleSearch = () => {
 
-    const sourceCity = cities.find(city => `${city.city} (${city.country})` === searchParams.source)?.code;
-    const destinationCity = cities.find(city => `${city.city} (${city.country})` === searchParams.destination)?.code;
+    const sourceCity = cities.find(city => city.city === searchParams.source?.city)?.code;
+    const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
     
     if (!sourceCity || !destinationCity) {
       alert("Please select valid source and destination.");
@@ -101,16 +101,18 @@ function Home() {
             <Autocomplete
               freeSolo
               options={cities}
+              getOptionLabel={(option) => `${option.city} (${option.country})`}
               value={searchParams.source}
-              onInputChange={(event, newValue) => handleInputChange("source", newValue)}
+              onChange={(event, newValue) => handleInputChange("source", newValue)}
               renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
             />
 
             <Autocomplete
               freeSolo
               options={cities}
+              getOptionLabel={(option) => `${option.city} (${option.country})`}
               value={searchParams.destination}
-              onInputChange={(event, newValue) => handleInputChange("destination", newValue)}
+              onChange={(event, newValue) => handleInputChange("destination", newValue)}
               renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
             <TextField
