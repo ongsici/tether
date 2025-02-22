@@ -14,6 +14,8 @@ data = {
     "client_id": os.getenv("AMAD_CLIENT_ID"),
     "client_secret": os.getenv("AMAD_CLIENT_SECRET")
 }
+print("client_id:", data["client_id"])
+print("client_secret:", data["client_secret"])
 
 response = requests.post(url, headers=headers, data=data)
 

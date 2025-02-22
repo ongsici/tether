@@ -1,6 +1,6 @@
 from ..utils.api_client import get_flight_data
 from ..models.flight_model import FlightResponse, SegmentResponse
-from ..utils.logging import configure_logging
+from ..utils.custom_logging import configure_logging
 import logging
 
 configure_logging()
@@ -46,7 +46,11 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
         flights.append(FlightResponse(**flight_info))
     
     logger.info(f"get_flight_data successful for departure_date: {departure_date}, return_date: {return_date}")
+    print(flights)
     return flights
+
+get_flights("SYD", "SIN", 2, "2025-02-23", "2025-02-26")
+    
 
 def extract_flight_info(flights: FlightResponse):
     segments = flights.segment_info

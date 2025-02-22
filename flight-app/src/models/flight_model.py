@@ -25,4 +25,4 @@ class SegmentResponse(BaseModel):
 class FlightResponse(BaseModel):
     number_of_segments: int
     segment_info: List[SegmentResponse] = []
-    price_per_person = str
+    price_per_person: str
