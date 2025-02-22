@@ -28,9 +28,14 @@ function Home() {
     fetch("/cities.json")
       .then(response => response.json())
       .then(data => {
-        setCities(data.map(row => `${row.city} (${row.country})`));
+        setCities(data);
       });
   }, []);
+
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];  // Format as YYYY-MM-DD
+  };
 
   const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
@@ -93,29 +98,30 @@ function Home() {
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {user ? (
+      {!user ? (
         <>
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
           <Box className="search-box">
-    
+          
             <Autocomplete
               freeSolo
               options={cities}
-              getOptionLabel={(option) => `${option.city} (${option.country})`}  // Format displayed in the dropdown
-              value={searchParams.source || null}  // Ensure the value is a full city object or null
-              onChange={(event, newValue) => handleInputChange("source", newValue)}  // Handle object change
+              getOptionLabel={(option) => `${option.city} (${option.country})`}
+              value={searchParams.source || null}
+              onChange={(event, newValue) => handleInputChange("source", newValue)}
               renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
             />
 
             <Autocomplete
               freeSolo
               options={cities}
-              getOptionLabel={(option) => `${option.city} (${option.country})`}  // Format displayed in the dropdown
-              value={searchParams.destination || null}  // Ensure the value is a full city object or null
-              onChange={(event, newValue) => handleInputChange("destination", newValue)}  // Handle object change
+              getOptionLabel={(option) => `${option.city} (${option.country})`}
+              value={searchParams.destination || null}
+              onChange={(event, newValue) => handleInputChange("destination", newValue)}
               renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
+
             <TextField
               label="Departure Date"
               name="departDate"
@@ -125,6 +131,9 @@ function Home() {
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
+              inputProps={{
+                min: getTodayDate(),
+              }}
             />
             <TextField
               label="Return Date"
@@ -135,6 +144,9 @@ function Home() {
               onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
+              inputProps={{
+                min: searchParams.departDate || getTodayDate(),  
+              }}
             />
             <FormControl fullWidth className="input-field">
                 <InputLabel id="travellers-label">Number of Travellers</InputLabel>
