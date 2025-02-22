@@ -6,7 +6,6 @@ import "./Home.css";
 function Home() {
   const [user, setUser] = useState(null);
   const [cities, setCities] = useState([]);
-  const [cityData, setCityData] = useState([]);
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -33,11 +32,6 @@ function Home() {
       });
   }, []);
 
-  const getCityCode = (cityName) => {
-    const cityObj = cityData.find(row => `${row.city} (${row.country})` === cityName);
-    return cityObj ? cityObj.code : "";
-  };
-
   const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
@@ -48,10 +42,19 @@ function Home() {
   };
 
   const handleSearch = () => {
+
+    const sourceCity = cities.find(city => `${city.city} (${city.country})` === searchParams.source)?.code;
+    const destinationCity = cities.find(city => `${city.city} (${city.country})` === searchParams.destination)?.code;
+    
+    if (!sourceCity || !destinationCity) {
+      alert("Please select valid source and destination.");
+      return;
+    }
+    
     const requestBody = {
       flights: {
-        source: getCityCode(searchParams.source),
-        destination: getCityCode(searchParams.destination),
+        source: sourceCity,
+        destination: destinationCity,
         departureDate: searchParams.departDate,
         returnDate: searchParams.returnDate,
         numTravellers: searchParams.numTravellers.toString(),
@@ -60,7 +63,7 @@ function Home() {
     
     if (searchParams.includeItinerary) {
       requestBody.itinerary = {
-        destination: getCityCode(searchParams.destination),
+        destination: destinationCity,
         startDate: searchParams.departDate,
         endDate: searchParams.returnDate,
       };
@@ -68,7 +71,7 @@ function Home() {
 
     if (searchParams.includeWeather) {
       requestBody.weather = {
-        destination: getCityCode(searchParams.destination),
+        destination: destinationCity,
         startDate: searchParams.departDate,
         endDate: searchParams.returnDate,
       };
