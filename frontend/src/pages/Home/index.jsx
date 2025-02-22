@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import { login, fetchUser } from "../../utils/auth";
+import { login } from "../../utils/auth";
 import { searchTravel } from "../../utils/api";
+import { getTodayDate } from "../../utils/helpers";
+import useFetchCities from "../../hooks/useFetchCities";
+import useFetchUser from "../../hooks/useFetchUser";
 import "./Home.css";
 // import Toast from "../../components/Toast";
 
 function Home() {
-  const [user, setUser] = useState(null);
-  const [cities, setCities] = useState([]);
+  const user = useFetchUser();
+  const cities = useFetchCities(); 
   // const [showToast, setShowToast] = useState(false)
   const [searchParams, setSearchParams] = useState({
     source: "",
@@ -18,27 +21,6 @@ function Home() {
     includeItinerary: false,
     includeWeather: false,
   });
-
-  useEffect(() => {
-    async function getUser() {
-      const userData = await fetchUser();
-      setUser(userData);
-    }
-    getUser();
-  }, []);
-
-  useEffect(() => {
-    fetch("/cities.json")
-      .then(response => response.json())
-      .then(data => {
-        setCities(data);
-      });
-  }, []);
-
-  const getTodayDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];  // Format as YYYY-MM-DD
-  };
 
   // const handleErrorToast = () => {
   //   setShowToast(true);
@@ -110,7 +92,7 @@ function Home() {
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {!user ? (
+      {user ? (
         <>
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 

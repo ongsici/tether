@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, TextField, Box } from "@mui/material";
-import { fetchUser } from "../../utils/auth";
+import React, { useState } from "react";
+import { Container, Typography, Button, TextField, Box, Autocomplete, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import useFetchUser from "../../hooks/useFetchUser";
+import useFetchCities from "../../hooks/useFetchCities";
+import { getTodayDate } from "../../utils/helpers";
+import { searchTravel } from "../../utils/api";
 import "./Flights.css";
 
 function Flights() {
-  const [user, setUser] = useState(null);
+  const user = useFetchUser();
+  const cities = useFetchCities();  
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -12,23 +16,39 @@ function Flights() {
     returnDate: "",
   });
 
-  useEffect(() => {
-    async function getUser() {
-      const userData = await fetchUser();
-      setUser(userData);
-    }
-    getUser();
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSearch = () => {
-    console.log("Search initiated with:", searchParams);
-    // Call backend API to get search results
-  };
+  const handleSearch = async () => {
+  
+      const sourceCity = cities.find(city => city.city === searchParams.source?.city)?.code;
+      const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
+      
+      if (!sourceCity || !destinationCity || !searchParams.departDate || !searchParams.returnDate || !searchParams.numTravellers) {
+        alert("Please select valid source and destination.");
+        return;
+      }
+      
+      const requestBody = {
+        flights: {
+          source: sourceCity,
+          destination: destinationCity,
+          departureDate: searchParams.departDate,
+          returnDate: searchParams.returnDate,
+          numTravellers: searchParams.numTravellers.toString(),
+        },
+      };
+      
+      console.log("API Request:", JSON.stringify(requestBody, null, 2));
+  
+      const data = await searchTravel(requestBody);
+      if (data) {
+        console.log("Response:", data);
+      } else {
+        console.error("Failed to fetch travel data");
+      }
+    };
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
@@ -39,31 +59,36 @@ function Flights() {
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
           <Box className="search-box">
-            <TextField
-              label="Source"
-              name="source"
-              value={searchParams.source}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+            <Autocomplete
+              freeSolo
+              options={cities}
+              getOptionLabel={(option) => `${option.city} (${option.country})`}
+              value={searchParams.source || null}
+              onChange={(event, newValue) => handleInputChange("source", newValue)}
+              renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
             />
-            <TextField
-              label="Destination"
-              name="destination"
-              value={searchParams.destination}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+
+            <Autocomplete
+              freeSolo
+              options={cities}
+              getOptionLabel={(option) => `${option.city} (${option.country})`}
+              value={searchParams.destination || null}
+              onChange={(event, newValue) => handleInputChange("destination", newValue)}
+              renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
+
             <TextField
               label="Departure Date"
               name="departDate"
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.departDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
+              inputProps={{
+                min: getTodayDate(),
+              }}
             />
             <TextField
               label="Return Date"
@@ -71,10 +96,30 @@ function Flights() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.returnDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
+              inputProps={{
+                min: searchParams.departDate || getTodayDate(),  
+              }}
             />
+
+            <FormControl fullWidth className="input-field">
+                <InputLabel id="travellers-label">Number of Travellers</InputLabel>
+                <Select
+                  labelId="travellers-label"
+                  value={searchParams.numTravellers}
+                  onChange={(e) => handleInputChange("numTravellers", e.target.value)}
+                  label="Number of Travellers"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                    <MenuItem key={num} value={num}>
+                      {num}
+                    </MenuItem>
+                  ))}
+                </Select>
+            </FormControl>
+
             <Button variant="contained" className="search-button" onClick={handleSearch}>
               Search Flights
             </Button>
