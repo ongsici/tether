@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
+import { searchTravel } from "../../utils/api";
 import "./Home.css";
+// import Toast from "../../components/Toast";
 
 function Home() {
   const [user, setUser] = useState(null);
   const [cities, setCities] = useState([]);
+  // const [showToast, setShowToast] = useState(false)
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -37,6 +40,11 @@ function Home() {
     return today.toISOString().split("T")[0];  // Format as YYYY-MM-DD
   };
 
+  // const handleErrorToast = () => {
+  //   setShowToast(true);
+  //   setTimeout(() => setShowToast(false), 3000);
+  // };
+
   const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
@@ -46,12 +54,13 @@ function Home() {
     setSearchParams((prev) => ({ ...prev, [name]: checked }));
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
 
     const sourceCity = cities.find(city => city.city === searchParams.source?.city)?.code;
     const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
     
-    if (!sourceCity || !destinationCity) {
+    if (!sourceCity || !destinationCity || !searchParams.departDate || !searchParams.returnDate || !searchParams.numTravellers) {
+      // handleErrorToast();
       alert("Please select valid source and destination.");
       return;
     }
@@ -81,18 +90,21 @@ function Home() {
         endDate: searchParams.returnDate,
       };
     }
-
     console.log("API Request:", JSON.stringify(requestBody, null, 2));
-    
-    fetch("/api/travel-search", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
-    })
-      .then(response => response.json())
-      .then(data => console.log("Response:", data))
-      .catch(error => console.error("Error:", error));
+
+    const data = await searchTravel(requestBody);
+    if (data) {
+      console.log("Response:", data);
+    } else {
+      console.error("Failed to fetch travel data");
+    }
   };
+
+  // if (showToast) {
+  //   return (
+  //     <Toast message="Error (TODO: change message)" onClose={() => setShowToast(false)} />
+  //   )
+  // }
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
