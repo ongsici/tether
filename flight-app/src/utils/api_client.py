@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 load_dotenv() # load environment variable(s)
 
 token = os.getenv("AMADEUS_API_TOKEN")
-# print(token)
 
 # Amadeus API, flight offers
 def get_flight_data(origin_loc_code: str, destination_loc_code: str, num_passenger: int, 
