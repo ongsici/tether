@@ -1,4 +1,4 @@
-const APIM_URL="/api/submitData";
+const APIM_URL="http://localhost:8000/api/submitData";
 
 
 export const searchTravel = async (requestBody) => {

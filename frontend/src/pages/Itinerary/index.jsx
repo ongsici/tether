@@ -30,7 +30,7 @@ function Itinerary() {
       }
       
       const requestBody = {
-        flights: {
+        itinerary: {
           destination: destinationCity,
           departureDate: searchParams.departDate,
           returnDate: searchParams.returnDate,

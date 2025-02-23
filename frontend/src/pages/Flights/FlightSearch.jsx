@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Typography, Button, TextField, Box, Autocomplete, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { Container, Typography, Button, TextField, Box, Autocomplete, FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@mui/material";
 import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
 import { getTodayDate } from "../../utils/helpers";
@@ -9,11 +10,14 @@ import "./Flights.css";
 function Flights() {
   const user = useFetchUser();
   const cities = useFetchCities();  
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
     departDate: "",
     returnDate: "",
+    numTravellers: 1
   });
 
   const handleInputChange = (name, value) => {
@@ -29,6 +33,7 @@ function Flights() {
         alert("Please select valid source and destination.");
         return;
       }
+      setLoading(true);
       
       const requestBody = {
         flights: {
@@ -45,16 +50,22 @@ function Flights() {
       const data = await searchTravel(requestBody);
       if (data) {
         console.log("Response:", data);
+        // setResults(data);
+        navigate('/flights/results', { state: { flightData: data } });
+
       } else {
         console.error("Failed to fetch travel data");
       }
+      setLoading(false);
     };
+
+
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {user ? (
+      {!user ? (
         <>
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
@@ -124,6 +135,21 @@ function Flights() {
               Search Flights
             </Button>
           </Box>
+          {/* {loading && <CircularProgress sx={{ mt: 2 }} />} */}
+          {loading && (
+          <>
+            {/* Whitewash Overlay */}
+            <div className="overlay"></div>
+
+            {/* Centered Circular Progress */}
+            <div className="loader-container">
+              <CircularProgress sx={{ color: '#023641' }} />
+              <Typography variant="h6" className="loading-text">
+                Just a moment, we're packing your bags!
+              </Typography>
+            </div>
+          </>
+        )}
         </>
       ) : (
         <>

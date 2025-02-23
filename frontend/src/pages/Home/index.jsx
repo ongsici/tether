@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl, CircularProgress } from "@mui/material";
 import { login } from "../../utils/auth";
 import { searchTravel } from "../../utils/api";
 import { getTodayDate } from "../../utils/helpers";
@@ -12,6 +12,8 @@ function Home() {
   const user = useFetchUser();
   const cities = useFetchCities(); 
   // const [showToast, setShowToast] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState({ flights: null, itinerary: null });
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -19,7 +21,6 @@ function Home() {
     returnDate: "",
     numTravellers: 1,
     includeItinerary: false,
-    includeWeather: false,
   });
 
   // const handleErrorToast = () => {
@@ -37,6 +38,8 @@ function Home() {
   };
 
   const handleSearch = async () => {
+    setLoading(true);
+    setResults({ flights: null, itinerary: null });
 
     const sourceCity = cities.find(city => city.city === searchParams.source?.city)?.code;
     const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
@@ -65,13 +68,6 @@ function Home() {
       };
     }
 
-    if (searchParams.includeWeather) {
-      requestBody.weather = {
-        destination: destinationCity,
-        startDate: searchParams.departDate,
-        endDate: searchParams.returnDate,
-      };
-    }
     console.log("API Request:", JSON.stringify(requestBody, null, 2));
 
     const data = await searchTravel(requestBody);
@@ -168,20 +164,15 @@ function Home() {
               }
               label="Include Itinerary Suggestions"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={searchParams.includeWeather}
-                  onChange={handleCheckboxChange}
-                  name="includeWeather"
-                  className="checkbox"
-                />
-              }
-              label="Include Weather Forecast"
-            />
+        
             <Button variant="contained" className="search-button" onClick={handleSearch}>
               Search Travel
             </Button>
+          </Box>
+          {loading && <CircularProgress sx={{ mt: 2 }} />}
+          <Box sx={{ mt: 4 }}>
+            {results.flights && <Box><Typography variant="h5">Flights</Typography><pre>{JSON.stringify(results.flights, null, 2)}</pre></Box>}
+            {results.itinerary && <Box><Typography variant="h5">Suggested Itinerary</Typography><pre>{JSON.stringify(results.itinerary, null, 2)}</pre></Box>}
           </Box>
         </>
       ) : (

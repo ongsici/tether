@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import Home from "./pages/Home";
-import Flights from "./pages/Flights"; 
+import FlightSearch from "./pages/Flights/FlightSearch"; 
+import FlightResults from "./pages/Flights/FlightResults";
 import Itinerary from "./pages/Itinerary";  
 import Weather from "./pages/Weather";
 import Footer from "./components/Footer";
@@ -15,7 +16,8 @@ function App() {
     <Router>
       <ResponsiveAppBar />
       <Routes>
-          <Route path="/flights" element={<Flights />} />
+          <Route path="/flights" element={<FlightSearch />} />
+          <Route path="/flights/results" element={<FlightResults />} />
           <Route path="/itinerary" element={<Itinerary />} />
           <Route path="/weather" element={<Weather />} />
           <Route path="/" element={<Home />} />
