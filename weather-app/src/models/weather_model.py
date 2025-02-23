@@ -9,7 +9,7 @@ class WeatherRequest(BaseModel):
 # model for single forecast day
 class ForecastDay(BaseModel):
     date: str
-    weather_code: int
+    weather_description: str
     temperature_max: float
     temperature_min: float
     sunrise: str
@@ -18,13 +18,12 @@ class ForecastDay(BaseModel):
     precipitation_probability_max: int
     wind_speed_max: float
 
-# response model for endpoint
-class WeatherResponse(BaseModel):
+# model for current weather
+class CurrentWeather(BaseModel):
     city: str
     country_code: str
     weather_main: str
     weather_description: str
-    weather_icon: str
     temperature: float
     feels_like: float
     pressure: int
@@ -37,4 +36,7 @@ class WeatherResponse(BaseModel):
     sunset: int
     latitude: float
     longitude: float
-    forecast: List[ForecastDay] = []
+
+# response model for endpoint
+class WeatherResponse(BaseModel):
+    results: dict
