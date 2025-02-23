@@ -50,7 +50,6 @@ function Flights() {
       const data = await searchTravel(requestBody);
       if (data) {
         console.log("Response:", data);
-        // setResults(data);
         navigate('/flights/results', { state: { flightData: data } });
 
       } else {
@@ -135,7 +134,7 @@ function Flights() {
               Search Flights
             </Button>
           </Box>
-          {/* {loading && <CircularProgress sx={{ mt: 2 }} />} */}
+          
           {loading && (
           <>
             {/* Whitewash Overlay */}
@@ -149,7 +148,7 @@ function Flights() {
               </Typography>
             </div>
           </>
-        )}
+          )}
         </>
       ) : (
         <>

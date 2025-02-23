@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
+import HomeResults from "./pages/Home/HomeResults";
 import FlightSearch from "./pages/Flights/FlightSearch"; 
 import FlightResults from "./pages/Flights/FlightResults";
 import Itinerary from "./pages/Itinerary";  
@@ -21,6 +22,7 @@ function App() {
           <Route path="/itinerary" element={<Itinerary />} />
           <Route path="/weather" element={<Weather />} />
           <Route path="/" element={<Home />} />
+          <Route path="/results" element={<HomeResults />} />
           <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <Footer /> {/* Include the Footer component */}

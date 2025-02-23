@@ -6,6 +6,7 @@ import { getTodayDate } from "../../utils/helpers";
 import useFetchCities from "../../hooks/useFetchCities";
 import useFetchUser from "../../hooks/useFetchUser";
 import "./Home.css";
+import { useNavigate } from "react-router";
 // import Toast from "../../components/Toast";
 
 function Home() {
@@ -13,7 +14,8 @@ function Home() {
   const cities = useFetchCities(); 
   // const [showToast, setShowToast] = useState(false)
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState({ flights: null, itinerary: null });
+  const navigate = useNavigate();
+  // const [results, setResults] = useState({ flights: null, itinerary: null });
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -38,8 +40,8 @@ function Home() {
   };
 
   const handleSearch = async () => {
-    setLoading(true);
-    setResults({ flights: null, itinerary: null });
+    
+    // setResults({ flights: null, itinerary: null });
 
     const sourceCity = cities.find(city => city.city === searchParams.source?.city)?.code;
     const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
@@ -49,6 +51,8 @@ function Home() {
       alert("Please select valid source and destination.");
       return;
     }
+
+    setLoading(true);
     
     const requestBody = {
       flights: {
@@ -73,9 +77,11 @@ function Home() {
     const data = await searchTravel(requestBody);
     if (data) {
       console.log("Response:", data);
+      navigate('/results', { state: { flightData: data } });
     } else {
       console.error("Failed to fetch travel data");
     }
+    setLoading(false);
   };
 
   // if (showToast) {
@@ -88,7 +94,7 @@ function Home() {
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {user ? (
+      {!user ? (
         <>
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
@@ -169,11 +175,20 @@ function Home() {
               Search Travel
             </Button>
           </Box>
-          {loading && <CircularProgress sx={{ mt: 2 }} />}
-          <Box sx={{ mt: 4 }}>
-            {results.flights && <Box><Typography variant="h5">Flights</Typography><pre>{JSON.stringify(results.flights, null, 2)}</pre></Box>}
-            {results.itinerary && <Box><Typography variant="h5">Suggested Itinerary</Typography><pre>{JSON.stringify(results.itinerary, null, 2)}</pre></Box>}
-          </Box>
+          {loading && (
+          <>
+            {/* Whitewash Overlay */}
+            <div className="overlay"></div>
+
+            {/* Centered Circular Progress */}
+            <div className="loader-container">
+              <CircularProgress sx={{ color: '#023641' }} />
+              <Typography variant="h6" className="loading-text">
+                Just a moment, we're packing your bags!
+              </Typography>
+            </div>
+          </>
+          )}
         </>
       ) : (
         <>
