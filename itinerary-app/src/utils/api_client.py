@@ -8,7 +8,7 @@ load_dotenv()  # Load API credentials from .env
 # City (OpenWeather): get city's geocode (latitude, longitude)
 def get_city_geocode(keyword: str) -> dict:
     OPENWEATHER_URL = "https://api.openweathermap.org/data/2.5/weather"
-    OPENWEATHER_KEY = os.getenv("OPENWEATHER_KEY")
+    OPENWEATHER_KEY = os.getenv("OPENWEATHER-KEY")
 
     params = {
         "q": keyword,  # City name

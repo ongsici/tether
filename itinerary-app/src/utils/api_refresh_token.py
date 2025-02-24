@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()  # Load API credentials from .env
 
 # Amadeus API credentials
-AMADEUS_KEY = os.getenv("AMADEUS_KEY")
-AMADEUS_SECRET = os.getenv("AMADEUS_SECRET")
+AMADEUS_KEY = os.getenv("AMADEUS-KEY")
+AMADEUS_SECRET = os.getenv("AMADEUS-SECRET")
 
 # Global storage for token and expiry time
 token = None
