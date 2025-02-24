@@ -51,11 +51,11 @@ function Itinerary() {
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {user ? (
+      {!user ? (
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }} >Plan Your Travel</Typography>
           
-          <Box className="search-box">
+          <Box className="search-box" sx={{ width: "400px" }}>
             <Autocomplete
               freeSolo
               options={cities}

@@ -7,7 +7,8 @@ import HomeResults from "./pages/Home/HomeResults";
 import FlightSearch from "./pages/Flights/FlightSearch"; 
 import FlightResults from "./pages/Flights/FlightResults";
 import Itinerary from "./pages/Itinerary";  
-import Weather from "./pages/Weather";
+import Weather from "./pages/Weather/WeatherSearch";
+import WeatherResults from "./pages/Weather/WeatherResults";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/flights/results" element={<FlightResults />} />
           <Route path="/itinerary" element={<Itinerary />} />
           <Route path="/weather" element={<Weather />} />
+          <Route path="/weather/results" element={<WeatherResults />} />
           <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
       <Footer /> {/* Include the Footer component */}

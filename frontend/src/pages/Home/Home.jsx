@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl, CircularProgress } from "@mui/material";
 import { login } from "../../utils/auth";
 import { searchTravel } from "../../utils/api";
-import { getTodayDate } from "../../utils/helpers";
+import { getTodayDate, getAirportOptions } from "../../utils/helpers";
 import useFetchCities from "../../hooks/useFetchCities";
 import useFetchUser from "../../hooks/useFetchUser";
 import "./Home.css";
@@ -15,10 +15,10 @@ function Home() {
   // const [showToast, setShowToast] = useState(false)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const [results, setResults] = useState({ flights: null, itinerary: null });
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
+    destinationCity: "",
     departDate: "",
     returnDate: "",
     numTravellers: 1,
@@ -40,13 +40,12 @@ function Home() {
   };
 
   const handleSearch = async () => {
-    
-    // setResults({ flights: null, itinerary: null });
 
-    const sourceCity = cities.find(city => city.city === searchParams.source?.city)?.code;
-    const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
+    const sourceAirport = searchParams.source?.airportCode;
+    const destinationAirport = searchParams.destination?.airportCode;
+    const destinationCity = searchParams.destination?.city;
     
-    if (!sourceCity || !destinationCity || !searchParams.departDate || !searchParams.returnDate || !searchParams.numTravellers) {
+    if (!sourceAirport || !destinationAirport || !searchParams.departDate || !searchParams.returnDate || !searchParams.numTravellers) {
       // handleErrorToast();
       alert("Please select valid source and destination.");
       return;
@@ -56,8 +55,8 @@ function Home() {
     
     const requestBody = {
       flights: {
-        source: sourceCity,
-        destination: destinationCity,
+        source: sourceAirport,
+        destination: destinationAirport,
         departureDate: searchParams.departDate,
         returnDate: searchParams.returnDate,
         numTravellers: searchParams.numTravellers.toString(),
@@ -98,25 +97,55 @@ function Home() {
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
 
-          <Box className="search-box">
+          <Box className="search-box" sx={{ width: "600px" }}>
           
             <Autocomplete
               freeSolo
-              options={cities}
-              getOptionLabel={(option) => `${option.city} (${option.country})`}
+              options={getAirportOptions(searchParams.source || "", cities)}
+              getOptionLabel={(option) => option.fullLabel}
               value={searchParams.source || null}
               onChange={(event, newValue) => handleInputChange("source", newValue)}
               renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
+              renderOption={(props, option) => (
+                <li {...props} className="MuiAutocomplete-option" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <span className="option-city-country" style={{ textAlign: 'left' }}> 
+                      {option.city}, {option.country}
+                    </span>
+                    <span className="airport-code">{option.airportCode}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <span className="option-airport-name" style={{ textAlign: 'left' }}>
+                      {option.airportName}
+                    </span>
+                  </div>
+                </li>
+              )}
             />
 
             <Autocomplete
               freeSolo
-              options={cities}
-              getOptionLabel={(option) => `${option.city} (${option.country})`}
+              options={getAirportOptions(searchParams.destination || "", cities)}
+              getOptionLabel={(option) => option.fullLabel}
               value={searchParams.destination || null}
               onChange={(event, newValue) => handleInputChange("destination", newValue)}
               renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
-            />
+              renderOption={(props, option) => (
+                <li {...props} className="MuiAutocomplete-option" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <span className="option-city-country" style={{ textAlign: 'left' }}> 
+                      {option.city}, {option.country}
+                    </span>
+                    <span className="airport-code">{option.airportCode}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <span className="option-airport-name" style={{ textAlign: 'left' }}>
+                      {option.airportName}
+                    </span>
+                  </div>
+                </li>
+              )}
+            />    
 
             <TextField
               label="Departure Date"

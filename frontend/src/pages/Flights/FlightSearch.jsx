@@ -56,25 +56,6 @@ function Flights() {
     }
     setLoading(false);
   };
-  
-  // const getAirportOptions = (inputValue) => {
-  //   const query = (typeof inputValue === 'string' ? inputValue : '').toLowerCase();
-  
-  //   const matchingCities = cities.filter((city) =>
-  //     city.city.toLowerCase().includes(query)
-  //   );
-    
-  //   return matchingCities.flatMap((city) =>
-  //     city.airports.map((airport, index) => ({
-  //       city: city.city,
-  //       country: city.country,
-  //       airportCode: airport,
-  //       airportName: city.airport_names[index],
-  //       fullLabel: `${airport} (${city.city}, ${city.country})`,
-  //     }))
-  //   );
-  // };
-    
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
@@ -84,7 +65,7 @@ function Flights() {
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
 
-          <Box className="search-box">
+          <Box className="search-box" sx={{ width: "600px" }}>
 
 
             <Autocomplete
@@ -94,21 +75,28 @@ function Flights() {
               value={searchParams.source || null}
               onChange={(event, newValue) => handleInputChange("source", newValue)}
               renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
-              renderOption={(props, option) => (
-                <li {...props} className="MuiAutocomplete-option" style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <span className="option-city-country" style={{ textAlign: 'left' }}> 
-                      {option.city}, {option.country}
-                    </span>
-                    <span className="airport-code">{option.airportCode}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <span className="option-airport-name" style={{ textAlign: 'left' }}>
-                      {option.airportName}
-                    </span>
-                  </div>
-                </li>
-              )}
+              renderOption={(props, option) => {
+                // Extract the `key` and exclude it from `props`
+                const { key, ...restProps } = props;
+              
+                return (
+                  <li key={option.airportCode} {...restProps} className="MuiAutocomplete-option" style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                      <span className="option-city-country" style={{ textAlign: 'left' }}> 
+                        {option.city}, {option.country}
+                      </span>
+                      <span className="airport-code">{option.airportCode}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                      <span className="option-airport-name" style={{ textAlign: 'left' }}>
+                        {option.airportName}
+                      </span>
+                    </div>
+                  </li>
+                );
+              }}
+              
+              
             />
 
             <Autocomplete
@@ -135,17 +123,6 @@ function Flights() {
               )}
             />    
 
-{/* 
-
-            <Autocomplete
-                freeSolo
-                options={getAirportOptions(searchParams.destination || "")}
-                getOptionLabel={(option) => option.fullLabel}
-                value={searchParams.destination || null}
-                onChange={(event, newValue) => handleInputChange("destination", newValue)}
-                renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
-            /> */}
-
             <TextField
               label="Departure Date"
               name="departDate"
@@ -159,6 +136,7 @@ function Flights() {
                 min: getTodayDate(),
               }}
             />
+
             <TextField
               label="Return Date"
               name="returnDate"

@@ -26,7 +26,7 @@ const FlightResults = () => {
               <Box className="flight-summary">
                 <Typography variant="h6" className="flight-summary-title">
                 <div className="flight-route">
-                  {flight.FlightResponse.outbound.map((segment, idx, arr) => (
+                  {flight.FlightResponse.inbound.map((segment, idx, arr) => (
                     <React.Fragment key={idx}>
                       <span className="airport-text">{segment.SegmentResponse.departure_airport}</span>
                       {idx < arr.length - 1 && ( // Display arrow between segments
@@ -41,9 +41,10 @@ const FlightResults = () => {
                     <FlightIcon className="flight-icon" />
                   </div>
                   <span className="airport-text">
-                    {flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.destination_airport}
+                    {flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.destination_airport}
                   </span>
                 </div>
+
                 </Typography>
                 <Typography variant="body2" className="flight-details">
                   {`Price: €${flight.FlightResponse.price_per_person}`}

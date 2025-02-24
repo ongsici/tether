@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, Autocomplete, CircularProgress} from "@mui/material";
 import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
@@ -8,10 +9,10 @@ import "./Weather.css";
 function Weather() {
   const user = useFetchUser();
   const cities = useFetchCities(); 
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState({ });
   const [searchParams, setSearchParams] = useState({
-    destination: ""
+    destination: null
   });
 
   const handleInputChange = (name, value) => {
@@ -19,14 +20,13 @@ function Weather() {
   };
 
   const handleSearch = async () => {  
-    const destinationCity = cities.find(city => city.city === searchParams.destination?.city)?.code;
+    const destinationCity = searchParams.destination ? searchParams.destination.city : null;
       
-    if (!destinationCity || !searchParams.departDate || !searchParams.returnDate ) {
+    if (!destinationCity) {
       alert("Please select valid source and destination.");
       return;
     }
     setLoading(true);
-    setResults({ });
     
     const requestBody = {
       weather: {
@@ -39,7 +39,7 @@ function Weather() {
     const data = await searchTravel(requestBody);
     if (data) {
       console.log("Response:", data);
-      setResults(data);
+      navigate('/weather/results', { state: { weatherData: data } });
     } else {
       console.error("Failed to fetch travel data");
     }
@@ -51,11 +51,11 @@ function Weather() {
       <div className="background-overlay"></div>
       
       <Box className="content-box">
-      {user ? (
+      {!user ? (
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
          
-          <Box className="search-box">
+          <Box className="search-box" sx={{ width: "400px" }}>
             <Autocomplete
               freeSolo
               options={cities}
@@ -69,14 +69,20 @@ function Weather() {
               Search Weather
             </Button>
           </Box> 
-          {loading && <CircularProgress sx={{ mt: 2 }} />}
-          {!loading && results?.results && (
-            <Box className="weather-box">
-              <Typography variant="h5">Weather Forecast</Typography>
-              <pre>{JSON.stringify(results.results, null, 2)}</pre>
-            </Box>
-          )}
+          {loading && (
+          <>
+            {/* Whitewash Overlay */}
+            <div className="overlay"></div>
 
+            {/* Centered Circular Progress */}
+            <div className="loader-container">
+              <CircularProgress sx={{ color: '#023641' }} />
+              <Typography variant="h6" className="loading-text">
+                Just a moment, we're packing your bags!
+              </Typography>
+            </div>
+          </>
+          )}
         </>
       ) : (
         <>
