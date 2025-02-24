@@ -66,7 +66,7 @@ function Flights() {
       <Box className="content-box">
       {!user ? (
         <>
-          <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
+          <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
 
           <Box className="search-box">
             <Autocomplete

@@ -13,7 +13,7 @@ const HomeResults = () => {
     return (
         <Box className="results-container">
         <div className="background-overlay"></div>
-          <Typography variant="h5" className="results-box">
+          <Typography variant="h4" className="results-header" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, mt: 5}}>
             Flight Options
           </Typography>
           {flights.length === 0 ? (
