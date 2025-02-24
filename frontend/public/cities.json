@@ -1,43 +1,81 @@
 [
-  { "city": "New York", "country": "USA", "code": "NYC" },
-  { "city": "London", "country": "UK", "code": "LON" },
-  { "city": "Tokyo", "country": "Japan", "code": "TYO" },
-  { "city": "Paris", "country": "France", "code": "PAR" },
-  { "city": "Berlin", "country": "Germany", "code": "BER" },
-  { "city": "Sydney", "country": "Australia", "code": "SYD" },
-  { "city": "Rome", "country": "Italy", "code": "ROM" },
-  { "city": "Beijing", "country": "China", "code": "BJS" },
-  { "city": "Moscow", "country": "Russia", "code": "MOW" },
-  { "city": "Istanbul", "country": "Turkey", "code": "IST" },
-  { "city": "Cairo", "country": "Egypt", "code": "CAI" },
-  { "city": "Cape Town", "country": "South Africa", "code": "CPT" },
-  { "city": "Rio de Janeiro", "country": "Brazil", "code": "RIO" },
-  { "city": "Mexico City", "country": "Mexico", "code": "MEX" },
-  { "city": "Toronto", "country": "Canada", "code": "YYZ" },
-  { "city": "Buenos Aires", "country": "Argentina", "code": "BUE" },
-  { "city": "Mumbai", "country": "India", "code": "BOM" },
-  { "city": "Seoul", "country": "South Korea", "code": "SEL" },
-  { "city": "Bangkok", "country": "Thailand", "code": "BKK" },
-  { "city": "Dubai", "country": "UAE", "code": "DXB" },
-  { "city": "Singapore", "country": "Singapore", "code": "SIN" },
-  { "city": "Kuala Lumpur", "country": "Malaysia", "code": "KUL" },
-  { "city": "Hong Kong", "country": "Hong Kong", "code": "HKG" },
-  { "city": "Shanghai", "country": "China", "code": "SHA" },
-  { "city": "Los Angeles", "country": "USA", "code": "LAX" },
-  { "city": "Chicago", "country": "USA", "code": "CHI" },
-  { "city": "San Francisco", "country": "USA", "code": "SFO" },
-  { "city": "Las Vegas", "country": "USA", "code": "LAS" },
-  { "city": "Miami", "country": "USA", "code": "MIA" },
-  { "city": "Orlando", "country": "USA", "code": "ORL" },
-  { "city": "Honolulu", "country": "USA", "code": "HNL" },
-  { "city": "Vancouver", "country": "Canada", "code": "YVR" },
-  { "city": "Montreal", "country": "Canada", "code": "YMQ" },
-  { "city": "Calgary", "country": "Canada", "code": "YYC" },
-  { "city": "Edmonton", "country": "Canada", "code": "YEG" },
-  { "city": "Ottawa", "country": "Canada", "code": "YOW" },
-  { "city": "Quebec City", "country": "Canada", "code": "YQB" },
-  { "city": "Halifax", "country": "Canada", "code": "YHZ" },
-  { "city": "St. John's", "country": "Canada", "code": "YYT" },
-  { "city": "Winnipeg", "country": "Canada", "code": "YWG" },
-  { "city": "Regina", "country": "Canada", "code": "YQR" }
-]
+    {
+      "city": "New York",
+      "country": "USA",
+      "airports": ["JFK", "LGA", "EWR"],
+      "airport_names": ["John F. Kennedy International Airport", "LaGuardia Airport", "Newark Liberty International Airport"]
+    },
+    {
+      "city": "London",
+      "country": "UK",
+      "airports": ["LHR", "LGW", "STN"],
+      "airport_names": ["Heathrow Airport", "Gatwick Airport", "Stansted Airport"]
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "airports": ["HND", "NRT"],
+      "airport_names": ["Haneda Airport", "Narita International Airport"]
+    },
+    {
+      "city": "Paris",
+      "country": "France",
+      "airports": ["CDG", "ORY"],
+      "airport_names": ["Charles de Gaulle Airport", "Orly Airport"]
+    },
+    {
+      "city": "Berlin",
+      "country": "Germany",
+      "airports": ["TXL", "SXF"],
+      "airport_names": ["Tegel Airport", "Schönefeld Airport"]
+    },
+    {
+      "city": "Sydney",
+      "country": "Australia",
+      "airports": ["SYD"],
+      "airport_names": ["Sydney Kingsford Smith Airport"]
+    },
+    {
+      "city": "Rome",
+      "country": "Italy",
+      "airports": ["FCO", "CIA"],
+      "airport_names": ["Leonardo da Vinci International Airport", "Ciampino Airport"]
+    },
+    {
+      "city": "Beijing",
+      "country": "China",
+      "airports": ["PEK", "PKX"],
+      "airport_names": ["Beijing Capital International Airport", "Beijing Daxing International Airport"]
+    },
+    {
+      "city": "Moscow",
+      "country": "Russia",
+      "airports": ["SVO", "DME"],
+      "airport_names": ["Sheremetyevo International Airport", "Domodedovo International Airport"]
+    },
+    {
+      "city": "Istanbul",
+      "country": "Turkey",
+      "airports": ["IST", "SAW"],
+      "airport_names": ["Istanbul Airport", "Sabiha Gökçen International Airport"]
+    },
+    {
+      "city": "Cairo",
+      "country": "Egypt",
+      "airports": ["CAI"],
+      "airport_names": ["Cairo International Airport"]
+    },
+    {
+      "city": "Cape Town",
+      "country": "South Africa",
+      "airports": ["CPT"],
+      "airport_names": ["Cape Town International Airport"]
+    },
+    {
+      "city": "Rio de Janeiro",
+      "country": "Brazil",
+      "airports": ["GIG", "SDU"],
+      "airport_names": ["Rio de Janeiro/Galeão International Airport", "Santos Dumont Airport"]
+    }
+  ]
+  

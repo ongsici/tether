@@ -33,6 +33,33 @@ body {
   align-items: center;
 }
 
+
+/* Style for the Autocomplete options */
+.MuiAutocomplete-option {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Style for the airport code */
+.airport-code {
+  background-color: #023641;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-left: auto;
+  font-weight: bold;
+  color: #fbf9f9;
+  font-size: 14px;
+}
+
+.option-city-country {
+  font-weight: 600;
+}
+
+.option-airport-name {
+  color: #555;
+}
+
+
 /* Center the CircularProgress */
 .loader-container {
   position: absolute;
