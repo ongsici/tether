@@ -11,11 +11,11 @@ logger = logging.getLogger("itinerary_microservice")
 app = FastAPI()
 
 # endpoint to fetch activities for the given city and optional parameters
-@app.get("/itinerary", response_model=List[ItineraryResponse])
-async def fetch_itinerary(city: str, radius: int = 10, limit: int = 5):
+@app.get("/itinerary", response_model=ItineraryResponse)
+async def fetch_itinerary(user_id: str, city: str, radius: int = 10, limit: int = 5):
     try:
         logger.info(f"Fetching activities for city: {city}")
-        activities = get_city_activities(city, radius, limit)
+        activities = get_city_activities(user_id, city, radius, limit)
         logger.info(f"Itinerary data fetched successfully for city: {city}")
         
         return activities

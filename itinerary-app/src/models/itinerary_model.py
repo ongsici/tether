@@ -3,13 +3,17 @@ from typing import List, Optional
 
 
 # request model for endpoint
-class ItineraryRequest(BaseModel):
+class ItineraryRequestObj(BaseModel):
     city: str
     radius: int
     limit: int
 
+class ItineraryRequest(BaseModel):
+    user_id: str
+    itinerary: ItineraryRequestObj
+
 # response model for endpoint
-class ItineraryResponse(BaseModel):
+class ItineraryResponseObj(BaseModel):
     city: str
     activity_id: str
     activity_name: str
@@ -17,3 +21,7 @@ class ItineraryResponse(BaseModel):
     price_amount: str
     price_currency: str
     pictures: List[str]
+
+class ItineraryResponse(BaseModel):
+    user_id: str
+    results: List[ItineraryResponseObj]

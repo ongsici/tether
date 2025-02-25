@@ -1,12 +1,12 @@
 from ..utils.api_client import get_city_geocode, get_activities
-from ..models.itinerary_model import ItineraryResponse
+from ..models.itinerary_model import ItineraryResponseObj, ItineraryResponse
 from ..utils.configure_logging import configure_logging
 import logging
 
 configure_logging()
 logger = logging.getLogger("itinerary_microservice")
 
-def get_city_activities(city_name: str, radius: int, limit: int = 10) -> ItineraryResponse:
+def get_city_activities(user_id: str, city_name: str, radius: int, limit: int = 10) -> ItineraryResponse:
     logger.info(f"Calling get_city_geocode for city: {city_name}")
     latitude, longitude = get_city_geocode(city_name)
 
@@ -23,7 +23,7 @@ def get_city_activities(city_name: str, radius: int, limit: int = 10) -> Itinera
 
     itinerary_responses = []
     for activity in limited_data:
-        itinerary_responses.append(ItineraryResponse(
+        itinerary_responses.append(ItineraryResponseObj(
             city = city_name,
             activity_id = activity.get("id", "None"),
             activity_name = activity.get("name", "No name available"),
@@ -35,7 +35,7 @@ def get_city_activities(city_name: str, radius: int, limit: int = 10) -> Itinera
 
     logger.info(f"get_activities successful for city geoCode: {latitude}, {longitude}")
 
-    return itinerary_responses
+    return ItineraryResponse(user_id=user_id, results=itinerary_responses)
 
 
 # for debugging
