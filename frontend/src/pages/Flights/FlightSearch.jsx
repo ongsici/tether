@@ -9,7 +9,6 @@ import "./Flights.css";
 
 function Flights() {
   const user = useFetchUser();
-  console.log("USER:", user);
   const cities = useFetchCities();  
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +36,8 @@ function Flights() {
     setLoading(true);
   
     const requestBody = {
-      user_id: user.user_id,
+      user_id: user.userId,
+      // user_id: "05cba8b331ed4ceda49eb0b3f70625a8",
       flights: {
         origin_loc_code: sourceAirport,
         destination_loc_code: destinationAirport,  
@@ -52,7 +52,10 @@ function Flights() {
     const data = await searchTravel(requestBody);
     if (data) {
       console.log("Response:", data);
-      navigate('/flights/results', { state: { flightData: data } });
+      // if (data.user_id === "05cba8b331ed4ceda49eb0b3f70625a8") {
+      if (data.user_id === user.userId) {
+        navigate('/flights/results', { state: { flightData: data.results } });
+      }
     } else {
       console.error("Failed to fetch travel data");
     }
@@ -63,7 +66,7 @@ function Flights() {
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {user ? (
+      {!user ? (
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
 
