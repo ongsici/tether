@@ -24,17 +24,17 @@ app = FastAPI()
 #         raise HTTPException(status_code=400, detail=str(e))
 
 
-@app.post("/itinerary", response_model=List[FlightResponse])  # Use POST method here
-async def fetch_itinerary(request: FlightRequest):
-    origin_loc = FlightRequest.flights.origin_loc_code
-    dest_loc = FlightRequest.flights.destination_loc_code
-    dep_date = FlightRequest.flights.departure_date
-    ret_date = FlightRequest.flights.return_date
-    num_passengers = FlightRequest.flights.num_passenger
+@app.post("/flight", response_model=List[FlightResponse])  # Use POST method here
+async def fetch_flight(request: FlightRequest):
+    origin_loc = request.flights.origin_loc_code
+    dest_loc = request.flights.destination_loc_code
+    dep_date = request.flights.departure_date
+    ret_date = request.flights.return_date
+    num_passengers = request.flights.num_passenger
     
     try:
         logger.info(f"Fetching flight data from {origin_loc} to {dest_loc} from {dep_date} to {ret_date}")
-        flight_data = get_flights(origin_loc, dest_loc, num_passengers, dep_date, ret_date, FlightRequest.user_id)
+        flight_data = get_flights(origin_loc, dest_loc, num_passengers, dep_date, ret_date, request.user_id)
         logger.info(f"Flight data fetched successfully from {origin_loc} to {dest_loc}")
 
         return flight_data
