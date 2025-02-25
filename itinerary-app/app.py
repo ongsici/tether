@@ -24,7 +24,7 @@ async def fetch_itinerary(city: str, radius: int = 10, limit: int = 5):
         logger.error(f"Error fetching itinerary data: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
 
-# sample GET request: http://127.0.0.1:8000/itinerary?city=London&radius=10&limit=2
+# sample GET request: http://127.0.0.1:7000/itinerary?city=London&radius=10&limit=2
 
 
 # @app.post("/itinerary", response_model=List[ItineraryResponse])  # Use POST method here
@@ -47,7 +47,7 @@ async def fetch_itinerary(city: str, radius: int = 10, limit: int = 5):
 
 # sample POST request:
 # curl -X 'POST' \
-#   'http://127.0.0.1:8000/itinerary' \
+#   'http://127.0.0.1:7000/itinerary' \
 #   -H 'Content-Type: application/json' \
 #   -d '{
 #   "city": "London",

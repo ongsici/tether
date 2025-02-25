@@ -24,10 +24,10 @@ def get_city_activities(city_name: str, radius: int, limit: int = 10) -> Itinera
     itinerary_responses = []
     for activity in limited_data:
         itinerary_responses.append(ItineraryResponse(
+            city = city_name,
+            activity_id = activity.get("id", "None"),
             activity_name = activity.get("name", "No name available"),
             activity_details = activity.get("shortDescription", "No description available"),
-            activity_latitude = activity.get("geoCode", {}).get("latitude", 0.0),
-            activity_longitude = activity.get("geoCode", {}).get("longitude", 0.0),
             price_amount = activity.get("price", {}).get("amount", "0.0"),
             price_currency = activity.get("price", {}).get("currencyCode", "EUR"),
             pictures = activity.get("pictures", [])

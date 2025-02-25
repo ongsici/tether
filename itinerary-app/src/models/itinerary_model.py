@@ -10,10 +10,10 @@ class ItineraryRequest(BaseModel):
 
 # response model for endpoint
 class ItineraryResponse(BaseModel):
+    city: str
+    activity_id: str
     activity_name: str
     activity_details: str
-    activity_latitude: float
-    activity_longitude: float
     price_amount: str
     price_currency: str
     pictures: List[str]

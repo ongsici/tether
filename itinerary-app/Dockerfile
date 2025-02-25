@@ -7,6 +7,6 @@ COPY . /itinerary-app
 
 RUN chmod +x itinerary-app/scripts/start.sh
 
-EXPOSE 8000
+EXPOSE 7000
 
 CMD ["bash", "/itinerary-app/scripts/start.sh"]
