@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, Autocomplete, FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@mui/material";
-import useFetchUser from "../../hooks/useFetchUser";
+// import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
 import { getTodayDate, getAirportOptions } from "../../utils/helpers";
 import { searchTravel } from "../../utils/api";
 import "./Flights.css";
 
 function Flights() {
-  const user = useFetchUser();
+  // const user = useFetchUser();
+  const user = { userId: "abc123" };
   const cities = useFetchCities();  
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +38,6 @@ function Flights() {
   
     const requestBody = {
       user_id: user.userId,
-      // user_id: "05cba8b331ed4ceda49eb0b3f70625a8",
       flights: {
         origin_loc_code: sourceAirport,
         destination_loc_code: destinationAirport,  
@@ -52,7 +52,6 @@ function Flights() {
     const data = await searchTravel(requestBody);
     if (data) {
       console.log("Response:", data);
-      // if (data.user_id === "05cba8b331ed4ceda49eb0b3f70625a8") {
       if (data.user_id === user.userId) {
         navigate('/flights/results', { state: { flightData: data.results } });
       }
@@ -156,7 +155,7 @@ function Flights() {
               }}
             />
 
-            <FormControl fullWidth className="input-field">
+            <FormControl fullWidth className="input-field" sx={{"& .MuiInputBase-root": { height: "60px" } }}>
                 <InputLabel id="travellers-label">Number of Travellers</InputLabel>
                 <Select
                   labelId="travellers-label"

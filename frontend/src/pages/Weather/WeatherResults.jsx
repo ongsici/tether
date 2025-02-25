@@ -16,11 +16,11 @@ const WeatherResults = () => {
   const { state } = useLocation();
   const data = state?.weatherData;
 
-  if (!data || !data.results) {
+  if (!data) {
     return <Typography>No weather data available</Typography>;
   }
 
-  const { current, forecast } = data.results;
+  const { current, forecast } = data;
 
   return (
     <Box className="results-container">

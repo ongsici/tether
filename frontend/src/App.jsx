@@ -6,7 +6,8 @@ import Home from "./pages/Home/Home";
 import HomeResults from "./pages/Home/HomeResults";
 import FlightSearch from "./pages/Flights/FlightSearch"; 
 import FlightResults from "./pages/Flights/FlightResults";
-import Itinerary from "./pages/Itinerary";  
+import Itinerary from "./pages/Itinerary/ItinerarySearch";  
+import ItineraryResults from "./pages/Itinerary/ItineraryResults";
 import Weather from "./pages/Weather/WeatherSearch";
 import WeatherResults from "./pages/Weather/WeatherResults";
 import Footer from "./components/Footer";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/flights" element={<FlightSearch />} />
           <Route path="/flights/results" element={<FlightResults />} />
           <Route path="/itinerary" element={<Itinerary />} />
+          <Route path="/itinerary/results" element={<ItineraryResults />} />
           <Route path="/weather" element={<Weather />} />
           <Route path="/weather/results" element={<WeatherResults />} />
           <Route path="/dashboard" element={<Dashboard />} />

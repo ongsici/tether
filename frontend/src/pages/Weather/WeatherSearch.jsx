@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, Autocomplete, CircularProgress} from "@mui/material";
-import useFetchUser from "../../hooks/useFetchUser";
+// import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
 import { searchTravel } from "../../utils/api";
 import "./Weather.css";
 
 function Weather() {
-  const user = useFetchUser();
+  // const user = useFetchUser();
+  const user = { userId: "abc123" };
   const cities = useFetchCities(); 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ function Weather() {
     setLoading(true);
     
     const requestBody = {
+      user_id: user.userId,
       weather: {
         city: destinationCity,
       },
@@ -39,7 +41,9 @@ function Weather() {
     const data = await searchTravel(requestBody);
     if (data) {
       console.log("Response:", data);
-      navigate('/weather/results', { state: { weatherData: data } });
+        if (data.user_id === user.userId) {
+          navigate('/weather/results', { state: { weatherData: data.results } });
+        }
     } else {
       console.error("Failed to fetch travel data");
     }
@@ -51,7 +55,7 @@ function Weather() {
       <div className="background-overlay"></div>
       
       <Box className="content-box">
-      {!user ? (
+      {user ? (
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
          

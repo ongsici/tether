@@ -4,13 +4,14 @@ import { login } from "../../utils/auth";
 import { searchTravel } from "../../utils/api";
 import { getTodayDate, getAirportOptions } from "../../utils/helpers";
 import useFetchCities from "../../hooks/useFetchCities";
-import useFetchUser from "../../hooks/useFetchUser";
+// import useFetchUser from "../../hooks/useFetchUser";
 import "./Home.css";
 import { useNavigate } from "react-router";
 // import Toast from "../../components/Toast";
 
 function Home() {
-  const user = useFetchUser();
+  // const user = useFetchUser();
+  const user = { userId: "abc123" };
   const cities = useFetchCities(); 
   // const [showToast, setShowToast] = useState(false)
   const [loading, setLoading] = useState(false);
@@ -54,6 +55,7 @@ function Home() {
     setLoading(true);
     
     const requestBody = {
+      user_id: user.userId,
       flights: {
         origin_loc_code: sourceAirport,
         destination_loc_code: destinationAirport,
@@ -76,7 +78,9 @@ function Home() {
     const data = await searchTravel(requestBody);
     if (data) {
       console.log("Response:", data);
-      navigate('/results', { state: { flightData: data } });
+      if (data.user_id === user.userId) {
+        navigate('/results', { state: { flightData: data } });
+      }
     } else {
       console.error("Failed to fetch travel data");
     }
@@ -93,7 +97,7 @@ function Home() {
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {!user ? (
+      {user ? (
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
 
@@ -173,7 +177,7 @@ function Home() {
                 min: searchParams.departDate || getTodayDate(),  
               }}
             />
-            <FormControl fullWidth className="input-field">
+            <FormControl fullWidth className="input-field" sx={{"& .MuiInputBase-root": { height: "60px" } }}>
                 <InputLabel id="travellers-label">Number of Travellers</InputLabel>
                 <Select
                   labelId="travellers-label"
