@@ -9,6 +9,7 @@ import "./Flights.css";
 
 function Flights() {
   const user = useFetchUser();
+  console.log("USER:", user);
   const cities = useFetchCities();  
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
