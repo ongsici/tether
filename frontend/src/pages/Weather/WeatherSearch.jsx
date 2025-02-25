@@ -30,7 +30,7 @@ function Weather() {
     
     const requestBody = {
       weather: {
-        destination: destinationCity,
+        city: destinationCity,
       },
     };
     

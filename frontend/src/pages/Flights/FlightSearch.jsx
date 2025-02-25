@@ -36,12 +36,13 @@ function Flights() {
     setLoading(true);
   
     const requestBody = {
+      user_id: user.user_id,
       flights: {
-        source: sourceAirport,
-        destination: destinationAirport,  
-        departureDate: searchParams.departDate,
-        returnDate: searchParams.returnDate,
-        numTravellers: searchParams.numTravellers.toString(),
+        origin_loc_code: sourceAirport,
+        destination_loc_code: destinationAirport,  
+        departure_date: searchParams.departDate,
+        return_date: searchParams.returnDate,
+        num_passenger: searchParams.numTravellers.toString(),
       },
     };
   
@@ -61,7 +62,7 @@ function Flights() {
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       <Box className="content-box">
-      {!user ? (
+      {user ? (
         <>
           <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
 

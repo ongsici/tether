@@ -55,11 +55,11 @@ function Home() {
     
     const requestBody = {
       flights: {
-        source: sourceAirport,
-        destination: destinationAirport,
-        departureDate: searchParams.departDate,
-        returnDate: searchParams.returnDate,
-        numTravellers: searchParams.numTravellers.toString(),
+        origin_loc_code: sourceAirport,
+        destination_loc_code: destinationAirport,
+        departure_date: searchParams.departDate,
+        return_date: searchParams.returnDate,
+        num_passenger: searchParams.numTravellers.toString(),
       },
     };
     
