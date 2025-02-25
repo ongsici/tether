@@ -2,12 +2,13 @@ from ..utils.api_client import get_flight_data
 from ..models.flight_model import FlightResponse, SegmentResponse
 from ..utils.custom_logging import configure_logging
 import logging
+from typing import List
 
 configure_logging()
 logger = logging.getLogger("flight_microservice")
 
 def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: str, 
-                    departure_date: str, return_date: str = None) -> FlightResponse:
+                    departure_date: str, return_date: str, user_id: str) -> FlightResponse:
     logger.info(f"Calling get_flight_data for departure_date: {departure_date}, return_date: {return_date}")
     data = get_flight_data(origin_loc_code, destination_loc_code, num_passenger, departure_date, return_date)
 
@@ -35,7 +36,7 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
                     "destination_airport": segment["arrival"]["iataCode"],
                     "airline_code": airline_code,
                     "flight_number": flight_code,
-                    "unique_id": airline_code + flight_code + departure_date + dep_time
+                    "segment_id": airline_code + flight_code + departure_date + dep_time
                 }
                 segments.append(SegmentResponse(**segment_info))
         flight_info = {
@@ -45,17 +46,20 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
         }
         flights.append(FlightResponse(**flight_info))
     
+    flights_respponse = FlightResponse(
+        user_id = user_id,
+        flight_results = flights
+    )
     logger.info(f"get_flight_data successful for departure_date: {departure_date}, return_date: {return_date}")
-    print(flights)
-    return flights
+    return flights_respponse
 
-get_flights("SYD", "SIN", 2, "2025-02-23", "2025-02-26")
+# get_flights("SYD", "SIN", 2, "2025-02-23", "2025-02-26")
     
 
 def extract_flight_info(flights: FlightResponse):
     segments = flights.segment_info
     for i, segment in enumerate(segments):
-        next_seg_id = segments[i+1].unique_id if (i+1 < len(segments)) else None
+        next_seg_id = segments[i+1].segment_id if (i+1 < len(segments)) else None
         # Store each field in database
 
 
