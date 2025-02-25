@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box } from "@mui/material";
+import { Container, Typography, Button, TextField, Checkbox, FormControlLabel, Box, Autocomplete, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { login, fetchUser } from "../../utils/auth";
-import Footer from "../../components/Footer";
 import "./Home.css";
 
 function Home() {
   const [user, setUser] = useState(null);
+  const [cities, setCities] = useState([]);
+  const [cityData, setCityData] = useState([]);
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
     departDate: "",
     returnDate: "",
+    numTravellers: 1,
     includeItinerary: false,
     includeWeather: false,
   });
@@ -23,8 +25,20 @@ function Home() {
     getUser();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  useEffect(() => {
+    fetch("/cities.json")
+      .then(response => response.json())
+      .then(data => {
+        setCities(data.map(row => `${row.city} (${row.country})`));
+      });
+  }, []);
+
+  const getCityCode = (cityName) => {
+    const cityObj = cityData.find(row => `${row.city} (${row.country})` === cityName);
+    return cityObj ? cityObj.code : "";
+  };
+
+  const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -34,8 +48,42 @@ function Home() {
   };
 
   const handleSearch = () => {
-    console.log("Search initiated with:", searchParams);
-    // Call backend API to get search results
+    const requestBody = {
+      flights: {
+        source: getCityCode(searchParams.source),
+        destination: getCityCode(searchParams.destination),
+        departureDate: searchParams.departDate,
+        returnDate: searchParams.returnDate,
+        numTravellers: searchParams.numTravellers.toString(),
+      },
+    };
+    
+    if (searchParams.includeItinerary) {
+      requestBody.itinerary = {
+        destination: getCityCode(searchParams.destination),
+        startDate: searchParams.departDate,
+        endDate: searchParams.returnDate,
+      };
+    }
+
+    if (searchParams.includeWeather) {
+      requestBody.weather = {
+        destination: getCityCode(searchParams.destination),
+        startDate: searchParams.departDate,
+        endDate: searchParams.returnDate,
+      };
+    }
+
+    console.log("API Request:", JSON.stringify(requestBody, null, 2));
+    
+    fetch("/api/travel-search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    })
+      .then(response => response.json())
+      .then(data => console.log("Response:", data))
+      .catch(error => console.error("Error:", error));
   };
 
   return (
@@ -47,21 +95,20 @@ function Home() {
           <Typography variant="h4" className="page-title">Plan Your Travel</Typography>
 
           <Box className="search-box">
-            <TextField
-              label="Source"
-              name="source"
+            <Autocomplete
+              freeSolo
+              options={cities}
               value={searchParams.source}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+              onInputChange={(event, newValue) => handleInputChange("source", newValue)}
+              renderInput={(params) => <TextField {...params} label="Source" fullWidth className="input-field" />}
             />
-            <TextField
-              label="Destination"
-              name="destination"
+
+            <Autocomplete
+              freeSolo
+              options={cities}
               value={searchParams.destination}
-              onChange={handleInputChange}
-              fullWidth
-              className="input-field"
+              onInputChange={(event, newValue) => handleInputChange("destination", newValue)}
+              renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
             <TextField
               label="Departure Date"
@@ -69,7 +116,7 @@ function Home() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.departDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
             />
@@ -79,10 +126,25 @@ function Home() {
               type="date"
               InputLabelProps={{ shrink: true }}
               value={searchParams.returnDate}
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e.target.name, e.target.value)}
               fullWidth
               className="input-field"
             />
+            <FormControl fullWidth className="input-field">
+                <InputLabel id="travellers-label">Number of Travellers</InputLabel>
+                <Select
+                  labelId="travellers-label"
+                  value={searchParams.numTravellers}
+                  onChange={(e) => handleInputChange("numTravellers", e.target.value)}
+                  label="Number of Travellers"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                    <MenuItem key={num} value={num}>
+                      {num}
+                    </MenuItem>
+                  ))}
+                </Select>
+            </FormControl>
             <FormControlLabel
               control={
                 <Checkbox
@@ -106,7 +168,7 @@ function Home() {
               label="Include Weather Forecast"
             />
             <Button variant="contained" className="search-button" onClick={handleSearch}>
-              Search Flights
+              Search Travel
             </Button>
           </Box>
         </>
@@ -122,7 +184,7 @@ function Home() {
         </>
       )}
       </Box>
-      <Footer />{/* Include the Footer component */}
+      
     </Container>
   );
 }

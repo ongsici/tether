@@ -1,0 +1,22 @@
+[
+  { "city": "New York", "country": "USA", "code": "NYC" },
+  { "city": "London", "country": "UK", "code": "LON" },
+  { "city": "Tokyo", "country": "Japan", "code": "TYO" },
+  { "city": "Paris", "country": "France", "code": "PAR" },
+  { "city": "Berlin", "country": "Germany", "code": "BER" },
+  { "city": "Sydney", "country": "Australia", "code": "SYD" },
+  { "city": "Rome", "country": "Italy", "code": "ROM" },
+  { "city": "Beijing", "country": "China", "code": "BJS" },
+  { "city": "Moscow", "country": "Russia", "code": "MOW" },
+  { "city": "Istanbul", "country": "Turkey", "code": "IST" },
+  { "city": "Cairo", "country": "Egypt", "code": "CAI" },
+  { "city": "Cape Town", "country": "South Africa", "code": "CPT" },
+  { "city": "Rio de Janeiro", "country": "Brazil", "code": "RIO" },
+  { "city": "Mexico City", "country": "Mexico", "code": "MEX" },
+  { "city": "Toronto", "country": "Canada", "code": "YYZ" },
+  { "city": "Buenos Aires", "country": "Argentina", "code": "BUE" },
+  { "city": "Mumbai", "country": "India", "code": "BOM" },
+  { "city": "Seoul", "country": "South Korea", "code": "SEL" },
+  { "city": "Bangkok", "country": "Thailand", "code": "BKK" },
+  { "city": "Dubai", "country": "UAE", "code": "DXB" }
+]
