@@ -1,5 +1,5 @@
 from ..utils.api_client import get_flight_data
-from ..models.flight_model import FlightResponse, SegmentResponse
+from ..models.flight_model import FlightResponse, SegmentResponse, FlightResponseObj
 from ..utils.custom_logging import configure_logging
 import logging
 from typing import List
@@ -28,19 +28,17 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
                 flight_code = segment["number"]
 
                 segment_info = {
-                    "SegmentResponse": {
-                        "num_passengers": num_passenger,
-                        "departure_time": dep_time,
-                        "departure_date": dep_date,
-                        "arrival_date": arr_date,
-                        "arrival_time": arr_time,
-                        "duration": segment["duration"][2:],
-                        "departure_airport": segment["departure"]["iataCode"],
-                        "destination_airport": segment["arrival"]["iataCode"],
-                        "airline_code": airline_code,
-                        "flight_number": flight_code,
-                        "unique_id": airline_code + flight_code + departure_date + dep_time
-                    }
+                    "num_passengers": int(num_passenger),
+                    "departure_time": dep_time,
+                    "departure_date": dep_date,
+                    "arrival_date": arr_date,
+                    "arrival_time": arr_time,
+                    "duration": segment["duration"][2:],  # removing the "PT" prefix if it's in ISO-8601
+                    "departure_airport": segment["departure"]["iataCode"],
+                    "destination_airport": segment["arrival"]["iataCode"],
+                    "airline_code": airline_code,
+                    "flight_number": flight_code,
+                    "segment_id": airline_code + flight_code + departure_date + dep_time
                 }
                 if i == 0:
                     outbound_segments.append(SegmentResponse(**segment_info))
@@ -48,15 +46,13 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
                     inbound_segments.append(SegmentResponse(**segment_info))
         number_of_segments = len(outbound_segments) + len(inbound_segments)
         flight_info = {
-            "FlightResponse": {
-                "number_of_segments": number_of_segments,
-                "flight_id": str(uuid.uuid4()),
-                "outbound": outbound_segments,
-                "inbound": inbound_segments,
-                "price_per_person": price_per_person
-            }
+            "number_of_segments": number_of_segments,
+            "flight_id": str(uuid.uuid4()),
+            "outbound": outbound_segments,
+            "inbound": inbound_segments,
+            "price_per_person": price_per_person
         }
-        flights.append(FlightResponse(**flight_info))
+        flights.append(FlightResponseObj(**flight_info))
     
     flights_respponse = FlightResponse(
         user_id = user_id,

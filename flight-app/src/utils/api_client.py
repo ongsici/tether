@@ -1,8 +1,8 @@
 import requests
-from api_token_refresh import get_valid_token
+from .api_token_refresh import get_valid_token
 
 # Amadeus API, flight offers
-def get_flight_data(origin_loc_code: str, destination_loc_code: str, num_passenger: int, 
+def get_flight_data(origin_loc_code: str, destination_loc_code: str, num_passenger: str, 
                     departure_date: str, return_date: str) -> dict:
     AMADEUS_URL = f"https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode={origin_loc_code}&destinationLocationCode={destination_loc_code}&departureDate={departure_date}&returnDate={return_date}&adults={num_passenger}&max=5"
 

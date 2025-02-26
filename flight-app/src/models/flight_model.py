@@ -30,9 +30,9 @@ class SegmentResponse(BaseModel):
 class FlightResponseObj(BaseModel):
     number_of_segments: int
     flight_id: str
-    segment_info: List[SegmentResponse] = []
+    outbound: List[SegmentResponse] = []
+    inbound: List[SegmentResponse] = []
     price_per_person: str
-
 
 class FlightResponse(BaseModel):
     user_id: str

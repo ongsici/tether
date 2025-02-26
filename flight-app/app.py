@@ -1,7 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from .models.flight_model import FlightResponse, FlightRequest
-from .services.flight_service import get_flight
-from .utils.logging import configure_logging
+from src.utils.custom_logging import configure_logging
 from src.services.flight_service import get_flights
 from src.models.flight_model import FlightRequest, FlightResponse
 import logging
@@ -12,19 +10,7 @@ logger = logging.getLogger("flight_microservice")
 
 app = FastAPI()
 
-# @app.get("/flight", response_model=List[FlightResponse])
-# async def fetch_flight(origin_city:str, dest_city:str, num_passengers:int, dep_date:str, ret_date:str):
-#     try:
-#         logger.info(f"Fetching flight data from {origin_city} to {dest_city} from {dep_date} to {ret_date}")
-#         flight_data = get_flights(origin_city, dest_city, num_passengers, dep_date, ret_date)
-#         logger.info(f"Flight data fetched successfully from {origin_city} to {dest_city}")
-#         return flight_data
-#     except Exception as e:
-#         logger.error(f"Error fetching flight data: {str(e)}")
-#         raise HTTPException(status_code=400, detail=str(e))
-
-
-@app.post("/flight", response_model=List[FlightResponse])  # Use POST method here
+@app.post("/flight", response_model=FlightResponse)
 async def fetch_flight(request: FlightRequest):
     origin_loc = request.flights.origin_loc_code
     dest_loc = request.flights.destination_loc_code
@@ -45,11 +31,17 @@ async def fetch_flight(request: FlightRequest):
 
 
 # sample POST request:
-# curl -X 'POST' \
-#   'http://127.0.0.1:8000/itinerary' \
-#   -H 'Content-Type: application/json' \
-#   -d '{
-#   "city": "London",
-#   "radius": 10,
-#   "limit": 2
-# }'
+
+# curl -X POST \
+#      -H "Content-Type: application/json" \
+#      -d '{
+#          "flights": {
+#              "origin_loc_code": "SYD",
+#              "destination_loc_code": "SIN",
+#              "departure_date": "2025-03-10",
+#              "return_date": "2025-03-17",
+#              "num_passenger": 1
+#          },
+#          "user_id": "testuser123"
+#      }' \
+#      http://0.0.0.0:5000/flight

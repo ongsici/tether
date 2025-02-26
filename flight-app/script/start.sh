@@ -4,6 +4,6 @@
 set -e
 
 HOST="0.0.0.0"
-PORT="5000"
+PORT="9000"
 
-exec uvicorn src.app:app --host $HOST --port $PORT
+exec uvicorn app:app --host $HOST --port $PORT

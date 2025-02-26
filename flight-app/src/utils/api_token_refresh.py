@@ -26,7 +26,7 @@ def get_amadeus_token():
     }
 
     response = requests.post(auth_url, data=payload)
-    response.raise_for_status()  # Raise error if request fails
+    response.raise_for_status()
 
     data = response.json()
     token = data["access_token"]
