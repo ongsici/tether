@@ -19,9 +19,10 @@ export const searchTravel = async (requestBody) => {
       console.error("API Error:", error);
       return null;
     }
+
   };
 
-  export const saveFlight = async (requestBody) => {
+export const saveFlight = async (requestBody) => {
     try {
       const response = await fetch(`${APIM_SAVE_URL}`, {
         method: "POST",

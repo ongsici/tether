@@ -131,8 +131,6 @@ body {
 
 .flight-summary {
   padding: 10px;
-  /* display: flex; */
-  /* align-items: flex-start; */
 }
 
 .flight-summary-title {
@@ -219,5 +217,4 @@ body {
   justify-content: flex-end;
   width: 100%;
 }
-
 
