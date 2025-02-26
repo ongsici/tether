@@ -131,6 +131,8 @@ body {
 
 .flight-summary {
   padding: 10px;
+  /* display: flex; */
+  /* align-items: flex-start; */
 }
 
 .flight-summary-title {
@@ -197,4 +199,25 @@ body {
 .MuiTableCell-root {
   font-size: 14px;
 }
+
+.save-flight-button {
+  margin-top: 20px;
+  align-self: flex-end; 
+  display: flex;
+  justify-content: flex-end;
+  background-color: #023641 !important;
+}
+
+.save-flight-button:hover {
+  background-color: #037e96 !important; /* Darker shade on hover */
+}
+
+
+.save-button-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 
