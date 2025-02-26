@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './AppBar.css'; // Import the CSS file
 
-const pages = ['Flights', 'Itinerary', 'Weather'];
+const pages = ['About Us', 'Flights', 'Itinerary', 'Weather'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -67,6 +67,8 @@ function ResponsiveAppBar() {
       navigate('/itinerary');
     } else if (page === 'Weather') {
       navigate('/weather');
+    } else if (page === 'About Us'){
+      navigate('/about');
     }
   };
 

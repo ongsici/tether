@@ -59,7 +59,7 @@
     visibility: visible;
     opacity: 1;
     display: inline-block;
-    z-index: 10;
+    z-index: 1;
     margin-right: 10px;
 }
 
