@@ -1,0 +1,9 @@
+# dependencies for weather microservice
+fastapi
+uvicorn
+python-dotenv
+requests
+pydantic
+pytest
+pytest-mock
+httpx
