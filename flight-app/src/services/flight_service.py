@@ -3,6 +3,7 @@ from ..models.flight_model import FlightResponse, SegmentResponse
 from ..utils.custom_logging import configure_logging
 import logging
 from typing import List
+import uuid
 
 configure_logging()
 logger = logging.getLogger("flight_microservice")
@@ -15,40 +16,51 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
     flights = []
     for flight in data["data"]:
         price_per_person = flight["price"]["base"]
-        segments = []
-        for itinerary in flight["itineraries"]:
+        outbound_segments = []
+        inbound_segments = []
+        for i, itinerary in enumerate(flight["itineraries"]):
             for segment in itinerary["segments"]:
                 if len(itinerary['segments']) > 3:
                     continue
                 dep_date, dep_time = segment["departure"]["at"].split('T')
                 arr_date, arr_time = segment["arrival"]["at"].split('T')
-                airline_code = segment['carrierCode']
-                flight_code = segment['number']
+                airline_code = segment["carrierCode"]
+                flight_code = segment["number"]
 
                 segment_info = {
-                    "num_passengers": num_passenger,
-                    "departure_time": dep_time,
-                    "departure_date": dep_date,
-                    "arrival_date": arr_date,
-                    "arrival_time": arr_time,
-                    "duration": segment["duration"][2:],
-                    "departure_airport": segment["departure"]["iataCode"],
-                    "destination_airport": segment["arrival"]["iataCode"],
-                    "airline_code": airline_code,
-                    "flight_number": flight_code,
-                    "segment_id": airline_code + flight_code + departure_date + dep_time
+                    "SegmentResponse": {
+                        "num_passengers": num_passenger,
+                        "departure_time": dep_time,
+                        "departure_date": dep_date,
+                        "arrival_date": arr_date,
+                        "arrival_time": arr_time,
+                        "duration": segment["duration"][2:],
+                        "departure_airport": segment["departure"]["iataCode"],
+                        "destination_airport": segment["arrival"]["iataCode"],
+                        "airline_code": airline_code,
+                        "flight_number": flight_code,
+                        "unique_id": airline_code + flight_code + departure_date + dep_time
+                    }
                 }
-                segments.append(SegmentResponse(**segment_info))
+                if i == 0:
+                    outbound_segments.append(SegmentResponse(**segment_info))
+                else:
+                    inbound_segments.append(SegmentResponse(**segment_info))
+        number_of_segments = len(outbound_segments) + len(inbound_segments)
         flight_info = {
-            "number_of_segments": len(segments),
-            "segment_info": segments,
-            "price_per_person": price_per_person
+            "FlightResponse": {
+                "number_of_segments": number_of_segments,
+                "flight_id": str(uuid.uuid4()),
+                "outbound": outbound_segments,
+                "inbound": inbound_segments,
+                "price_per_person": price_per_person
+            }
         }
         flights.append(FlightResponse(**flight_info))
     
     flights_respponse = FlightResponse(
         user_id = user_id,
-        flight_results = flights
+        results = flights
     )
     logger.info(f"get_flight_data successful for departure_date: {departure_date}, return_date: {return_date}")
     return flights_respponse

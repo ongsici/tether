@@ -11,7 +11,7 @@ def get_flight_data(origin_loc_code: str, destination_loc_code: str, num_passeng
     }
 
     response = requests.get(AMADEUS_URL, headers=headers)
-    if response.status_code == 401:  # Handle token expiration
+    if response.status_code == 401:
         print("Token expired, refreshing...")
         headers["Authorization"] = f"Bearer {get_valid_token()}"
         response = requests.get(AMADEUS_URL, headers=headers)

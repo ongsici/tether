@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 
 # request model for endpoint
 class FlightRequestObj(BaseModel):
@@ -36,5 +36,5 @@ class FlightResponseObj(BaseModel):
 
 class FlightResponse(BaseModel):
     user_id: str
-    results: List[FlightResponseObj]
+    results: List[FlightResponseObj] = []
 
