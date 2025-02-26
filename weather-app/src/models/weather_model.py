@@ -2,9 +2,13 @@ from pydantic import BaseModel
 from typing import List, Optional
 
 # request model for endpoint
-class WeatherRequest(BaseModel):
+class WeatherRequestObj(BaseModel):
     city: str
     country_code: str = None  # optional field
+
+class WeatherRequest(BaseModel):
+    user_id: str
+    weather: WeatherRequestObj
 
 # model for single forecast day
 class ForecastDay(BaseModel):
@@ -30,7 +34,6 @@ class CurrentWeather(BaseModel):
     humidity: int
     wind_speed: float
     cloudiness: int
-    rain_1h: Optional[float] = None # if available
     timestamp: int
     sunrise: int
     sunset: int
@@ -39,4 +42,5 @@ class CurrentWeather(BaseModel):
 
 # response model for endpoint
 class WeatherResponse(BaseModel):
+    user_id: str
     results: dict

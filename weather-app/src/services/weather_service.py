@@ -19,7 +19,7 @@ WMO_code = {
     99: "Thunderstorm with heavy hail"
 }
 
-def get_weather(city: str, country_code: str = None) -> WeatherResponse:
+def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherResponse:
     logger.info(f"Calling get_weather_data for city: {city}, country_code: {country_code}")
     data = get_weather_data(city, country_code)             # [1] fetch weather data from OpenWeather API
     lat, lon = data["coord"]["lat"], data["coord"]["lon"]   # [2] extract coordinates for Open-Meteo API
@@ -36,7 +36,6 @@ def get_weather(city: str, country_code: str = None) -> WeatherResponse:
         humidity=data["main"]["humidity"],       # %
         wind_speed=data["wind"]["speed"],        # m/s
         cloudiness=data["clouds"]["all"],        # % cloudiness
-        rain_1h=data.get("rain", {}).get("1h"),  # mm/h, if available
         timestamp=data["dt"],                    # UTC
         sunrise=data["sys"]["sunrise"],
         sunset=data["sys"]["sunset"],
@@ -66,4 +65,4 @@ def get_weather(city: str, country_code: str = None) -> WeatherResponse:
         logger.warning("Incomplete or missing daily forecast data")
 
     logger.info(f"get_weather_data successful for city: {city}")
-    return WeatherResponse(results={"current": current_weather, "forecast": forecast_list})
+    return WeatherResponse(user_id=user_id, results={"current": current_weather, "forecast": forecast_list})

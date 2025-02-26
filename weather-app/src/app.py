@@ -13,9 +13,9 @@ app = FastAPI()
 @app.post("/weather", response_model=WeatherResponse)
 async def fetch_weather(request: WeatherRequest):
     try:
-        logger.info(f"Fetching weather data for city: {request.city}, country_code: {request.country_code}")
-        weather_data = get_weather(request.city, request.country_code)
-        logger.info(f"Weather data fetched successfully for city: {request.city}")
+        logger.info(f"Fetching weather data for city: {request.weather.city}, country_code: {request.weather.country_code}")
+        weather_data = get_weather(request.user_id, request.weather.city, request.weather.country_code)
+        logger.info(f"Weather data fetched successfully for city: {request.weather.city}")
         return weather_data
     except Exception as e:
         logger.error(f"Error fetching weather data: {str(e)}")
