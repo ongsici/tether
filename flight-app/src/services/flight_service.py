@@ -2,7 +2,6 @@ from ..utils.api_client import get_flight_data
 from ..models.flight_model import FlightResponse, SegmentResponse, FlightResponseObj
 from ..utils.custom_logging import configure_logging
 import logging
-from typing import List
 import uuid
 
 configure_logging()

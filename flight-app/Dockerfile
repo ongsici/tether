@@ -1,16 +1,15 @@
 FROM python:3.10-slim
 
-WORKDIR /app
+WORKDIR /flight-app
 
-COPY requirements.txt .
+COPY requirements.txt .  
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/ ./src
-COPY script/start.sh ./start.sh
+COPY . .  
 
-RUN chmod +x start.sh
+RUN chmod +x script/start.sh
 
 EXPOSE 9000
 
-CMD ["bash", "start.sh"]
+CMD ["bash", "/flight-app/script/start.sh"]
