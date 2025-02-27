@@ -1,7 +1,7 @@
 const APIM_URL="https://tether-apim-2.azure-api.net/api/submitData";
 const APIM_SAVE_URL="http://localhost:8000/api/saveData";
 
-const subscriptionKey = process.env.APIM_SUBSCRIPTION_KEY;
+const subscriptionKey = process.env.REACT_APP_APIM_SUBSCRIPTION_KEY;
 
 export const searchTravel = async (requestBody) => {
     try {
