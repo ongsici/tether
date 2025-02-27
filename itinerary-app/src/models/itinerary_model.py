@@ -20,7 +20,7 @@ class ItineraryResponseObj(BaseModel):
     activity_details: str
     price_amount: str
     price_currency: str
-    pictures: List[str]
+    pictures: str
 
 class ItineraryResponse(BaseModel):
     user_id: str
