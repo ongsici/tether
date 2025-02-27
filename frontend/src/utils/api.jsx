@@ -1,12 +1,15 @@
 const APIM_URL="https://tether-apim-2.azure-api.net/api/submitData";
 const APIM_SAVE_URL="http://localhost:8000/api/saveData";
 
+const subscriptionKey = process.env.APIM_SUBSCRIPTION_KEY;
 
 export const searchTravel = async (requestBody) => {
     try {
       const response = await fetch(`${APIM_URL}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+                  "Ocp-Apim-Subscription-Key": subscriptionKey
+        },
         body: JSON.stringify(requestBody),
       });
   
