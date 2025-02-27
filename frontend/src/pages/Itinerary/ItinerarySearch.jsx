@@ -80,7 +80,7 @@ const Itinerary = () => {
                   labelId="radius-label"
                   value={searchParams.radius}
                   onChange={(e) => handleInputChange("radius", e.target.value)}
-                  label="Search Radius"
+                  label="Search Radius" className="input-field"
                 >
                   {[...Array(20).keys()].map(num => (
                     <MenuItem key={num+1} value={num+1}>{num+1}</MenuItem>
@@ -94,7 +94,7 @@ const Itinerary = () => {
                   labelId="limit-label"
                   value={searchParams.limit}
                   onChange={(e) => handleInputChange("limit", e.target.value)}
-                  label="Number of Activities"
+                  label="Number of Activities" className="input-field"
                 >
                   {[...Array(10).keys()].map(num => (
                     <MenuItem key={num+1} value={num+1}>{num+1}</MenuItem>

@@ -181,3 +181,6 @@ body {
   font-weight: bold;
   color: #007BFF;
 }
+.input-field {
+  background-color: white !important;
+}
