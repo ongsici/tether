@@ -7,11 +7,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -30,14 +25,21 @@ jobs:
           file: weather-app/Dockerfile
           push: true
           tags: ghcr.io/atchyuni/weather-app:latest
-      
-      - name: Log in to Azure
-        run: |
-          az login --identity
-      
-      - name: Update Azure Container App
-        run: |
-          az containerapp update \
-            --name weather-app \
-            --resource-group tether-rg-2 \
-            --image ghcr.io/atchyuni/weather-app:latest
+
+      # - name: Log in to Azure CLI
+      #   uses: azure/login@v1
+      #   with:
+      #     creds: |
+      #       {
+      #         "clientId": "${{ secrets.AZURE_USERNAME }}",
+      #         "clientSecret": "${{ secrets.AZURE_PASSWORD }}",
+      #         "tenantId": "${{ secrets.AZURE_TENANT_ID }}",
+      #         "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+      #       }
+
+      # - name: Update Azure Container App
+      #   run: |
+      #     az containerapp update \
+      #       --name weather-app \
+      #       --resource-group tether-rg-2 \
+      #       --image ghcr.io/atchyuni/weather-app:latest \
