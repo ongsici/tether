@@ -51,5 +51,5 @@ class ItineraryInfo(Base):
     activity_details = Column(String)
     price_amount = Column(String)
     price_currency = Column(String)
-    pictures = Column(String)  # to store picture URLs as JSON or text
+    pictures = Column(String)
     num_users_saved = Column(Integer, default=0)
