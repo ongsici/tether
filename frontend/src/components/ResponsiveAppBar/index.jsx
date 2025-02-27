@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import './AppBar.css'; // Import the CSS file
 
 const pages = ['About Us', 'Flights', 'Itinerary', 'Weather'];
-const settings = ['Profile', 'Dashboard', 'Logout'];
+const settings = ['Saved Flights', 'Saved Itinerary', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);

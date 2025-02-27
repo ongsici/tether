@@ -7,13 +7,12 @@ import useFetchCities from "../../hooks/useFetchCities";
 // import useFetchUser from "../../hooks/useFetchUser";
 import "./Home.css";
 import { useNavigate } from "react-router";
-// import Toast from "../../components/Toast";
 
 function Home() {
   // const user = useFetchUser();
   const user = { userId: "abc123" };
   const cities = useFetchCities(); 
-  // const [showToast, setShowToast] = useState(false)
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useState({
@@ -26,10 +25,6 @@ function Home() {
     includeItinerary: false,
   });
 
-  // const handleErrorToast = () => {
-  //   setShowToast(true);
-  //   setTimeout(() => setShowToast(false), 3000);
-  // };
 
   const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
@@ -87,11 +82,6 @@ function Home() {
     setLoading(false);
   };
 
-  // if (showToast) {
-  //   return (
-  //     <Toast message="Error (TODO: change message)" onClose={() => setShowToast(false)} />
-  //   )
-  // }
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
