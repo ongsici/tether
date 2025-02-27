@@ -32,6 +32,8 @@ jobs:
         run: npm install
         working-directory: ./frontend
 
+      - name: Set APIM Subscription Key
+        run: echo "REACT_APP_APIM_SUBSCRIPTION_KEY=${{ secrets.APIM_SUBSCRIPTION_KEY }}" >> $GITHUB_ENV
 
       # - name: Build app
       #   run: npm run build
