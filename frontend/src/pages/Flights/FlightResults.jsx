@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Box, Typography, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Accordion, AccordionSummary, AccordionDetails, Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FlightIcon from '@mui/icons-material/Flight';
@@ -7,13 +6,13 @@ import AddIcon from '@mui/icons-material/Add';
 // import useFetchUser from "../../hooks/useFetchUser";
 import { saveFlight } from '../../utils/api';
 import Toast from '../../components/Toast';
+import { useFlights } from '../../context/FlightsProvider';
 import "./Flights.css";
 
 const FlightResults = () => {
   // const user = useFetchUser();
   const user = { userId: "abc123" };
-  const { state } = useLocation();
-  const flights = state?.flightData || []; // This retrieves the data passed in 'state'
+  const { flights } = useFlights();
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
 
   console.log("Received Flight Data:", flights); // Debugging line
