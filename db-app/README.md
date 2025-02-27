@@ -21,3 +21,8 @@ curl -X 'POST' \
       "pictures": "https://cdn.smartvel.com/ccpictures/buildings-gdda326066_640.jpg"
     }
   }'
+
+
+## Using PostgreSQL database:
+To run: psql -h tether-database.postgres.database.azure.com -p 5432 -U tether_postgres_admin postgres
+To exit: \q
