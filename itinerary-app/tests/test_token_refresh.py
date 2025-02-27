@@ -18,7 +18,7 @@ def reset_token_globals():
     token_module.token_expiry = 0
 
 
-@patch("src.utils.api_token_refresh.requests.post")
+@patch("src.utils.api_refresh_token.requests.post")
 def test_get_amadeus_token_successfully_fetches_token(mock_post):
     """
     GIVEN a valid response (status_code=200) from Amadeus OAuth
@@ -41,7 +41,7 @@ def test_get_amadeus_token_successfully_fetches_token(mock_post):
     assert token_module.token_expiry > 0
 
 
-@patch("src.utils.api_token_refresh.requests.post")
+@patch("src.utils.api_refresh_token.requests.post")
 def test_get_amadeus_token_raises_exception_on_error(mock_post):
     """
     GIVEN an invalid response that triggers raise_for_status()
@@ -58,8 +58,8 @@ def test_get_amadeus_token_raises_exception_on_error(mock_post):
     mock_post.assert_called_once()
 
 
-@patch("src.utils.api_token_refresh.time.time", return_value=1000)
-@patch("src.utils.api_token_refresh.get_amadeus_token")
+@patch("src.utils.api_refresh_token.time.time", return_value=1000)
+@patch("src.utils.api_refresh_token.get_amadeus_token")
 def test_get_valid_token_fetches_new_token_if_no_token(mock_get_token, mock_time):
     """
     GIVEN token=None initially
@@ -73,27 +73,27 @@ def test_get_valid_token_fetches_new_token_if_no_token(mock_get_token, mock_time
     mock_get_token.assert_called_once()
 
 
-@patch("src.utils.api_token_refresh.get_amadeus_token")
+@patch("src.utils.api_refresh_token.get_amadeus_token")
 def test_get_valid_token_fetches_new_token_after_expiration(mock_get_token):
     """
     GIVEN a token is fetched at time=1000 but it expires before time=2000,
     WHEN we call get_valid_token() at time=2000,
     THEN it should call get_amadeus_token() again for a new token.
     """
-    with patch("src.utils.api_token_refresh.time.time", return_value=1000):
+    with patch("src.utils.api_refresh_token.time.time", return_value=1000):
         mock_get_token.return_value = "first_token"
         result1 = get_valid_token()
         assert result1 == "first_token"
         assert mock_get_token.call_count == 1
 
-    with patch("src.utils.api_token_refresh.time.time", return_value=2000):
+    with patch("src.utils.api_refresh_token.time.time", return_value=2000):
         mock_get_token.return_value = "second_token"
         result2 = get_valid_token()
         assert result2 == "second_token"
         assert mock_get_token.call_count == 2
 
 
-@patch("src.utils.api_token_refresh.get_amadeus_token")
+@patch("src.utils.api_refresh_token.get_amadeus_token")
 def test_get_valid_token_propagates_exception_if_refresh_fails(mock_get_token):
     """
     GIVEN an expired token
@@ -102,14 +102,14 @@ def test_get_valid_token_propagates_exception_if_refresh_fails(mock_get_token):
     THEN the exception should bubble up to the caller.
     """
 
-    with patch("src.utils.api_token_refresh.time.time", return_value=1000):
+    with patch("src.utils.api_refresh_token.time.time", return_value=1000):
         mock_get_token.return_value = "initial_token"
         first = get_valid_token()
         assert first == "initial_token"
         assert mock_get_token.call_count == 1
 
     mock_get_token.side_effect = Exception("Network error")
-    with patch("src.utils.api_token_refresh.time.time", return_value=2000):
+    with patch("src.utils.api_refresh_token.time.time", return_value=2000):
         with pytest.raises(Exception) as exc:
             get_valid_token()
         assert "Network error" in str(exc.value)
