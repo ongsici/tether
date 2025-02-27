@@ -5,7 +5,6 @@ import { FlightProvider } from "./context/FlightsProvider";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import AboutUs from "./pages/AboutUs";
 import Home from "./pages/Home/Home";
-import HomeResults from "./pages/Home/HomeResults";
 import FlightSearch from "./pages/Flights/FlightSearch"; 
 import FlightResults from "./pages/Flights/FlightResults";
 import Itinerary from "./pages/Itinerary/ItinerarySearch";  
@@ -24,7 +23,6 @@ function App() {
         <ResponsiveAppBar />
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/results" element={<HomeResults />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/flights" element={<FlightSearch />} />
             <Route path="/flights/results" element={<FlightResults />} />
