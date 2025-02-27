@@ -3,14 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class User(Base):
-    __tablename__ = 'user'
-    user_id = Column(String, primary_key=True)
-    user_details = Column(String)
-
 class SavedFlight(Base):
     __tablename__ = 'saved_flight'
-    user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
+    user_id = Column(String, nullable=False)
     flight_id = Column(String, ForeignKey('flight_info.flight_id'), nullable=False)
     
     __table_args__ = (
@@ -41,7 +36,7 @@ class SegmentInfo(Base):
 
 class SavedItinerary(Base):
     __tablename__ = 'saved_itinerary'
-    user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
+    user_id = Column(String, nullable=False)
     activity_id = Column(String, ForeignKey('itinerary_info.activity_id'), nullable=False)
     
     __table_args__ = (

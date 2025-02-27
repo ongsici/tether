@@ -62,10 +62,8 @@ class FlightSearch(BaseModel):
     departure_airport: str
     destination_airport: str
 
-# Create FastAPI instance
 app = FastAPI(title="Flight and Itinerary API")
 
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allows all origins
@@ -74,7 +72,7 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
-# User endpoints
+# user endpoints
 @app.post("/api/user/create", status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate):
     try:
@@ -89,11 +87,10 @@ def get_user(user: UserGet):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-# Flight endpoints
+# flight endpoints
 @app.post("/api/flights/save", status_code=status.HTTP_201_CREATED)
 def save_flight(flight: FlightSave):
     try:
-        # Convert Pydantic model to dict
         segments = [segment.dict() for segment in flight.segments]
         
         return db_service.save_flight(
@@ -120,7 +117,7 @@ def get_saved_flights(user: UserGet):
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Itinerary endpoints
+# itinerary endpoints
 @app.post("/api/itineraries/save", status_code=status.HTTP_201_CREATED)
 def save_itinerary(itinerary: ItinerarySave):
     try:
