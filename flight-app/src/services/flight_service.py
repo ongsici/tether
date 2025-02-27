@@ -14,13 +14,14 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
 
     flights = []
     for flight in data["data"]:
+        if any(len(itin["segments"]) > 3 for itin in flight["itineraries"]):
+            logger.info("Skipping a flight because it has an itinerary with more than 3 segments.")
+            continue
         price_per_person = str(flight["price"]["base"])
         outbound_segments = []
         inbound_segments = []
         for i, itinerary in enumerate(flight["itineraries"]):
             for segment in itinerary["segments"]:
-                if len(itinerary['segments']) > 3:
-                    continue
                 dep_date, dep_time = segment["departure"]["at"].split('T')
                 arr_date, arr_time = segment["arrival"]["at"].split('T')
                 airline_code = segment["carrierCode"]

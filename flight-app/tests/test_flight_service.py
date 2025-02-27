@@ -12,7 +12,7 @@ def single_round_trip_mock_data():
     return {
         "data": [
             {
-                "price": {"base": 300},
+                "price": {"base": "300"},
                 "itineraries": [
                     {
                         "segments": [
@@ -144,7 +144,7 @@ def test_call_get_flights_with_multiple_itineraries_returns_correct_flights(
     mock_data = {
         "data": [
             {
-                "price": {"base": 500},
+                "price": {"base": "500"},
                 "itineraries": [
                     {
                         "segments": [
