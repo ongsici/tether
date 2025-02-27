@@ -32,9 +32,6 @@ jobs:
         run: npm install
         working-directory: ./frontend
 
-      - name: Set APIM Subscription Key
-        run: echo "REACT_APP_APIM_SUBSCRIPTION_KEY=${{ secrets.APIM_SUBSCRIPTION_KEY }}" >> $GITHUB_ENV
-
       # - name: Build app
       #   run: npm run build
       #   working-directory: ./frontend
@@ -62,6 +59,9 @@ jobs:
           output_location: "build" # Built app content directory - optional
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
+        env:
+          REACT_APP_APIM_SUBSCRIPTION_KEY: ${{ secrets.REACT_APP_APIM_SUBSCRIPTION_KEY }}
+
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
