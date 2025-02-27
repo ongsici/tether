@@ -18,6 +18,7 @@ jobs:
           username: ${{ secrets.WEATHER_GHCR_USERNAME }}
           password: ${{ secrets.WEATHER_GHCR_TOKEN }}
 
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -35,6 +36,7 @@ jobs:
       #   run: |
       #     az version
 
+
       - name: Log in to Azure
         run: |
           az login --username ${{ secrets.AZURE_USERNAME }} --password ${{ secrets.AZURE_PASSWORD }}
@@ -45,3 +47,4 @@ jobs:
             --name weather-app \
             --resource-group tether-rg-2 \
             --image ghcr.io/atchyuni/weather-app:latest \
+
