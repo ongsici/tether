@@ -1,5 +1,5 @@
 from ..utils.api_client import get_weather_data, get_weather_forecast
-from ..models.weather_model import WeatherResponse, ForecastDay
+from ..models.weather_model import ForecastDay, CurrentWeather, WeatherResponse
 from ..utils.logging import configure_logging
 import logging
 
@@ -19,19 +19,40 @@ WMO_code = {
     99: "Thunderstorm with heavy hail"
 }
 
-def get_weather(city: str, country_code: str = None) -> WeatherResponse:
+def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherResponse:
     logger.info(f"Calling get_weather_data for city: {city}, country_code: {country_code}")
     data = get_weather_data(city, country_code)             # [1] fetch weather data from OpenWeather API
     lat, lon = data["coord"]["lat"], data["coord"]["lon"]   # [2] extract coordinates for Open-Meteo API
     forecast_data = get_weather_forecast(lat, lon)          # [3] fetch forecast data from Open-Meteo API
 
+    current_weather = CurrentWeather(
+        city=data["name"],
+        country_code=data["sys"]["country"],
+        weather_main=data["weather"][0]["main"],
+        weather_description=data["weather"][0]["description"],
+        temperature=data["main"]["temp"],        # Celsius
+        feels_like=data["main"]["feels_like"],
+        pressure=data["main"]["pressure"],       # hPa
+        humidity=data["main"]["humidity"],       # %
+        wind_speed=data["wind"]["speed"],        # m/s
+        cloudiness=data["clouds"]["all"],        # % cloudiness
+        timestamp=data["dt"],                    # UTC
+        sunrise=data["sys"]["sunrise"],
+        sunset=data["sys"]["sunset"],
+        latitude=lat,
+        longitude=lon
+    )
+
     daily_data = forecast_data.get("daily", {})
     forecast_list = []
     if daily_data and all(len(daily_data[key]) == len(daily_data["time"]) for key in daily_data):
-        for i in range(len(daily_data["time"])):
+        for i in range(1, len(daily_data["time"])):
+            weather_code = daily_data["weather_code"][i]
+            weather_description = WMO_code.get(weather_code, "Unknown") # map WMO code to description
+
             forecast_list.append(ForecastDay(
                 date=daily_data["time"][i],
-                weather_code=daily_data["weather_code"][i],
+                weather_description=weather_description,
                 temperature_max=daily_data["temperature_2m_max"][i],
                 temperature_min=daily_data["temperature_2m_min"][i],
                 sunrise=daily_data["sunrise"][i],
@@ -43,26 +64,5 @@ def get_weather(city: str, country_code: str = None) -> WeatherResponse:
     else:
         logger.warning("Incomplete or missing daily forecast data")
 
-    weather_info = {
-        "city": data["name"],
-        "country_code": data["sys"]["country"],
-        "weather_main": data["weather"][0]["main"],
-        "weather_description": data["weather"][0]["description"],
-        "weather_icon": data["weather"][0]["icon"],
-        "temperature": data["main"]["temp"],        # Celsius
-        "feels_like": data["main"]["feels_like"],
-        "pressure": data["main"]["pressure"],       # hPa
-        "humidity": data["main"]["humidity"],       # %
-        "wind_speed": data["wind"]["speed"],        # m/s
-        "cloudiness": data["clouds"]["all"],        # % cloudiness
-        "rain_1h": data.get("rain", {}).get("1h"),  # mm/h, if available
-        "timestamp": data["dt"],                    # UTC
-        "sunrise": data["sys"]["sunrise"],
-        "sunset": data["sys"]["sunset"],
-        "latitude": lat,
-        "longitude": lon,
-        "forecast": forecast_list
-    }
-
     logger.info(f"get_weather_data successful for city: {city}")
-    return WeatherResponse(**weather_info)
+    return WeatherResponse(user_id=user_id, results={"current": current_weather, "forecast": forecast_list})
