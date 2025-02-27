@@ -1,4 +1,4 @@
-const APIM_URL="http://localhost:8000/api/submitData";
+const APIM_URL="https://tether-apim-2.azure-api.net/api/submitData";
 const APIM_SAVE_URL="http://localhost:8000/api/saveData";
 
 
