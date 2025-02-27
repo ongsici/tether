@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, PrimaryKeyConstraint
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -10,20 +10,24 @@ class User(Base):
 
 class SavedFlight(Base):
     __tablename__ = 'saved_flight'
-    user_id = Column(String, ForeignKey('user.user_id'))
-    flight_id = Column(String, ForeignKey('flight_info.flight_id'))
+    user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
+    flight_id = Column(String, ForeignKey('flight_info.flight_id'), nullable=False)
+    
+    __table_args__ = (
+        PrimaryKeyConstraint('user_id', 'flight_id'),
+    )
 
 class FlightInfo(Base):
     __tablename__ = 'flight_info'
     flight_id = Column(String, primary_key=True)
     total_num_segments = Column(Integer)
     price = Column(String)
-    num_users_saved = Column(Integer)
+    num_users_saved = Column(Integer, default=0)
 
 class SegmentInfo(Base):
     __tablename__ = 'segment_info'
-    flight_id = Column(String, ForeignKey('flight_info.flight_id'))
-    index = Column(Integer)
+    flight_id = Column(String, ForeignKey('flight_info.flight_id'), nullable=False)
+    index = Column(Integer, nullable=False)
     segment_id = Column(Integer, primary_key=True)
     airline_code = Column(String)
     flight_code = Column(String)
@@ -37,8 +41,12 @@ class SegmentInfo(Base):
 
 class SavedItinerary(Base):
     __tablename__ = 'saved_itinerary'
-    user_id = Column(String, ForeignKey('user.user_id'))
-    activity_id = Column(String, ForeignKey('itinerary_info.activity_id'))
+    user_id = Column(String, ForeignKey('user.user_id'), nullable=False)
+    activity_id = Column(String, ForeignKey('itinerary_info.activity_id'), nullable=False)
+    
+    __table_args__ = (
+        PrimaryKeyConstraint('user_id', 'activity_id'),
+    )
 
 class ItineraryInfo(Base):
     __tablename__ = 'itinerary_info'
@@ -49,4 +57,4 @@ class ItineraryInfo(Base):
     price_amount = Column(String)
     price_currency = Column(String)
     pictures = Column(String)  # to store picture URLs as JSON or text
-    num_users_saved = Column(Integer)
+    num_users_saved = Column(Integer, default=0)
