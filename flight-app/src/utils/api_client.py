@@ -24,8 +24,6 @@ def get_flight_data(origin_loc_code: str, destination_loc_code: str, num_passeng
         response.raise_for_status()
 
 
-# get_flight_data("SYD", "SIN", 2, "2025-02-23", "2025-02-26")
-
 
 
 

@@ -9,9 +9,11 @@ class FlightRequestObj(BaseModel):
     departure_date: str
     return_date: str
 
+
 class FlightRequest(BaseModel):
     user_id: str
     flights: FlightRequestObj
+
 
 class SegmentResponse(BaseModel):
     num_passengers: int
@@ -24,17 +26,26 @@ class SegmentResponse(BaseModel):
     destination_airport: str
     airline_code: str
     flight_number: str
-    segment_id: str
+    unique_id: str
+
+
+class SegmentResponseWrapper(BaseModel):
+    SegmentResponse: SegmentResponse
 
 
 class FlightResponseObj(BaseModel):
     number_of_segments: int
     flight_id: str
-    outbound: List[SegmentResponse] = []
-    inbound: List[SegmentResponse] = []
+    outbound: List[SegmentResponseWrapper] = []
+    inbound: List[SegmentResponseWrapper] = []
     price_per_person: str
+
+
+class FlightResponseObjWrapper(BaseModel):
+    FlightResponse: FlightResponseObj
+
 
 class FlightResponse(BaseModel):
     user_id: str
-    results: List[FlightResponseObj] = []
+    results: List[FlightResponseObjWrapper] = []
 

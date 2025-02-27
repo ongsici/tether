@@ -1,5 +1,5 @@
 from ..utils.api_client import get_flight_data
-from ..models.flight_model import FlightResponse, SegmentResponse, FlightResponseObj
+from ..models.flight_model import FlightResponse, SegmentResponse, FlightResponseObj, FlightResponseObjWrapper, SegmentResponseWrapper
 from ..utils.custom_logging import configure_logging
 import logging
 import uuid
@@ -14,7 +14,7 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
 
     flights = []
     for flight in data["data"]:
-        price_per_person = flight["price"]["base"]
+        price_per_person = str(flight["price"]["base"])
         outbound_segments = []
         inbound_segments = []
         for i, itinerary in enumerate(flight["itineraries"]):
@@ -32,18 +32,25 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
                     "departure_date": dep_date,
                     "arrival_date": arr_date,
                     "arrival_time": arr_time,
-                    "duration": segment["duration"][2:],  # removing the "PT" prefix if it's in ISO-8601
+                    "duration": segment["duration"][2:], 
                     "departure_airport": segment["departure"]["iataCode"],
                     "destination_airport": segment["arrival"]["iataCode"],
                     "airline_code": airline_code,
                     "flight_number": flight_code,
-                    "segment_id": airline_code + flight_code + departure_date + dep_time
+                    "unique_id": airline_code + flight_code + departure_date + dep_time
                 }
+
+                wrapped_segment = SegmentResponseWrapper(
+                    SegmentResponse=SegmentResponse(**segment_info)
+                )
+
                 if i == 0:
-                    outbound_segments.append(SegmentResponse(**segment_info))
+                    outbound_segments.append(wrapped_segment)
                 else:
-                    inbound_segments.append(SegmentResponse(**segment_info))
+                    inbound_segments.append(wrapped_segment)
+
         number_of_segments = len(outbound_segments) + len(inbound_segments)
+
         flight_info = {
             "number_of_segments": number_of_segments,
             "flight_id": str(uuid.uuid4()),
@@ -51,7 +58,11 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
             "inbound": inbound_segments,
             "price_per_person": price_per_person
         }
-        flights.append(FlightResponseObj(**flight_info))
+        flight_obj = FlightResponseObj(**flight_info)
+
+        flights.append(
+            FlightResponseObjWrapper(FlightResponse=flight_obj)
+        )
     
     flights_respponse = FlightResponse(
         user_id = user_id,
@@ -59,15 +70,13 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
     )
     logger.info(f"get_flight_data successful for departure_date: {departure_date}, return_date: {return_date}")
     return flights_respponse
-
-# get_flights("SYD", "SIN", 2, "2025-02-23", "2025-02-26")
     
 
-def extract_flight_info(flights: FlightResponse):
-    segments = flights.segment_info
-    for i, segment in enumerate(segments):
-        next_seg_id = segments[i+1].segment_id if (i+1 < len(segments)) else None
-        # Store each field in database
+# def extract_flight_info(flights: FlightResponse):
+#     segments = flights.segment_info
+#     for i, segment in enumerate(segments):
+#         next_seg_id = segments[i+1].unique_id if (i+1 < len(segments)) else None
+#         # Store each field in database
 
 
 

@@ -3,7 +3,6 @@ from src.utils.custom_logging import configure_logging
 from src.services.flight_service import get_flights
 from src.models.flight_model import FlightRequest, FlightResponse
 import logging
-from typing import List
 
 configure_logging()
 logger = logging.getLogger("flight_microservice")

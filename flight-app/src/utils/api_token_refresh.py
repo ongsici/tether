@@ -3,13 +3,11 @@ import time
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()  # Load API credentials from .env
+load_dotenv()
 
-# Amadeus API credentials
 AMAD_CLIENT_ID = os.getenv("AMAD-CLIENT-ID")
 AMAD_CLIENT_SECRET = os.getenv("AMAD-CLIENT-SECRET")
 
-# Global storage for token and expiry time
 token = None
 token_expiry = 0
 
