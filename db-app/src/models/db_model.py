@@ -1,0 +1,52 @@
+from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = 'user'
+    user_id = Column(String, primary_key=True)
+    user_details = Column(String)
+
+class SavedFlight(Base):
+    __tablename__ = 'saved_flight'
+    user_id = Column(String, ForeignKey('user.user_id'))
+    flight_id = Column(String, ForeignKey('flight_info.flight_id'))
+
+class FlightInfo(Base):
+    __tablename__ = 'flight_info'
+    flight_id = Column(String, primary_key=True)
+    total_num_segments = Column(Integer)
+    price = Column(String)
+    num_users_saved = Column(Integer)
+
+class SegmentInfo(Base):
+    __tablename__ = 'segment_info'
+    flight_id = Column(String, ForeignKey('flight_info.flight_id'))
+    index = Column(Integer)
+    segment_id = Column(Integer, primary_key=True)
+    airline_code = Column(String)
+    flight_code = Column(String)
+    departure_date = Column(String)
+    departure_time = Column(String)
+    arrival_date = Column(String)
+    arrival_time = Column(String)
+    duration = Column(String)
+    departure_airport = Column(String)
+    destination_airport = Column(String)
+
+class SavedItinerary(Base):
+    __tablename__ = 'saved_itinerary'
+    user_id = Column(String, ForeignKey('user.user_id'))
+    activity_id = Column(String, ForeignKey('itinerary_info.activity_id'))
+
+class ItineraryInfo(Base):
+    __tablename__ = 'itinerary_info'
+    city = Column(String)
+    activity_id = Column(String, primary_key=True)
+    activity_name = Column(String)
+    activity_details = Column(String)
+    price_amount = Column(String)
+    price_currency = Column(String)
+    pictures = Column(String)  # to store picture URLs as JSON or text
+    num_users_saved = Column(Integer)
