@@ -23,6 +23,8 @@ def get_city_activities(user_id: str, city_name: str, radius: int, limit: int = 
 
     itinerary_responses = []
     for activity in limited_data:
+        pic = activity.get("pictures", [])
+
         itinerary_responses.append(ItineraryResponseObj(
             city = city_name,
             activity_id = activity.get("id", "None"),
@@ -30,7 +32,7 @@ def get_city_activities(user_id: str, city_name: str, radius: int, limit: int = 
             activity_details = activity.get("shortDescription", "No description available"),
             price_amount = activity.get("price", {}).get("amount", "0.0"),
             price_currency = activity.get("price", {}).get("currencyCode", "EUR"),
-            pictures = activity.get("pictures", [])
+            pictures = pic[0] if pic else ""
         ))
 
     logger.info(f"get_activities successful for city geoCode: {latitude}, {longitude}")
