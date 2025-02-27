@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, FormControl, InputLabel, Select, MenuItem, Autocomplete, CircularProgress } from "@mui/material";
-// import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
 import { searchTravel } from "../../utils/api";
+import { useItinerary } from "../../context/ItineraryProvider";
 import "./Itinerary.css";
 
-function Itinerary() {
-  // const user = useFetchUser();
+const Itinerary = () => {
   const user = { userId: "abc123" };
   const cities = useFetchCities(); 
   const navigate = useNavigate();
+  const { setItinerary } = useItinerary();
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
     destination: "",
@@ -18,44 +18,43 @@ function Itinerary() {
     limit: "",
   });
 
-
   const handleInputChange = (name, value) => {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSearch = async () => {
-    
     const destinationCity = searchParams.destination ? searchParams.destination.city : null;
-      
-      if (!destinationCity || !searchParams.radius || !searchParams.limit ) {
-        alert("Please select valid source and destination.");
-        return;
-      }
+    
+    if (!destinationCity || !searchParams.radius || !searchParams.limit ) {
+      alert("Please select valid source and destination.");
+      return;
+    }
 
-      setLoading(true);
-      
-      const requestBody = {
-        user_id: user.userId,
-        itinerary: {
-          city: destinationCity,
-          radius: searchParams.radius,
-          limit: searchParams.limit,
-        },
-      };
-      
-      console.log("API Request:", JSON.stringify(requestBody, null, 2));
-  
-      const data = await searchTravel(requestBody);
-      if (data) {
-        console.log("Response:", data);
-        if (data.user_id === user.userId) {
-          navigate('/itinerary/results', { state: { itineraryData: data.results } });
-        }
-      } else {
-        console.error("Failed to fetch travel data");
-      }
-      setLoading(false);
+    setLoading(true);
+    
+    const requestBody = {
+      user_id: user.userId,
+      itinerary: {
+        city: destinationCity,
+        radius: searchParams.radius,
+        limit: searchParams.limit,
+      },
     };
+    
+    console.log("API Request:", JSON.stringify(requestBody, null, 2));
+
+    const data = await searchTravel(requestBody);
+    if (data) {
+      console.log("Response:", data);
+      if (data.user_id === user.userId) {
+        setItinerary(data.results);
+        navigate('/itinerary/results');
+      }
+    } else {
+      console.error("Failed to fetch travel data");
+    }
+    setLoading(false);
+  };
 
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
@@ -83,10 +82,8 @@ function Itinerary() {
                   onChange={(e) => handleInputChange("radius", e.target.value)}
                   label="Search Radius"
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((num) => (
-                    <MenuItem key={num} value={num}>
-                      {num}
-                    </MenuItem>
+                  {[...Array(20).keys()].map(num => (
+                    <MenuItem key={num+1} value={num+1}>{num+1}</MenuItem>
                   ))}
                 </Select>
             </FormControl>
@@ -99,10 +96,8 @@ function Itinerary() {
                   onChange={(e) => handleInputChange("limit", e.target.value)}
                   label="Number of Activities"
                 >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                    <MenuItem key={num} value={num}>
-                      {num}
-                    </MenuItem>
+                  {[...Array(10).keys()].map(num => (
+                    <MenuItem key={num+1} value={num+1}>{num+1}</MenuItem>
                   ))}
                 </Select>
             </FormControl>
@@ -114,10 +109,7 @@ function Itinerary() {
 
           {loading && (
           <>
-            {/* Whitewash Overlay */}
             <div className="overlay"></div>
-
-            {/* Centered Circular Progress */}
             <div className="loader-container">
               <CircularProgress sx={{ color: '#023641' }} />
               <Typography variant="h6" className="loading-text">
@@ -128,9 +120,7 @@ function Itinerary() {
           )}
         </>
       ) : (
-        <>
-          <Typography variant="h6" className="welcome-title">Login to search for itinerary</Typography>
-        </>
+        <Typography variant="h6" className="welcome-title">Login to search for itinerary</Typography>
       )}
       </Box>
     </Container>
@@ -138,3 +128,4 @@ function Itinerary() {
 }
 
 export default Itinerary;
+
