@@ -31,10 +31,14 @@ def save_flight(user_id: str, flight_id: str, total_num_segments: int, price: st
     if not db_flight:
         db_flight = FlightInfo(flight_id=flight_id, total_num_segments=total_num_segments, price=price, num_users_saved=1)
         db.add(db_flight)
+        db.commit()
+
         db.bulk_save_objects([SegmentInfo(flight_id=flight_id, **segment) for segment in segments])
+        db.commit()
     
     else:
         db_flight.num_users_saved += 1
+        db.commit()
 
     # check that user has not already saved this flight
     existing_saved_flight = db.query(SavedFlight).filter_by(user_id=user_id, flight_id=flight_id).one_or_none()
@@ -42,6 +46,7 @@ def save_flight(user_id: str, flight_id: str, total_num_segments: int, price: st
         return {"message": "User has already saved this flight"}
     
     db.add(SavedFlight(user_id=user_id, flight_id=flight_id))
+    db.commit()
     return {"message": "Flight saved successfully"}
 
 @db_operation
@@ -50,15 +55,24 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
     if not saved_flight:
         return {"message": "User does not have this flight saved"}
     
+    # delete from saved_flight table
+    db.delete(saved_flight)
+    db.commit()
+    
     flight_info = db.query(FlightInfo).filter_by(flight_id=flight_id).one_or_none()
     if flight_info:
+        # decrement num_users_saved in the FlightInfo table
         flight_info.num_users_saved = max(0, flight_info.num_users_saved - 1)
         
         # delete entry if no users saved this flight
         if flight_info.num_users_saved == 0:
+            # first delete corresponding segments in segment_info
+            db.query(SegmentInfo).filter_by(flight_id=flight_id).delete()
+            db.commit()
+            
             db.delete(flight_info)
     
-    db.delete(saved_flight)
+    db.commit()
     return {"message": "Flight removed from saved"}
 
 @db_operation
@@ -113,15 +127,20 @@ def unsave_itinerary(user_id: str, activity_id: str, db: Session = None) -> Opti
     if not saved_itinerary:
         return {"message": "User does not have this itinerary saved"}
     
+    # delete from SavedItinerary table
+    db.delete(saved_itinerary)
+    db.commit()
+    
     itinerary_info = db.query(ItineraryInfo).filter_by(activity_id=activity_id).one_or_none()
     if itinerary_info:
+        # decrement num_users_saved in the ItineraryInfo table
         itinerary_info.num_users_saved = max(0, itinerary_info.num_users_saved - 1)
 
         # delete entry if no users saved this itinerary
         if itinerary_info.num_users_saved == 0:
             db.delete(itinerary_info)
     
-    db.delete(saved_itinerary)
+    db.commit()
     return {"message": "Itinerary removed from saved"}
 
 @db_operation
