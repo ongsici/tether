@@ -163,16 +163,16 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
         for in_f in inbound_segment_info:
             inbound_flights.append(SegmentResponseWrapper(SegmentResponse(
                 num_passengers = 1,                     # TODO: check if save num_passengers
-                departure_time = out_f.departure_time,
-                departure_date = out_f.departure_date,
-                arrival_date = out_f.arrival_date,
-                arrival_time = out_f.arrival_time,
-                duration = out_f.duration,
-                departure_airport = out_f.departure_airport,
-                destination_airport = out_f.destination_airport,
-                airline_code = out_f.airline_code,
-                flight_number = out_f.flight_number,
-                unique_id = out_f.segment_id
+                departure_time = in_f.departure_time,
+                departure_date = in_f.departure_date,
+                arrival_date = in_f.arrival_date,
+                arrival_time = in_f.arrival_time,
+                duration = in_f.duration,
+                departure_airport = in_f.departure_airport,
+                destination_airport = in_f.destination_airport,
+                airline_code = in_f.airline_code,
+                flight_number = in_f.flight_number,
+                unique_id = in_f.segment_id
             )))
 
         all_flights.append(FlightResponseObjWrapper(
