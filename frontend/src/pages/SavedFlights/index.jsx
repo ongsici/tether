@@ -42,7 +42,7 @@ function SavedFlights() {
       };
 
     fetchFlights();
-}, []); // TODO: might need to remove []
+}, [user.userId]); 
 
   if (loading) {
     return (
