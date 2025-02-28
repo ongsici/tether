@@ -38,7 +38,7 @@ def save_flight(full_info: FlightSaveDB, db: Session = None) -> Dict[str, str]:
     db_flight = db.query(FlightInfo).filter_by(flight_id=flight_info.flight_id).one_or_none()
     if not db_flight:
         # (1) save flight info
-        db.add(FlightInfo(**flight_info.dict(), num_users_saved=1))  # Pydantic v2
+        db.add(FlightInfo(**flight_info.dict(), num_users_saved=1))
         db.commit()
 
         # (2) save segments info
@@ -90,9 +90,10 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
         if flight_info.num_users_saved == 0:
 
             # (1) check if other flights saved corresponding segments
-            segment_ids = db.query(FlightSegments.segment_id).filter(FlightSegments.flight_id == flight_id).all()
-            for s in segment_ids:
-                segment_info = db.query(SegmentInfo).filter_by(segment_id=s).one_or_none()
+            segments = db.query(FlightSegments.segment_id).filter(FlightSegments.flight_id == flight_id).all()
+            for segment in segments:
+                segment_id = segment[0]  # Extract the actual string segment_id
+                segment_info = db.query(SegmentInfo).filter_by(segment_id=segment_id).one_or_none()
                 if segment_info:
                     segment_info.num_flights_saved -= 1
                     db.commit()
@@ -132,48 +133,52 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
         inbound_flights = []
 
         outbound_segment_info = (
-            db.query(SegmentInfo)
+            db.query(SegmentInfo, FlightSegments.segment_order)
             .join(FlightSegments, SegmentInfo.segment_id == FlightSegments.segment_id)
             .filter(FlightSegments.flight_id == flight.flight_id)
             .filter(FlightSegments.bound == 'outbound')
             .all()
         )
         inbound_segment_info = (
-            db.query(SegmentInfo)
+            db.query(SegmentInfo, FlightSegments.segment_order)
             .join(FlightSegments, SegmentInfo.segment_id == FlightSegments.segment_id)
             .filter(FlightSegments.flight_id == flight.flight_id)
             .filter(FlightSegments.bound == 'inbound')
             .all()
         )
 
-        for out_f in outbound_segment_info:
-            outbound_flights.append(SegmentResponseWrapper(SegmentResponse(
-                num_passengers = 1,                     # TODO: check if save num_passengers
-                departure_time = out_f.departure_time,
-                departure_date = out_f.departure_date,
-                arrival_date = out_f.arrival_date,
-                arrival_time = out_f.arrival_time,
-                duration = out_f.duration,
-                departure_airport = out_f.departure_airport,
-                destination_airport = out_f.destination_airport,
-                airline_code = out_f.airline_code,
-                flight_number = out_f.flight_number,
-                unique_id = out_f.segment_id
-            )))
-        for in_f in inbound_segment_info:
-            inbound_flights.append(SegmentResponseWrapper(SegmentResponse(
-                num_passengers = 1,                     # TODO: check if save num_passengers
-                departure_time = in_f.departure_time,
-                departure_date = in_f.departure_date,
-                arrival_date = in_f.arrival_date,
-                arrival_time = in_f.arrival_time,
-                duration = in_f.duration,
-                departure_airport = in_f.departure_airport,
-                destination_airport = in_f.destination_airport,
-                airline_code = in_f.airline_code,
-                flight_number = in_f.flight_number,
-                unique_id = in_f.segment_id
-            )))
+        for out_f, segment_order in outbound_segment_info:
+            outbound_flights.append(SegmentResponseWrapper(
+                SegmentResponse=SegmentResponse(
+                    num_passengers = 1,                     # TODO: check if save num_passengers
+                    departure_time = out_f.departure_time,
+                    departure_date = out_f.departure_date,
+                    arrival_date = out_f.arrival_date,
+                    arrival_time = out_f.arrival_time,
+                    duration = out_f.duration,
+                    departure_airport = out_f.departure_airport,
+                    destination_airport = out_f.destination_airport,
+                    airline_code = out_f.airline_code,
+                    flight_number = segment_order,
+                    unique_id = out_f.segment_id
+                )
+            ))
+        for in_f, segment_order in inbound_segment_info:
+            inbound_flights.append(SegmentResponseWrapper(
+                SegmentResponse=SegmentResponse(
+                    num_passengers = 1,                     # TODO: check if save num_passengers
+                    departure_time = in_f.departure_time,
+                    departure_date = in_f.departure_date,
+                    arrival_date = in_f.arrival_date,
+                    arrival_time = in_f.arrival_time,
+                    duration = in_f.duration,
+                    departure_airport = in_f.departure_airport,
+                    destination_airport = in_f.destination_airport,
+                    airline_code = in_f.airline_code,
+                    flight_number = segment_order,
+                    unique_id = in_f.segment_id
+                )
+            ))
 
         all_flights.append(FlightResponseObjWrapper(
             FlightResponse=FlightResponseObj(
