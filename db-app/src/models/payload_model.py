@@ -6,32 +6,52 @@ from typing import List
 class UserRequest(BaseModel):
     user_id: str
 
-class SegmentData(BaseModel):
-    index: int
-    segment_id: int
-    airline_code: str
-    flight_code: str
-    departure_date: str
+
+##### FLIGHTS #####
+
+# front-end / API response
+class SegmentResponse(BaseModel):
+    num_passengers: int
     departure_time: str
+    departure_date: str
     arrival_date: str
     arrival_time: str
     duration: str
     departure_airport: str
     destination_airport: str
+    airline_code: str
+    flight_number: str
+    unique_id: str
 
-class FlightDetails(BaseModel):
+class SegmentResponseWrapper(BaseModel):
+    SegmentResponse: SegmentResponse
+
+class FlightResponseObj(BaseModel):
+    number_of_segments: int
     flight_id: str
-    total_num_segments: int
-    price: str
-    segments: List[SegmentData]
+    outbound: List[SegmentResponseWrapper] = []
+    inbound: List[SegmentResponseWrapper] = []
+    price_per_person: str
 
-class FlightSave(BaseModel):
+class FlightResponseObjWrapper(BaseModel):
+    FlightResponse: FlightResponseObj
+
+# save / view responses
+class FlightSaveRequest(BaseModel):
     user_id: str
-    flight: FlightDetails
+    flights: FlightResponseObjWrapper
 
-class FlightUnsave(BaseModel):
+class FlightViewResponse(BaseModel):
+    user_id: str
+    flights: List[FlightResponseObjWrapper]
+
+# unsave response
+class FlightUnsaveRequest(BaseModel):
     user_id: str
     flight_id: str
+
+
+##### ITINERARY #####
 
 class ItineraryDetails(BaseModel):
     city: str
@@ -42,17 +62,14 @@ class ItineraryDetails(BaseModel):
     price_currency: str
     pictures: str
 
-class ItinerarySave(BaseModel):
+class ItinerarySaveRequest(BaseModel):
     user_id: str
     itinerary: ItineraryDetails
 
-class ItineraryUnsave(BaseModel):
+class ItineraryViewResponse(BaseModel):
+    user_id: str
+    itinerary: List[ItineraryDetails]
+
+class ItineraryUnsaveRequest(BaseModel):
     user_id: str
     activity_id: str
-
-class CitySearch(BaseModel):
-    city: str
-
-class FlightSearch(BaseModel):
-    departure_airport: str
-    destination_airport: str

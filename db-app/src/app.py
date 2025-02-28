@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
 from .services import db_service
-from .models.payload_model import UserRequest, FlightSave, FlightUnsave, ItinerarySave, ItineraryUnsave
+from .models.payload_model import UserRequest, FlightSaveRequest, FlightUnsaveRequest, ItinerarySaveRequest, ItineraryUnsaveRequest
+from .models.convert_model import transform_flight_save
 
 app = FastAPI(title="Flight and Itinerary API")
 
@@ -18,23 +19,16 @@ app.add_middleware(
 
 # flight endpoints
 @app.post("/api/flights/save", status_code=status.HTTP_201_CREATED)
-def save_flight(flight: FlightSave):
+def save_flight(flight: FlightSaveRequest):
     try:
-        flight_details = flight.flight
-        segments = [segment.dict() for segment in flight_details.segments]
-        
-        return db_service.save_flight(
-            user_id=flight.user_id,
-            flight_id=flight_details.flight_id,
-            total_num_segments=flight_details.total_num_segments,
-            price=flight_details.price,
-            segments=segments
-        )
+        flight_db_info = transform_flight_save(flight)
+        return db_service.save_flight(flight_db_info)
+    
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/flights/unsave", status_code=status.HTTP_200_OK)
-def unsave_flight(flight: FlightUnsave):
+def unsave_flight(flight: FlightUnsaveRequest):
     result = db_service.unsave_flight(user_id=flight.user_id, flight_id=flight.flight_id)
     if not result:
         raise HTTPException(status_code=404, detail="Saved flight not found")
@@ -43,13 +37,13 @@ def unsave_flight(flight: FlightUnsave):
 @app.post("/api/flights/get_saved", status_code=status.HTTP_200_OK)
 def get_saved_flights(user: UserRequest):
     try:
-        return db_service.get_saved_flights(user_id=user.user_id)
+        return db_service.get_saved_flights(user=user.user_id)
     except SQLAlchemyError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 # itinerary endpoints
 @app.post("/api/itineraries/save", status_code=status.HTTP_201_CREATED)
-def save_itinerary(itinerary: ItinerarySave):
+def save_itinerary(itinerary: ItinerarySaveRequest):
     try:
         itinerary_details = itinerary.itinerary
 
@@ -67,7 +61,7 @@ def save_itinerary(itinerary: ItinerarySave):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/itineraries/unsave", status_code=status.HTTP_200_OK)
-def unsave_itinerary(itinerary: ItineraryUnsave):
+def unsave_itinerary(itinerary: ItineraryUnsaveRequest):
     result = db_service.unsave_itinerary(user_id=itinerary.user_id, activity_id=itinerary.activity_id)
     if not result:
         raise HTTPException(status_code=404, detail="Saved itinerary not found")

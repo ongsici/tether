@@ -3,6 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
+##### FLIGHTS #####
+
 class SavedFlight(Base):
     __tablename__ = 'saved_flight'
     user_id = Column(String, nullable=False)
@@ -19,11 +22,21 @@ class FlightInfo(Base):
     price = Column(String)
     num_users_saved = Column(Integer, default=0)
 
+class FlightSegments(Base):
+    __tablename__ = 'flight_segments'
+    flight_id = Column(String, ForeignKey('flight_info.flight_id'), nullable=False)
+    segment_id = Column(String, ForeignKey('segment_info.segment_id'), nullable=False)
+    segment_order = Column(Integer)
+    bound = Column(String)
+
+    # TODO: check this
+    __table_args__ = (
+        PrimaryKeyConstraint('flight_id', 'segment_order'),
+    )
+
 class SegmentInfo(Base):
     __tablename__ = 'segment_info'
-    flight_id = Column(String, ForeignKey('flight_info.flight_id'), nullable=False)
-    index = Column(Integer, nullable=False)
-    segment_id = Column(Integer, primary_key=True)
+    segment_id = Column(String, primary_key=True)
     airline_code = Column(String)
     flight_code = Column(String)
     departure_date = Column(String)
@@ -33,6 +46,10 @@ class SegmentInfo(Base):
     duration = Column(String)
     departure_airport = Column(String)
     destination_airport = Column(String)
+    num_flights_saved = Column(Integer, default=0)
+
+
+##### ITINERARY #####
 
 class SavedItinerary(Base):
     __tablename__ = 'saved_itinerary'

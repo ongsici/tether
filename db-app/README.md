@@ -44,50 +44,42 @@ curl -X 'POST' \
 # Example flight request
 SAVE:
 curl -X POST "http://127.0.0.1:8000/api/flights/save" \
-    -H "Content-Type: application/json" \
-    -d '{
-        "user_id": "user123",
-        "flight": {
-            "flight_id": "abc123",
-            "total_num_segments": 2,
-            "price": "716.00",
-            "segments": [
-                {
-                    "index": 1,
-                    "segment_id": 1,
-                    "airline_code": "TR",
-                    "flight_code": "21",
-                    "departure_date": "2025-02-23",
-                    "departure_time": "22:00:00",
-                    "arrival_date": "2025-02-24",
-                    "arrival_time": "03:15:00",
-                    "duration": "8H15M",
-                    "departure_airport": "SYD",
-                    "destination_airport": "SIN"
-                },
-                {
-                    "index": 2,
-                    "segment_id": 2,
-                    "airline_code": "TR",
-                    "flight_code": "2",
-                    "departure_date": "2025-02-26",
-                    "departure_time": "02:00:00",
-                    "arrival_date": "2025-02-26",
-                    "arrival_time": "13:00:00",
-                    "duration": "8H",
-                    "departure_airport": "SIN",
-                    "destination_airport": "SYD"
-                }
-            ]
-        }
-    }'
+     -H "Content-Type: application/json" \
+     -d '{
+         "user_id": "123",
+         "flights": {
+             "FlightResponse": {
+                 "number_of_segments": 1,
+                 "flight_id": "XYZ123",
+                 "outbound": [
+                     {
+                         "SegmentResponse": {
+                             "num_passengers": 1,
+                             "departure_time": "10:00",
+                             "departure_date": "2025-03-01",
+                             "arrival_date": "2025-03-01",
+                             "arrival_time": "14:00",
+                             "duration": "4h",
+                             "departure_airport": "JFK",
+                             "destination_airport": "LAX",
+                             "airline_code": "AA",
+                             "flight_number": "1234",
+                             "unique_id": "abc123"
+                         }
+                     }
+                 ],
+                 "inbound": [],
+                 "price_per_person": "500"
+             }
+         }
+     }'
 
 VIEW:
 curl -X 'POST' \
   'http://127.0.0.1:8000/api/flights/get_saved' \
   -H 'Content-Type: application/json' \
   -d '{
-    "user_id": "user123" 
+    "user_id": "123" 
   }'
 
 UNSAVE:
@@ -95,8 +87,8 @@ curl -X 'POST' \
   'http://127.0.0.1:8000/api/flights/unsave' \
   -H 'Content-Type: application/json' \
   -d '{
-    "user_id": "user123",
-    "flight_id": "abc123"
+    "user_id": "123",
+    "flight_id": "XYZ123"
   }'
 
 
