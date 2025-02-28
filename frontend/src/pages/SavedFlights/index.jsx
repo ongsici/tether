@@ -19,7 +19,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FlightIcon from "@mui/icons-material/Flight";
 // import useFetchUser from "../../hooks/useFetchUser";
-import { getSavedFlights } from "../../utils/api";
+import { getSavedDetails } from "../../utils/api";
 import "./SavedFlights.css";
 
 function SavedFlights() {
@@ -31,8 +31,11 @@ function SavedFlights() {
   useEffect(() => {
     const fetchFlights = async () => {
         setLoading(true);
-        const requestBody = { user_id: user.userId };
-        const flights = await getSavedFlights(requestBody);
+        const requestBody = { 
+          user_id: user.userId,
+          type: "flights"
+        };
+        const flights = await getSavedDetails(requestBody);
         if (flights.user_id === user.userId) {
           setSavedFlights(flights.results);
         } else {
@@ -71,7 +74,7 @@ function SavedFlights() {
         </Typography>
       {user ? (
         savedFlights && savedFlights.length === 0 ? (
-          <Typography variant="body1">No flights found.</Typography>
+          <Typography variant="body1">No saved flights found.</Typography>
         ) : (
           <div className="results-box">
             {savedFlights.map((flight, index) => (

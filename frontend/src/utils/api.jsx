@@ -47,7 +47,7 @@ export const saveFlight = async (requestBody) => {
     }
   };
   
-export const getSavedFlights = async (requestBody) => {
+export const getSavedDetails = async (requestBody) => {
 
   try {
     const response = await fetch (`${APIM_RETRIEVE_URL}`, {
@@ -59,11 +59,11 @@ export const getSavedFlights = async (requestBody) => {
       body: JSON.stringify(requestBody),
     });
     if (!response.ok) {
-      throw new Error("Failed to retrieve saved flights");
+      throw new Error("Failed to retrieve saved details");
     }
     return await response.json();
   } catch (error) {
-    console.error("Error retrieving flight details: ", error);
+    console.error("Error retrieving saved details: ", error);
     return null;
   }
 }

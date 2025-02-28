@@ -13,6 +13,7 @@ import Weather from "./pages/Weather/WeatherSearch";
 import WeatherResults from "./pages/Weather/WeatherResults";
 import Footer from "./components/Footer";
 import SavedFlights from "./pages/SavedFlights"
+import SavedItinerary from "./pages/SavedItinerary";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/weather" element={<Weather />} />
             <Route path="/weather/results" element={<WeatherResults />} />
             <Route path="/savedflights" element={<SavedFlights />} />
+            <Route path="/saveditinerary" element={<SavedItinerary />} />
         </Routes>
         <Footer /> {/* Include the Footer component */}
       </Router>

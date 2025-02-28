@@ -55,8 +55,10 @@ function ResponsiveAppBar() {
   const handleNavigation = (setting) => {
     if (setting === 'Logout') {
       logout();
-    } else if (setting === 'Dashboard') {
-      navigate('/dashboard');
+    } else if (setting === 'Saved Flights') {
+      navigate('/savedflights');
+    } else if (setting === 'Saved Itinerary') {
+      navigate('/saveditinerary');
     }
   };
 
