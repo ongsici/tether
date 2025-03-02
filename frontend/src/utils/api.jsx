@@ -1,7 +1,8 @@
-const APIM_URL="https://tether-apim-2.azure-api.net/api/submitData";
-// const APIM_URL="http://localhost:8000/api/submitData"
+// const APIM_URL="https://tether-apim-2.azure-api.net/api/submitData";
+const APIM_URL="http://localhost:8000/api/submitData"
 const APIM_SAVE_URL="http://localhost:8000/api/saveData";
 const APIM_RETRIEVE_URL="http://localhost:8000/api/retrieveData"
+const APIM_REMOVE_URL="http://localhost:8000/api/removeData"
 
 const subscriptionKey = process.env.REACT_APP_APIM_SUBSCRIPTION_KEY;
 
@@ -46,6 +47,27 @@ export const saveFlight = async (requestBody) => {
       return { success: false, message: "Error saving flight." };
     }
   };
+
+
+export const removeFlight = async (requestBody) => {
+  try {
+    const response = await fetch(`${APIM_REMOVE_URL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": subscriptionKey
+      },
+      body: JSON.stringify(requestBody),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to remove flight");
+    }
+    return { success: true, message: "Flight removed successfully!" };
+  } catch (error) {
+    console.error("Error removing flight:", error);
+    return { success: false, message: "Error removing flight." };
+  }
+};
   
 export const getSavedDetails = async (requestBody) => {
 

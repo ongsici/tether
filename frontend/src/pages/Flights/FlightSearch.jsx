@@ -11,7 +11,7 @@ import "./Flights.css";
 const Flights = () => {
   // const user = useFetchUser();
   const user = { userId: "abc123" };
-  const cities = useFetchCities();  
+  const cities = useFetchCities("/cities.json");  
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setFlights } = useFlights();  
