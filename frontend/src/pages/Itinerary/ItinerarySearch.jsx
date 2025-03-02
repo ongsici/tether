@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, FormControl, InputLabel, Select, MenuItem, Autocomplete, CircularProgress } from "@mui/material";
 import useFetchCities from "../../hooks/useFetchCities";
+// import useFetchUser from "../../hooks/useFetchUser";
 import { searchTravel } from "../../utils/api";
 import { useItinerary } from "../../context/ItineraryProvider";
 import "./Itinerary.css";
 
 const Itinerary = () => {
   const user = { userId: "abc123" };
+  // const user = useFetchUser();
   const cities = useFetchCities(); 
   const navigate = useNavigate();
   const { setItinerary } = useItinerary();
@@ -111,7 +113,7 @@ const Itinerary = () => {
           <>
             <div className="overlay"></div>
             <div className="loader-container">
-              <CircularProgress sx={{ color: '#023641' }} />
+              <CircularProgress sx={{ color: '#023641' , mb: 2}} />
               <Typography variant="h6" className="loading-text">
                 Just a moment, we're looking for exciting stuff for you!
               </Typography>

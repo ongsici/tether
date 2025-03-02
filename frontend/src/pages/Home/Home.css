@@ -57,6 +57,11 @@ body {
   padding: 16px !important;
 }
 
+.description-text {
+  font-size: 14px;
+  color: #555;
+}
+
 .MuiTypography-root {
   margin-top: 8px;
 } 
@@ -66,10 +71,10 @@ body {
   margin-bottom: 15px !important; 
 } 
 
-.MuiTypography-body2 {
+/* .MuiTypography-body2 {
   font-size: 14px;
   color: #555;
-}
+} */
 
 .MuiCardActionArea-root {
   padding: 20px;

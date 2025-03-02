@@ -19,7 +19,7 @@ function Home() {
                   <Typography variant="h5" sx={{ mt: 2, fontFamily: 'Roboto, sans-serif' }}>
                     Flight Search
                   </Typography>
-                  <Typography variant="body2" sx={{ mt: 1 }}>
+                  <Typography variant="body2" className="description-text" sx={{ mt: 1 }}>
                     Find the best flights to your desired destinations.
                   </Typography>
                 </CardContent>
@@ -36,7 +36,7 @@ function Home() {
                   <Typography variant="h5" sx={{ mt: 2 }}>
                     Itinerary Planner
                   </Typography>
-                  <Typography variant="body2" sx={{ mt: 1 }}>
+                  <Typography variant="body2" className="description-text" sx={{ mt: 1 }}>
                     Plan your trip with our easy-to-use itinerary tool.
                   </Typography>
                 </CardContent>
@@ -53,7 +53,7 @@ function Home() {
                   <Typography variant="h5" sx={{ mt: 2 }}>
                     Weather Forecast
                   </Typography>
-                  <Typography variant="body2" sx={{ mt: 1 }}>
+                  <Typography variant="body2" className="description-text" sx={{ mt: 1 }}>
                     Get real-time weather updates for your travel destination.
                   </Typography>
                 </CardContent>
