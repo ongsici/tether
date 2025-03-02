@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const useFetchCities = (url) => {
     const [cities, setCities] = useState([]);
   
-    useEffect(() => {
+    useEffect((url) => {
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
