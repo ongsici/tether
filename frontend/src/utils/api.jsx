@@ -48,6 +48,26 @@ export const saveFlight = async (requestBody) => {
     }
   };
 
+export const saveIitnerary = async (requestBody) => {
+  try {
+    const response = await fetch(`${APIM_SAVE_URL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": subscriptionKey
+      },
+      body: JSON.stringify(requestBody),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to save flight");
+    }
+    return { success: true, message: "Flight saved successfully!" };
+  } catch (error) {
+    console.error("Error saving flight:", error);
+    return { success: false, message: "Error saving flight." };
+  }
+};
+
 
 export const removeFlight = async (requestBody) => {
   try {
@@ -66,6 +86,27 @@ export const removeFlight = async (requestBody) => {
   } catch (error) {
     console.error("Error removing flight:", error);
     return { success: false, message: "Error removing flight." };
+  }
+};
+
+
+export const removeItinerary = async (requestBody) => {
+  try {
+    const response = await fetch(`${APIM_REMOVE_URL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": subscriptionKey
+      },
+      body: JSON.stringify(requestBody),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to remove itinerary");
+    }
+    return { success: true, message: "Itinerary removed successfully!" };
+  } catch (error) {
+    console.error("Error removing itinerary:", error);
+    return { success: false, message: "Error removing itinerary." };
   }
 };
   

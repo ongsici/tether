@@ -245,7 +245,7 @@ function SavedFlights() {
         )
       ) : (
         <>
-          <Typography variant="h6" className="welcome-title">Login to retrieve saved flights</Typography>
+          <Typography variant="h6" className="welcome-title">Login to view saved flights</Typography>
         </>
       )}
       </Box>

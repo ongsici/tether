@@ -190,12 +190,13 @@ body {
   margin-bottom: 8px;
 }
 
-/* Activity price */
+/* Activity price
 .activity-price {
   font-size: 1rem;
   font-weight: bold;
   color: #007BFF;
-}
+} */
+ 
 .input-field {
   background-color: white !important;
 }
