@@ -29,6 +29,7 @@ function SavedFlights() {
   const user = { userId: "abc123"};
   const [savedFlights, setSavedFlights] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState(false);
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
 
   useEffect(() => {
@@ -51,17 +52,23 @@ function SavedFlights() {
 }, [user.userId]); 
 
   const handleRemoveFlight = async (flight_id) => {
+    setButtonLoading(true);
     const payload = {
       user_id: user.userId,
       flight_id: flight_id
     }
     console.log("Removing Flight:", payload);
     const result = await removeFlight(payload);
+    setButtonLoading(false);
     setToast({
       message: result.message,
       type: result.success ? "success" : "error",
       visible: true,
     });
+    
+    if (result.success){
+      setSavedFlights((prevFlight) => prevFlight.filter(flight => flight.FlightResponse.flight_id !== flight_id));
+    }
   }
 
   if (loading) {
@@ -229,7 +236,10 @@ function SavedFlights() {
                   </AccordionDetails>
                 </Accordion>
 
-                <div className="save-button-container">
+                <div className="save-flight-button-container">
+                  {buttonLoading ? (
+                    <CircularProgress size={24} className="loading-spinner"/> 
+                  ) : (
                   <Button
                     variant="contained"
                     className="save-flight-button"
@@ -238,6 +248,7 @@ function SavedFlights() {
                   >
                     Remove Flight
                   </Button>
+                  )}
                 </div>
               </div>
             ))}

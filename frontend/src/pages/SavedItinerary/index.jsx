@@ -11,6 +11,7 @@ function SavedItinerary() {
     const user = { userId: "abc123"};
     const [savedItinerary, setSavedItinerary] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [buttonLoading, setButtonLoading] = useState(false);
     const [toast, setToast] = useState({ message: '', type: '', visible: false });
 
     useEffect(() => {
@@ -33,17 +34,22 @@ function SavedItinerary() {
     }, [user.userId]);
 
     const handleRemoveItinerary = async (activity_id) => {
+        setButtonLoading(true);
         const payload = {
           user_id: user.userId,
           activity_id: activity_id
         }
         console.log("Removing Itinerary:", payload);
         const result = await removeItinerary(payload);
+        setButtonLoading(false);
         setToast({
           message: result.message,
           type: result.success ? "success" : "error",
           visible: true,
         });
+        if (result.success){
+          setSavedItinerary((prevItinerary) => prevItinerary.filter(activity => activity.activity_id !== activity_id));
+        }
       }
 
     if (loading) {
@@ -107,16 +113,20 @@ function SavedItinerary() {
                         Price: {activity.price_amount} {activity.price_currency}
                       </Typography> */}
                     </CardContent>
-
+                    
                     <div className="save-button-container">
-                      <Button
-                        variant="contained"
-                        className="save-itinerary-button"
-                        startIcon={<RemoveCircleOutlineIcon />}
-                        onClick={() => handleRemoveItinerary(activity.activity_id)}
-                      >
-                        Remove Itinerary
-                      </Button>
+                      {buttonLoading ? (
+                          <CircularProgress size={24} className="loading-spinner"/> 
+                        ) : (
+                        <Button
+                          variant="contained"
+                          className="save-itinerary-button"
+                          startIcon={<RemoveCircleOutlineIcon />}
+                          onClick={() => handleRemoveItinerary(activity.activity_id)}
+                        >
+                          Remove Itinerary
+                        </Button>
+                      )}
                     </div>
                   </Card>
                 </Grid>
