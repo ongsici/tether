@@ -22,18 +22,28 @@ app.add_middleware(
 @app.post("/weather", response_model=WeatherResponse)
 async def fetch_weather(request: WeatherRequest):
     try:
-        logger.info(f"Fetching weather data for city: {request.weather.city}, country_code: {request.weather.country_code}")
+        logger.info(f"Calling weather_service.get_weather() for city: {request.weather.city}, country_code: {request.weather.country_code}")
         weather_data = get_weather(request.user_id, request.weather.city, request.weather.country_code)
         
-        if weather_data and weather_data.results:
-            logger.info(f"Complete weather data fetched and processed successfully")
-        else:
+        if not weather_data or not weather_data.results:
             logger.warning(f"No weather data found for city: {request.weather.city}, country_code: {request.weather.country_code}")
-
-        # optionally log response at DEBUG
-        logger.debug(f"WeatherResponse data: {weather_data}")
+        else:
+            logger.debug(f"Weather data fetched and processed successfully")
 
         return weather_data
+    
+    except KeyError as e:
+        logger.error(f"Missing key in response: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Invalid response structure: {str(e)}")
+
+    except ValueError as e:
+        logger.warning(f"Data validation issue: {str(e)}")
+        raise HTTPException(status_code=404, detail=f"Data issue: {str(e)}")
+
+    except RuntimeError as e:
+        logger.error(f"Service error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Service error: {str(e)}")
+    
     except Exception as e:
-        logger.error(f"Error fetching weather data: {str(e)}", exc_info=True) # log exception traceback
-        raise HTTPException(status_code=400, detail=str(e))
+        logger.critical(f"Unexpected error: {str(e)}", exc_info=True) # log exception traceback
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")

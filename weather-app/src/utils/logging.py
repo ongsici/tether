@@ -59,6 +59,6 @@ def configure_logging():
         logging.getLogger("urllib3").setLevel(logging.WARNING)
 
         logger.info(
-            f"Logging is configured. Level={log_level_str}, "
-            f"Log file='{LOG_FILE}', Rotating daily with up to 7 backups."
+            f"Logging configuration: level={log_level_str}, "
+            f"log file='{LOG_FILE}', rotating daily with up to 7 backups"
         )
