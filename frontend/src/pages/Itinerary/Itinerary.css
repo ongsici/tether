@@ -1,0 +1,186 @@
+/* Flights.css */
+body {
+    background-image: url('../../assets/travel.jpg'); 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+  }
+  
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* 60% transparency */
+  z-index: -1;
+}
+
+/* Overlay Effect - Whitewash/Translucent Background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  z-index: 10; /* To make sure the overlay is above other content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Center the content within a container */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+/* Page Title Styling */
+.page-title {
+  font-family: 'monospace';
+  font-weight: 700;
+  color: #023641;
+  margin-bottom: 20px;
+}
+
+/* Search Form Box */
+.search-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
+}
+
+/* Input Field Styling */
+.input-field .MuiOutlinedInput-root {
+  border-radius: 5px;
+}
+
+/* Checkbox Styling */
+.checkbox .MuiCheckbox-root {
+  color: #023641;
+}
+
+/* Search Button Styling */
+.search-button {
+  background-color: #023641 !important;
+  color: white !important;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.search-button:hover {
+  background-color: rgba(2, 54, 65, 0.8) !important;
+}
+
+/* Welcome Section */
+.welcome-title {
+  font-family: 'monospace';
+  font-weight: 700;
+  letter-spacing: .2rem;
+  color: #023641;
+}
+
+.description-text {
+  font-size: 18px;
+  color: #333;
+  margin: 15px 0;
+}
+  
+/* Container for the itinerary */
+.itinerary-container {
+  padding: 24px;
+}
+
+/* Title of the itinerary page */
+.itinerary-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 30px;;
+}
+
+/* Message when there are no activities */
+.no-activities {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Grid layout for activity cards */
+.activities-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Individual activity card */
+.activity-card {
+  display: flex;
+  justify-content: center;
+}
+
+/* Card styling */
+.card {
+  width: 300px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* Activity image */
+.activity-image {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  object-fit: cover;
+}
+
+/* Card content */
+.card-content {
+  padding: 16px;
+  text-align: center;
+}
+
+/* Activity name */
+.activity-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* Activity details */
+.activity-details {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+/* Activity price */
+.activity-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007BFF;
+}
+.input-field {
+  background-color: white !important;
+}

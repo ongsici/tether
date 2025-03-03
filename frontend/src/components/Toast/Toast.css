@@ -1,0 +1,132 @@
+/* @keyframes slideDown {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+.toast {
+    position: fixed;
+    top: 80px;
+    left: 40%;
+    background-color: #dbf4e9;
+    color: #327756;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid #327756;
+    opacity: 0;
+    animation: slideDown 0.5s ease forwards;
+    z-index: 999;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  .toast-content {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: #070000;
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  
+  .toast.show {
+    opacity: 1;
+  }
+  
+  .toast.hide {
+    opacity: 0;
+  }
+   */
+
+   
+
+   @keyframes slideDown {
+    0% {
+      transform: translateX(-50%) translateY(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .toast {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 280px;
+    max-width: 350px;
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    z-index: 1000;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+  
+  .toast.show {
+    animation: slideDown 0.5s ease forwards;
+    opacity: 1;
+  }
+  
+  .toast.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  
+  .toast.success {
+    background-color: #9fefff; /* Matches your theme's dark teal */
+    border-color: #023641;
+    color: #023641;
+    /* border-left: 6px solid #9fffcd; */
+  }
+  
+  .toast.error {
+    background-color: rgb(252, 182, 182); /* A deep red matching theme style */
+    border-color: #023641;
+    color: #023641;
+    /* border-left: 6px solid #ea9393; */
+  }
+  
+  .toast-content {
+    flex: 1;
+    word-wrap: break-word;
+    text-align: center;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: #023641;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 5px;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .close-button:hover {
+    opacity: 0.7;
+  }
+  
+  

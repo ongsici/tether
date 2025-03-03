@@ -1,0 +1,81 @@
+[
+    {
+      "city": "New York",
+      "country": "USA",
+      "airports": ["JFK", "LGA", "EWR"],
+      "airport_names": ["John F. Kennedy International Airport", "LaGuardia Airport", "Newark Liberty International Airport"]
+    },
+    {
+      "city": "London",
+      "country": "UK",
+      "airports": ["LHR", "LGW", "STN"],
+      "airport_names": ["Heathrow Airport", "Gatwick Airport", "Stansted Airport"]
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "airports": ["HND", "NRT"],
+      "airport_names": ["Haneda Airport", "Narita International Airport"]
+    },
+    {
+      "city": "Paris",
+      "country": "France",
+      "airports": ["CDG", "ORY"],
+      "airport_names": ["Charles de Gaulle Airport", "Orly Airport"]
+    },
+    {
+      "city": "Berlin",
+      "country": "Germany",
+      "airports": ["TXL", "SXF"],
+      "airport_names": ["Tegel Airport", "Schönefeld Airport"]
+    },
+    {
+      "city": "Sydney",
+      "country": "Australia",
+      "airports": ["SYD"],
+      "airport_names": ["Sydney Kingsford Smith Airport"]
+    },
+    {
+      "city": "Rome",
+      "country": "Italy",
+      "airports": ["FCO", "CIA"],
+      "airport_names": ["Leonardo da Vinci International Airport", "Ciampino Airport"]
+    },
+    {
+      "city": "Beijing",
+      "country": "China",
+      "airports": ["PEK", "PKX"],
+      "airport_names": ["Beijing Capital International Airport", "Beijing Daxing International Airport"]
+    },
+    {
+      "city": "Moscow",
+      "country": "Russia",
+      "airports": ["SVO", "DME"],
+      "airport_names": ["Sheremetyevo International Airport", "Domodedovo International Airport"]
+    },
+    {
+      "city": "Istanbul",
+      "country": "Turkey",
+      "airports": ["IST", "SAW"],
+      "airport_names": ["Istanbul Airport", "Sabiha Gökçen International Airport"]
+    },
+    {
+      "city": "Cairo",
+      "country": "Egypt",
+      "airports": ["CAI"],
+      "airport_names": ["Cairo International Airport"]
+    },
+    {
+      "city": "Cape Town",
+      "country": "South Africa",
+      "airports": ["CPT"],
+      "airport_names": ["Cape Town International Airport"]
+    },
+    {
+      "city": "Rio de Janeiro",
+      "country": "Brazil",
+      "airports": ["GIG", "SDU"],
+      "airport_names": ["Rio de Janeiro/Galeão International Airport", "Santos Dumont Airport"]
+    }
+  ]
+  
