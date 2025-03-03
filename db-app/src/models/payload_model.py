@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List
 
 
-# models for request validation
+# model for request validation
 class UserRequest(BaseModel):
     user_id: str
 

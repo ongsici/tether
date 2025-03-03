@@ -29,9 +29,8 @@ class FlightSegments(Base):
     segment_order = Column(Integer)
     bound = Column(String)
 
-    # TODO: check this
     __table_args__ = (
-        PrimaryKeyConstraint('flight_id', 'segment_order'),
+        PrimaryKeyConstraint('flight_id', 'segment_order', 'bound'),
     )
 
 class SegmentInfo(Base):
