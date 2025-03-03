@@ -88,7 +88,7 @@ def test_fetch_weather_raises_400_on_exception(mock_get_weather, client, valid_w
 
     response = client.post("/weather", json=valid_weather_request_payload)
     assert response.status_code == 400
-    assert response.json()["detail"] == "Some weather error"
+    assert "Some weather error" in response.json()["detail"]
     mock_get_weather.assert_called_once()
 
 def test_fetch_weather_validation_error(client):

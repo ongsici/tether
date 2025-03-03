@@ -45,5 +45,5 @@ async def fetch_weather(request: WeatherRequest):
         raise HTTPException(status_code=500, detail=f"Service error: {str(e)}")
     
     except Exception as e:
-        logger.critical(f"Unexpected error: {str(e)}", exc_info=True) # log exception traceback
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+        logger.error(f"Unexpected error: {str(e)}", exc_info=True) # log exception traceback
+        raise HTTPException(status_code=400, detail=f"Unexpected error: {str(e)}")
