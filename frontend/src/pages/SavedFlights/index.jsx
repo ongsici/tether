@@ -14,12 +14,14 @@ import {
   TableRow,
   Paper,
   CircularProgress,
-  // Button,
+  Button,
 } from "@mui/material";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FlightIcon from "@mui/icons-material/Flight";
 // import useFetchUser from "../../hooks/useFetchUser";
-import { getSavedDetails } from "../../utils/api";
+import { getSavedDetails, removeFlight } from "../../utils/api";
+import Toast from '../../components/Toast';
 import "./SavedFlights.css";
 
 function SavedFlights() {
@@ -27,6 +29,8 @@ function SavedFlights() {
   const user = { userId: "abc123"};
   const [savedFlights, setSavedFlights] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const [toast, setToast] = useState({ message: '', type: '', visible: false });
 
   useEffect(() => {
     const fetchFlights = async () => {
@@ -47,6 +51,26 @@ function SavedFlights() {
     fetchFlights();
 }, [user.userId]); 
 
+  const handleRemoveFlight = async (flight_id) => {
+    setButtonLoading(true);
+    const payload = {
+      user_id: user.userId,
+      flight_id: flight_id
+    }
+    console.log("Removing Flight:", payload);
+    const result = await removeFlight(payload);
+    setButtonLoading(false);
+    setToast({
+      message: result.message,
+      type: result.success ? "success" : "error",
+      visible: true,
+    });
+    
+    if (result.success){
+      setSavedFlights((prevFlight) => prevFlight.filter(flight => flight.FlightResponse.flight_id !== flight_id));
+    }
+  }
+
   if (loading) {
     return (
       <>
@@ -64,10 +88,18 @@ function SavedFlights() {
     );
   }
 
-
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
+
+      {toast.visible && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ ...toast, visible: false })}
+        />
+      )}
+
       <Box className="content-box">
         <Typography variant="h4" className="results-header" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, mt: 5}}>
           Saved Flights
@@ -204,23 +236,27 @@ function SavedFlights() {
                   </AccordionDetails>
                 </Accordion>
 
-                {/* <div className="save-button-container">
+                <div className="save-flight-button-container">
+                  {buttonLoading ? (
+                    <CircularProgress size={24} className="loading-spinner"/> 
+                  ) : (
                   <Button
                     variant="contained"
                     className="save-flight-button"
-                    startIcon={<AddIcon />}
-                    onClick={() => handleSaveFlight(flight)}
+                    startIcon={<RemoveCircleOutlineIcon />}
+                    onClick={() => handleRemoveFlight(flight.FlightResponse.flight_id)}
                   >
-                    Save Flight
+                    Remove Flight
                   </Button>
-                </div> */}
+                  )}
+                </div>
               </div>
             ))}
           </div>
         )
       ) : (
         <>
-          <Typography variant="h6" className="welcome-title">Login to retrieve saved flights</Typography>
+          <Typography variant="h6" className="welcome-title">Login to view saved flights</Typography>
         </>
       )}
       </Box>

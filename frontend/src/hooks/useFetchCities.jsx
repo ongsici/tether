@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-const useFetchCities = () => {
+const useFetchCities = (url) => {
     const [cities, setCities] = useState([]);
   
-    useEffect(() => {
-      fetch("/cities.json")
+    useEffect((url) => {
+      fetch(url)
         .then((response) => response.json())
         .then((data) => {
           setCities(data);

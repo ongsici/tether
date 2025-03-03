@@ -9,7 +9,7 @@ import "./Weather.css";
 function Weather() {
   // const user = useFetchUser();
   const user = { userId: "abc123" };
-  const cities = useFetchCities(); 
+  const cities = useFetchCities("/weather_cities.json"); 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useState({
@@ -22,9 +22,10 @@ function Weather() {
 
   const handleSearch = async () => {  
     const destinationCity = searchParams.destination ? searchParams.destination.city : null;
+    const destinationCountryCode = searchParams.destination ? searchParams.destination.country_code : null;
       
-    if (!destinationCity) {
-      alert("Please select valid source and destination.");
+    if (!destinationCity || !destinationCountryCode) {
+      alert("Please select destination.");
       return;
     }
     setLoading(true);
@@ -33,6 +34,7 @@ function Weather() {
       user_id: user.userId,
       weather: {
         city: destinationCity,
+        country_code: destinationCountryCode
       },
     };
     

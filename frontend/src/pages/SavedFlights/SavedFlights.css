@@ -80,3 +80,27 @@ body {
     margin: 15px 0;
   }
     
+
+  .save-flight-button {
+    margin-top: 20px;
+    align-self: flex-end; 
+    display: flex;
+    justify-content: flex-end;
+    background-color: #023641 !important;
+  }
+  
+  .save-flight-button:hover {
+    background-color: #037e96 !important; /* Darker shade on hover */
+  }
+  
+  
+  .save-flight-button-container {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+
+ 
