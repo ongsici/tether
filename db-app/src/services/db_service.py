@@ -77,50 +77,44 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
     if not saved_flight:
         return {"message": "User does not have this flight saved"}
     
+    # retrieve flight info before deleting saved flight
+    flight_info = db.query(FlightInfo).filter_by(flight_id=flight_id).one_or_none()
+    if not flight_info:
+        return {"message": "Flight does not exist"}
+
     # delete from saved_flight table
     db.delete(saved_flight)
     db.commit()
-    
-    flight_info = db.query(FlightInfo).filter_by(flight_id=flight_id).one_or_none()
-    if flight_info:
-        flight_info.num_users_saved -= 1
-        db.commit()
+
+    # decrement num_users_saved count
+    flight_info.num_users_saved -= 1
+    db.commit()
+
+    # delete all related flight info if no other users saved it
+    if flight_info.num_users_saved == 0:
+        segment_ids = [row[0] for row in db.query(FlightSegments.segment_id)
+                        .filter(FlightSegments.flight_id == flight_id).all()]
         
-        # delete all related flight info if no other users saved it
-        if flight_info.num_users_saved == 0:
+        # [1] delete flight segments first (child)
+        db.query(FlightSegments).filter_by(flight_id=flight_id).delete()
+        db.commit()
 
-            # (1) check if other flights saved corresponding segments
-            segments = db.query(FlightSegments.segment_id).filter(FlightSegments.flight_id == flight_id).all()
-            for segment in segments:
-                segment_id = segment[0]  # Extract the actual string segment_id
-                segment_info = db.query(SegmentInfo).filter_by(segment_id=segment_id).one_or_none()
-                if segment_info:
-                    segment_info.num_flights_saved -= 1
-                    db.commit()
+        # [2] delete flight info (parent)
+        db.delete(flight_info)
+        db.commit()
 
-                    # (2) delete segments if no other flights use it
-                    if segment_info.num_flights_saved == 0:
-                        db.delete(segment_info)
-                        db.commit()
+        # [3] update/delete segment info
+        for segment_id in segment_ids:
+            segment_info = db.query(SegmentInfo).filter_by(segment_id=segment_id).one_or_none()
+            if segment_info:
+                segment_info.num_flights_saved -= 1
 
-                # TODO: improve error handling
-                else:
-                    return {"message": "Flight segment does not exist"}
-
-            # (3) delete connecting flight info
-            db.query(FlightSegments).filter_by(flight_id=flight_id).delete()
-            db.commit()
-            
-            # (4) delete flight info
-            db.delete(flight_info)
-            db.commit()
-
-    # TODO: improve error handling
-    else:
-        return {"message": "Flight does not exist"}
+                if segment_info.num_flights_saved <= 0:
+                    db.delete(segment_info)
+                
+                db.commit()
     
     return {"message": "Flight successfully removed from saved"}
-
 
 @db_operation
 def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str, Any]]]:
@@ -159,7 +153,7 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                     departure_airport = out_f.departure_airport,
                     destination_airport = out_f.destination_airport,
                     airline_code = out_f.airline_code,
-                    flight_number = segment_order,
+                    flight_number = str(segment_order),
                     unique_id = out_f.segment_id
                 )
             ))
@@ -175,7 +169,7 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                     departure_airport = in_f.departure_airport,
                     destination_airport = in_f.destination_airport,
                     airline_code = in_f.airline_code,
-                    flight_number = segment_order,
+                    flight_number = str(segment_order),
                     unique_id = in_f.segment_id
                 )
             ))
