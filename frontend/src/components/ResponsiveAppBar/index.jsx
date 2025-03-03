@@ -3,17 +3,18 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 import MenuIcon from '@mui/icons-material/Menu';
 import { login, logout, fetchUser } from "../../utils/auth";  
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-// import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 import './AppBar.css'; // Import the CSS file
 
-const pages = ['Flights', 'Itinerary', 'Weather'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['About Us', 'Flights', 'Itinerary', 'Weather'];
+const settings = ['Saved Flights', 'Saved Itinerary', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); 
 
 
   useEffect(() => {
@@ -26,6 +27,14 @@ function ResponsiveAppBar() {
     const interval = setInterval(getUser, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  const getInitials = (name) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,6 +55,22 @@ function ResponsiveAppBar() {
   const handleNavigation = (setting) => {
     if (setting === 'Logout') {
       logout();
+    } else if (setting === 'Saved Flights') {
+      navigate('/savedflights');
+    } else if (setting === 'Saved Itinerary') {
+      navigate('/saveditinerary');
+    }
+  };
+
+  const handlePageNavigation = (page) => {
+    if (page === 'Flights') {
+      navigate('/flights'); 
+    } else if (page === 'Itinerary') {
+      navigate('/itinerary');
+    } else if (page === 'Weather') {
+      navigate('/weather');
+    } else if (page === 'About Us'){
+      navigate('/about');
     }
   };
 
@@ -58,7 +83,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#"
+            href="/"
             className="app-bar-logo"
           >
             TETHER
@@ -92,7 +117,7 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => { handlePageNavigation(page); handleCloseNavMenu(); }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -104,7 +129,7 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handlePageNavigation(page)}
                 sx={{ my: 2 }}
               >
                 {page}
@@ -117,7 +142,9 @@ function ResponsiveAppBar() {
             {user ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} className="avatar-button">
-                  <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                  <Avatar sx={{ bgcolor: "grey.500", color: "white" }}>
+                    {user?.userDetails ? getInitials(user.userDetails) : "?"}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
             ) : (

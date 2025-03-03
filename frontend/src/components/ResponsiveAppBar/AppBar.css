@@ -4,6 +4,7 @@
 .MuiAppBar-root.app-bar {
     background-color: #023641; /* Blue color, change as needed */
     padding: 2px 0;
+    z-index: 10;
 }
 
 /* Logo styling */
@@ -58,7 +59,7 @@
     visibility: visible;
     opacity: 1;
     display: inline-block;
-    z-index: 10;
+    z-index: 1;
     margin-right: 10px;
 }
 
