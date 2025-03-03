@@ -10,7 +10,7 @@ import "./Itinerary.css";
 const Itinerary = () => {
   const user = { userId: "abc123" };
   // const user = useFetchUser();
-  const cities = useFetchCities(); 
+  const cities = useFetchCities("/cities.json"); 
   const navigate = useNavigate();
   const { setItinerary } = useItinerary();
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const Itinerary = () => {
     const destinationCity = searchParams.destination ? searchParams.destination.city : null;
     
     if (!destinationCity || !searchParams.radius || !searchParams.limit ) {
-      alert("Please select valid source and destination.");
+      alert("Invalid search inputs");
       return;
     }
 
