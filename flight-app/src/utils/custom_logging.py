@@ -10,7 +10,7 @@ LOG_DIR.mkdir(exist_ok=True)  # create log directory if it doesn't exist
 
 def configure_logging():
     """
-    Configure logging to include console output and a rotating file handler.
+    Configure logging to include both stdout and stderr output and a rotating file handler.
     Log level can be set through the LOG_LEVEL environment variable.
     """
 
@@ -27,11 +27,20 @@ def configure_logging():
     log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     formatter = logging.Formatter(log_format)
 
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setFormatter(formatter)
-    console_handler.setLevel(log_level)
-    logger.addHandler(console_handler)
+    # Console handler for lower-level logs (DEBUG, INFO) -> stdout
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    stdout_handler.setLevel(logging.DEBUG)
+    stdout_handler.addFilter(lambda record: record.levelno < logging.WARNING)  
+    stdout_handler.setFormatter(formatter)
+    logger.addHandler(stdout_handler)
 
+    # Console handler for WARNING and above -> stderr
+    stderr_handler = logging.StreamHandler(sys.stderr)
+    stderr_handler.setLevel(logging.WARNING)
+    stderr_handler.setFormatter(formatter)
+    logger.addHandler(stderr_handler)
+
+    # TimedRotatingFileHandler for file-based logs (all levels)
     file_handler = TimedRotatingFileHandler(
         LOG_FILE,
         when="midnight",
@@ -39,8 +48,8 @@ def configure_logging():
         backupCount=7,
         encoding="utf-8"
     )
-    file_handler.setFormatter(formatter)
     file_handler.setLevel(log_level)
+    file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 
     logging.getLogger("requests").setLevel(logging.WARNING)
