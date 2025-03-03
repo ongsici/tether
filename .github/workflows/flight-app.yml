@@ -2,7 +2,7 @@ name: Build and Deploy to Azure Container Apps
 
 on:
   push:
-    branches: [ "weather-app" ]
+    branches: [ "flight-app" ]
 
 jobs:
   build-and-deploy:
@@ -19,26 +19,26 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r weather-app/requirements.txt
+          pip install -r flight-app/requirements.txt
 
       - name: Run unit tests
         run: |
-          pytest weather-app/tests --maxfail=1 --disable-warnings -q
+          pytest flight-app/tests --maxfail=1 --disable-warnings -q
 
       - name: Log in to GHCR
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ secrets.WEATHER_GHCR_USERNAME }}
-          password: ${{ secrets.WEATHER_GHCR_TOKEN }}
+          username: ${{ secrets.FLIGHT_GHCR_USERNAME }}
+          password: ${{ secrets.FLIGHT_GHCR_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: weather-app
-          file: weather-app/Dockerfile
+          context: flight-app
+          file: flight-app/Dockerfile
           push: true
-          tags: ghcr.io/atchyuni/weather-app:latest
+          tags: ghcr.io/zjx047/flight-app:latest
 
       # - name: Log in to Azure CLI
       #   uses: azure/login@v1
@@ -54,6 +54,6 @@ jobs:
       # - name: Update Azure Container App
       #   run: |
       #     az containerapp update \
-      #       --name weather-app \
+      #       --name flight-app \
       #       --resource-group tether-rg-2 \
-      #       --image ghcr.io/atchyuni/weather-app:latest \
+      #       --image ghcr.io/zjx047/flight-app:latest \

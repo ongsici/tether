@@ -24,8 +24,16 @@ async def fetch_weather(request: WeatherRequest):
     try:
         logger.info(f"Fetching weather data for city: {request.weather.city}, country_code: {request.weather.country_code}")
         weather_data = get_weather(request.user_id, request.weather.city, request.weather.country_code)
-        logger.info(f"Weather data fetched successfully for city: {request.weather.city}")
+        
+        if weather_data and weather_data.results:
+            logger.info(f"Complete weather data fetched and processed successfully")
+        else:
+            logger.warning(f"No weather data found for city: {request.weather.city}, country_code: {request.weather.country_code}")
+
+        # optionally log response at DEBUG
+        logger.debug(f"WeatherResponse data: {weather_data}")
+
         return weather_data
     except Exception as e:
-        logger.error(f"Error fetching weather data: {str(e)}")
+        logger.error(f"Error fetching weather data: {str(e)}", exc_info=True) # log exception traceback
         raise HTTPException(status_code=400, detail=str(e))

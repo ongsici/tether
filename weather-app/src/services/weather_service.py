@@ -20,10 +20,19 @@ WMO_code = {
 }
 
 def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherResponse:
-    logger.info(f"Calling get_weather_data for city: {city}, country_code: {country_code}")
-    data = get_weather_data(city, country_code)             # [1] fetch weather data from OpenWeather API
-    lat, lon = data["coord"]["lat"], data["coord"]["lon"]   # [2] extract coordinates for Open-Meteo API
-    forecast_data = get_weather_forecast(lat, lon)          # [3] fetch forecast data from Open-Meteo API
+    logger.info("Calling weather_service.get_weather() to fetch weather data...")
+
+    data = get_weather_data(city, country_code)                 # [1] fetch weather data from OpenWeather API
+    logger.info("Successful call to OpenWeather API")
+
+    lat, lon = data["coord"]["lat"], data["coord"]["lon"]       # [2] extract coordinates for Open-Meteo API
+    logger.debug(f"Extracted coordinates: lat={lat}, lon={lon}")
+
+    forecast_data = get_weather_forecast(lat, lon)              # [3] fetch forecast data from Open-Meteo API
+    if forecast_data and forecast_data.get("daily"):
+        logger.info(f"Successful call to Open-Meteo API")
+    else:
+        logger.warning(f"No forecast data found for coordinates: lat={lat}, lon={lon}")
 
     current_weather = CurrentWeather(
         city=data["name"],
@@ -42,6 +51,7 @@ def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherRes
         latitude=lat,
         longitude=lon
     )
+    logger.debug(f"Current weather data processed successfully for {city}, temperature: {current_weather.temperature}°C")
 
     daily_data = forecast_data.get("daily", {})
     forecast_list = []
@@ -61,8 +71,9 @@ def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherRes
                 precipitation_probability_max=daily_data["precipitation_probability_max"][i],
                 wind_speed_max=daily_data["wind_speed_10m_max"][i]
             ))
+        
+        logger.info(f"Forecast data processed successfully for {len(forecast_list)} days")
     else:
         logger.warning("Incomplete or missing daily forecast data")
 
-    logger.info(f"get_weather_data successful for city: {city}")
     return WeatherResponse(user_id=user_id, results={"current": current_weather, "forecast": forecast_list})
