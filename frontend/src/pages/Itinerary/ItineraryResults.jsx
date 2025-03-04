@@ -12,12 +12,12 @@ const ItineraryResults = () => {
   const user = { userId: "abc123" };
   const { itinerary } = useItinerary();
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
-  const [buttonLoading, setButtonLoading] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState({});
 
   console.log("Received Itinerary Data:", itinerary);
 
   const handleSaveItinerary = async (activity) => {
-    setButtonLoading(true);
+    setButtonLoading((prev) => ({ ...prev, [activity.activity_id]: true }));
     const payload = {
       user_id: user.userId,
       itinerary: activity
@@ -25,7 +25,7 @@ const ItineraryResults = () => {
 
     console.log("Saving Itinerary:", payload);
     const result = await saveIitnerary(payload);
-    setButtonLoading(false);
+    setButtonLoading((prev) => ({ ...prev, [activity.activity_id]: false }));
     setToast({
       message: result.message,
       type: result.success ? "success" : "error",
@@ -87,7 +87,7 @@ const ItineraryResults = () => {
                     </CardContent>
 
                     <div className="save-button-container">
-                      {buttonLoading ? (
+                      {buttonLoading[activity.activity_id] ? (
                           <CircularProgress size={24} className="loading-spinner"/> 
                       ) : (
                         <Button

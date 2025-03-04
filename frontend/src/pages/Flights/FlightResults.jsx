@@ -14,19 +14,21 @@ const FlightResults = () => {
   const user = { userId: "abc123" };
   const { flights } = useFlights();
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
-  const [buttonLoading, setButtonLoading] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState({});
 
   console.log("Received Flight Data:", flights); // Debugging line
 
   const handleSaveFlight = async (flight) => {
-    setButtonLoading(true);
+    setButtonLoading((prev) => ({ ...prev, [flight.FlightResponse.flight_id]: true }));
+    
     const payload = {
       user_id: user.userId,
       flights: flight
     }
     console.log("Saving Flight:", payload);
     const result = await saveFlight(payload);
-    setButtonLoading(false);
+
+    setButtonLoading((prev) => ({ ...prev, [flight.FlightResponse.flight_id]: false }));
     setToast({
       message: result.message,
       type: result.success ? "success" : "error",
@@ -183,7 +185,7 @@ const FlightResults = () => {
                 </Accordion>
   
                 <div className="save-button-container">
-                  {buttonLoading ? (
+                  {buttonLoading[flight.FlightResponse.flight_id] ? (
                     <CircularProgress size={24} className="loading-spinner"/> 
                   ) : (
                     <Button 
