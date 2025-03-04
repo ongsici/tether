@@ -55,13 +55,14 @@ const ItineraryResults = () => {
           </Typography>
         ) : (
           <div className="results-box">
-            <Grid container spacing={3} className="activities-grid">
+            <Grid container spacing={3} className="activities-grid" sx={{ maxWidth: "100%", margin: "0 auto" }}>
               {itinerary?.map((activity) => (
                 <Grid
                   item
                   xs={12}
                   sm={6}
                   md={4}
+                  lg={2}
                   key={activity.activity_id}
                   className="activity-card"
                 >
