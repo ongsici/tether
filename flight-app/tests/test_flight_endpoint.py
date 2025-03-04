@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch
 from fastapi.testclient import TestClient
-from app import app
+from flight_app.app import app
 
 
 @pytest.fixture
