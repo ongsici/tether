@@ -10,7 +10,7 @@ import "./Itinerary.css";
 const Itinerary = () => {
   const user = { userId: "abc123" };
   // const user = useFetchUser();
-  const cities = useFetchCities("/cities.json"); 
+  const cities = useFetchCities("/weather_cities.json"); 
   const navigate = useNavigate();
   const { setItinerary } = useItinerary();
   const [loading, setLoading] = useState(false);
@@ -115,7 +115,7 @@ const Itinerary = () => {
             <div className="loader-container">
               <CircularProgress sx={{ color: '#023641' , mb: 2}} />
               <Typography variant="h6" className="loading-text">
-                Just a moment, we're looking for exciting stuff for you!
+                Mapping out your adventure, just a sec!
               </Typography>
             </div>
           </>

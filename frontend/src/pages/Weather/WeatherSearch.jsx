@@ -82,7 +82,7 @@ function Weather() {
             <div className="loader-container">
               <CircularProgress sx={{ color: '#023641', mb: 2 }} />
               <Typography variant="h6" className="loading-text">
-                Just a moment, we're packing your bags!
+                Checking the skies, hang tight!
               </Typography>
             </div>
           </>
