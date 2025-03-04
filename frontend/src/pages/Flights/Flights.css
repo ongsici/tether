@@ -222,4 +222,9 @@ body {
   background-color: white !important;
 }
 
+.city-text {
+  display: block;
+  font-size: 12px;
+  color: gray;
+}
 

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, FormControl, InputLabel, Select, MenuItem, Autocomplete, CircularProgress } from "@mui/material";
+import { Tooltip, IconButton } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import useFetchCities from "../../hooks/useFetchCities";
 // import useFetchUser from "../../hooks/useFetchUser";
 import { searchTravel } from "../../utils/api";
@@ -76,33 +78,48 @@ const Itinerary = () => {
               renderInput={(params) => <TextField {...params} label="Destination" fullWidth className="input-field" />}
             />
 
-            <FormControl fullWidth className="radius-field" sx={{"& .MuiInputBase-root": { height: "60px" } }}>
+            <Box display="flex" alignItems="center">
+              <FormControl fullWidth>
                 <InputLabel id="radius-label">Search Radius (km)</InputLabel>
                 <Select
                   labelId="radius-label"
                   value={searchParams.radius}
                   onChange={(e) => handleInputChange("radius", e.target.value)}
-                  label="Search Radius" className="input-field"
+                  label="Search Radius"
+                  className="input-field"
                 >
                   {[...Array(20).keys()].map(num => (
                     <MenuItem key={num+1} value={num+1}>{num+1}</MenuItem>
                   ))}
                 </Select>
-            </FormControl>
+              </FormControl>
+              <Tooltip title="Select the area in km around the city centre to search for activities" arrow>
+                <IconButton size="small" sx={{ ml: 1 }}>
+                  <InfoOutlinedIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </Box>
 
-            <FormControl fullWidth className="limit-field" sx={{"& .MuiInputBase-root": { height: "60px" } }}>
-                <InputLabel id="limit-label">Number of Activities</InputLabel>
-                <Select
-                  labelId="limit-label"
-                  value={searchParams.limit}
-                  onChange={(e) => handleInputChange("limit", e.target.value)}
-                  label="Number of Activities" className="input-field"
-                >
-                  {[...Array(10).keys()].map(num => (
-                    <MenuItem key={num+1} value={num+1}>{num+1}</MenuItem>
-                  ))}
-                </Select>
-            </FormControl>
+            <Box display="flex" alignItems="center">
+              <FormControl fullWidth className="limit-field" sx={{"& .MuiInputBase-root": { height: "60px" } }}>
+                  <InputLabel id="limit-label">Number of Activities</InputLabel>
+                  <Select
+                    labelId="limit-label"
+                    value={searchParams.limit}
+                    onChange={(e) => handleInputChange("limit", e.target.value)}
+                    label="Number of Activities" className="input-field"
+                  >
+                    {[...Array(10).keys()].map(num => (
+                      <MenuItem key={num+1} value={num+1}>{num+1}</MenuItem>
+                    ))}
+                  </Select>
+              </FormControl>
+              <Tooltip title="Select the number of activities you would like to view" arrow>
+                <IconButton size="small" sx={{ ml: 1 }}>
+                  <InfoOutlinedIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </Box>
           
             <Button variant="contained" className="search-button" onClick={handleSearch}>
               Search Itinerary
