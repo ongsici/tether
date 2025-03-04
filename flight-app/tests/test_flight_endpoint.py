@@ -1,3 +1,10 @@
+import os
+import sys
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__)) 
+FLIGHT_APP_DIR = os.path.join(CURRENT_DIR, '..')  
+sys.path.insert(0, FLIGHT_APP_DIR)
+
 import pytest
 from app import app
 from unittest.mock import patch
