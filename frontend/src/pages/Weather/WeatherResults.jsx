@@ -61,7 +61,7 @@ const WeatherResults = () => {
 
         {/* Weather Description Card */}
         <Grid item xs={12} sm={6} md={2}>
-          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)", boxShadow: 3}}>
+          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)", boxShadow: 3, borderTop: "4px solid #023641", borderBottom: "4px solid #023641" }}>
             <CardContent>
               <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
                 Weather
@@ -75,7 +75,7 @@ const WeatherResults = () => {
 
         {/* Temperature Card */}
         <Grid item xs={12} sm={6} md={2}>
-          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)",boxShadow: 3 }}>
+          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)",boxShadow: 3, borderTop: "4px solid #023641", borderBottom: "4px solid #023641" }}>
             <CardContent>
               <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
                 Temperature
@@ -89,7 +89,7 @@ const WeatherResults = () => {
 
         {/* Humidity Card */}
         <Grid item xs={12} sm={6} md={2}>
-          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)",boxShadow: 3 }}>
+          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)",boxShadow: 3, borderTop: "4px solid #023641", borderBottom: "4px solid #023641" }}>
             <CardContent>
               <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
                 Humidity
@@ -102,7 +102,7 @@ const WeatherResults = () => {
 
         {/* Wind Speed Card */}
         <Grid item xs={12} sm={6} md={2}>
-          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)", boxShadow: 3 }}>
+          <Card className="weather-card" sx={{ width: '180px', backgroundColor: "rgba(255, 255, 255, 0.7)", boxShadow: 3, borderTop: "4px solid #023641", borderBottom: "4px solid #023641" }}>
             <CardContent>
               <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
                 Wind Speed
@@ -125,7 +125,7 @@ const WeatherResults = () => {
 
       {/* Forecast Table */}
       <Box sx={{ maxWidth: "1000px", margin: "0 auto", padding: 2 }}>
-        <TableContainer component={Paper} sx={{ backgroundColor: "rgba(255, 255, 255, 0.6)", boxShadow: 3, borderRadius: "12px" , marginBottom: 6}}>
+        <TableContainer component={Paper} sx={{ backgroundColor: "rgba(255, 255, 255, 0.6)", boxShadow: 3, borderRadius: "12px" , marginBottom: 6, borderTop: "4px solid #023641", borderBottom: "4px solid #023641" }}>
           <Table>
             <TableHead>
               <TableRow>
