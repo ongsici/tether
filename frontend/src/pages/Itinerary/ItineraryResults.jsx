@@ -62,7 +62,7 @@ const ItineraryResults = () => {
                   xs={12}
                   sm={6}
                   md={4}
-                  lg={2}
+                  lg={3}
                   key={activity.activity_id}
                   className="activity-card"
                 >
