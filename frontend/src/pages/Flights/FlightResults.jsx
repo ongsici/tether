@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Accordion, AccordionSummary, AccordionDetails, Button } from '@mui/material';
+import { Box, Typography, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Accordion, AccordionSummary, AccordionDetails, Button, CircularProgress} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FlightIcon from '@mui/icons-material/Flight';
 import AddIcon from '@mui/icons-material/Add';
@@ -14,17 +14,19 @@ const FlightResults = () => {
   const user = { userId: "abc123" };
   const { flights } = useFlights();
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   console.log("Received Flight Data:", flights); // Debugging line
 
   const handleSaveFlight = async (flight) => {
-
+    setButtonLoading(true);
     const payload = {
       user_id: user.userId,
       flights: flight
     }
     console.log("Saving Flight:", payload);
     const result = await saveFlight(payload);
+    setButtonLoading(false);
     setToast({
       message: result.message,
       type: result.success ? "success" : "error",
@@ -181,13 +183,18 @@ const FlightResults = () => {
                 </Accordion>
   
                 <div className="save-button-container">
-                  <Button 
-                    variant="contained" 
-                    className="save-flight-button" 
-                    startIcon={<AddIcon />}
-                    onClick={() => handleSaveFlight(flight)}>
-                    Save Flight
-                  </Button>
+                  {buttonLoading ? (
+                    <CircularProgress size={24} className="loading-spinner"/> 
+                  ) : (
+                    <Button 
+                      variant="contained" 
+                      className="save-flight-button" 
+                      startIcon={<AddIcon />}
+                      onClick={() => handleSaveFlight(flight)}>
+                      Save Flight
+                    </Button>
+                  )}
+                  
                 </div>
   
               </div>

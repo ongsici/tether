@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Card, CardMedia, CardContent, Grid, Button } from "@mui/material";
+import { Box, Typography, Card, CardMedia, CardContent, Grid, Button, CircularProgress } from "@mui/material";
 import Toast from '../../components/Toast';
 import AddIcon from '@mui/icons-material/Add';
 import { useItinerary } from "../../context/ItineraryProvider";
@@ -12,10 +12,12 @@ const ItineraryResults = () => {
   const user = { userId: "abc123" };
   const { itinerary } = useItinerary();
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   console.log("Received Itinerary Data:", itinerary);
 
   const handleSaveItinerary = async (activity) => {
+    setButtonLoading(true);
     const payload = {
       user_id: user.userId,
       itinerary: activity
@@ -23,6 +25,7 @@ const ItineraryResults = () => {
 
     console.log("Saving Itinerary:", payload);
     const result = await saveIitnerary(payload);
+    setButtonLoading(false);
     setToast({
       message: result.message,
       type: result.success ? "success" : "error",
@@ -83,14 +86,20 @@ const ItineraryResults = () => {
                     </CardContent>
 
                     <div className="save-button-container">
-                      <Button
-                        variant="contained"
-                        className="save-itinerary-button"
-                        startIcon={<AddIcon />}
-                        onClick={() => handleSaveItinerary(activity)}
-                      >
-                        Save Itinerary
-                      </Button>
+                      {buttonLoading ? (
+                          <CircularProgress size={24} className="loading-spinner"/> 
+                      ) : (
+                        <Button
+                          variant="contained"
+                          className="save-itinerary-button"
+                          startIcon={<AddIcon />}
+                          onClick={() => handleSaveItinerary(activity)}
+                        >
+                          Save Itinerary
+                        </Button>
+                      )
+                      }
+                      
                     </div>
 
                   </Card>
