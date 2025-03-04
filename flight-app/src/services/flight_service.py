@@ -85,12 +85,14 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
     
 
 def get_city_from_airport(airport: str):
-    file_path = os.path.join(os.getcwd(), 'src/services/airport_to_city.json')
-    with open(file_path) as file:
+    current_dir = os.path.dirname(__file__)
+
+    file_path = os.path.join(current_dir, "airport_to_city.json")
+
+    with open(file_path, "r") as file:
         data = json.load(file)
     
     for entry in data:
-        # Check if the airport code is in the list of airports for this entry
         if airport in entry["airports"]:
             return entry["city"]
     
