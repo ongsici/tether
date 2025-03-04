@@ -1,8 +1,11 @@
-// const APIM_URL="https://tether-apim-2.azure-api.net/api/submitData";
-const APIM_URL="http://localhost:8000/api/submitData"
-const APIM_SAVE_URL="http://localhost:8000/api/saveData";
-const APIM_RETRIEVE_URL="http://localhost:8000/api/retrieveData"
-const APIM_REMOVE_URL="http://localhost:8000/api/removeData"
+const APIM_URL="https://tether-apim-2.azure-api.net/api/submitData";
+const APIM_SAVE_URL="https://tether-apim-2.azure-api.net/api/saveData";
+const APIM_RETRIEVE_URL="https://tether-apim-2.azure-api.net/api/retrieveData";
+const APIM_REMOVE_URL="https://tether-apim-2.azure-api.net/api/removeData"
+// const APIM_URL="http://localhost:8000/api/submitData"
+// const APIM_SAVE_URL="http://localhost:8000/api/saveData";
+// const APIM_RETRIEVE_URL="http://localhost:8000/api/retrieveData"
+// const APIM_REMOVE_URL="http://localhost:8000/api/removeData"
 
 const subscriptionKey = process.env.REACT_APP_APIM_SUBSCRIPTION_KEY;
 
