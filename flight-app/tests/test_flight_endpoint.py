@@ -28,8 +28,8 @@ def valid_flight_request_payload():
 
 def mock_flight_response():
     """
-    Return a dict that matches the FlightResponse schema structure
-    with one outbound and one inbound segment.
+    Return a dict matching the *new* FlightResponse schema, 
+    including total_price, HH:MM times, and city fields.
     """
     return {
         "user_id": "testuser123",
@@ -42,16 +42,18 @@ def mock_flight_response():
                         {
                             "SegmentResponse": {
                                 "num_passengers": 1,
-                                "departure_time": "08:00:00",
+                                "departure_time": "08:00",
                                 "departure_date": "2025-03-10",
                                 "arrival_date": "2025-03-10",
-                                "arrival_time": "14:00:00",
+                                "arrival_time": "14:00",
                                 "duration": "8H",
                                 "departure_airport": "SYD",
+                                "departure_city": "Sydney (Mascot)",
                                 "destination_airport": "SIN",
+                                "destination_city": "Singapore",
                                 "airline_code": "QF",
                                 "flight_number": "81",
-                                "unique_id": "QF812025-03-1008:00:00"
+                                "unique_id": "QF812025-03-1008:00"
                             }
                         }
                     ],
@@ -59,24 +61,28 @@ def mock_flight_response():
                         {
                             "SegmentResponse": {
                                 "num_passengers": 1,
-                                "departure_time": "10:00:00",
+                                "departure_time": "10:00",
                                 "departure_date": "2025-03-17",
                                 "arrival_date": "2025-03-17",
-                                "arrival_time": "20:00:00",
+                                "arrival_time": "20:00",
                                 "duration": "10H",
                                 "departure_airport": "SIN",
+                                "departure_city": "Singapore",
                                 "destination_airport": "SYD",
+                                "destination_city": "Sydney (Mascot)",
                                 "airline_code": "QF",
                                 "flight_number": "82",
-                                "unique_id": "QF822025-03-1710:00:00"
+                                "unique_id": "QF822025-03-1710:00"
                             }
                         }
                     ],
-                    "price_per_person": "300"
+                    "price_per_person": "300",
+                    "total_price": "300"
                 }
             }
         ]
     }
+
 
 
 @patch("app.get_flights")
@@ -98,9 +104,21 @@ def test_post_flight_with_valid_data_returns_200_and_flight_response(
     assert response.status_code == 200
     response_json = response.json()
 
+    # Basic checks
     assert response_json["user_id"] == "testuser123"
     assert len(response_json["results"]) == 1
-    assert response_json["results"][0]["FlightResponse"]["price_per_person"] == "300"
+
+    flight_resp = response_json["results"][0]["FlightResponse"]
+    assert flight_resp["price_per_person"] == "300"
+    assert flight_resp["total_price"] == "300"  # new assertion
+
+    # Check outbound segment
+    outbound_segment = flight_resp["outbound"][0]["SegmentResponse"]
+    assert outbound_segment["departure_time"] == "08:00"    # confirm HH:MM
+    assert outbound_segment["arrival_time"] == "14:00"
+    assert outbound_segment["departure_city"] == "Sydney (Mascot)"
+    assert outbound_segment["destination_city"] == "Singapore"
+
     # Confirm the service was called with the right arguments
     mock_get_flights.assert_called_once_with(
         "SYD", "SIN", "1", "2025-03-10", "2025-03-17", "testuser123"
