@@ -23,6 +23,7 @@ jobs:
 
       - name: Run unit tests
         run: |
+          cd flight-app
           pytest flight-app/tests --maxfail=1 --disable-warnings -q
 
       - name: Log in to GHCR
