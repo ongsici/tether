@@ -13,12 +13,15 @@ class SegmentData(BaseModel):
     arrival_time: str
     duration: str
     departure_airport: str
+    departure_city: str
     destination_airport: str
+    destination_city: str
 
 class FlightData(BaseModel):
     flight_id: str
     total_num_segments: int
-    price: str
+    price_per_person: str
+    total_price: str
 
 class FlightSegmentData(BaseModel):
     flight_id: str
@@ -51,7 +54,9 @@ def transform_flight_save(flight_request: FlightSaveRequest) -> dict:
             arrival_time = s.arrival_time,
             duration = s.duration,
             departure_airport = s.departure_airport,
-            destination_airport = s.destination_airport
+            departure_city = s.departure_city,
+            destination_airport = s.destination_airport,
+            destination_city = s.destination_city
         ))
     
     # saving flight relation with segments
@@ -82,7 +87,8 @@ def transform_flight_save(flight_request: FlightSaveRequest) -> dict:
     flight_details = FlightData(
         flight_id = flight_info.flight_id,
         total_num_segments = flight_info.number_of_segments,
-        price = flight_info.price_per_person,
+        price_per_person = flight_info.price_per_person,
+        total_price = flight_info.total_price
     )
 
     db_model = FlightSaveDB(

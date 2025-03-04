@@ -9,7 +9,8 @@ from ..utils.api_client import get_db
 from ..models.db_model import SavedFlight, FlightInfo, FlightSegments, SegmentInfo, SavedItinerary, ItineraryInfo
 from ..models.payload_model import (
     SegmentResponse, SegmentResponseWrapper, FlightResponseObj,
-    FlightResponseObjWrapper, FlightViewResponse, ItineraryDetails, ItineraryViewResponse
+    FlightResponseObjWrapper, FlightViewResponse, ItineraryDetails, ItineraryViewResponse,
+    SaveUnsaveResponse
 )
 from ..models.convert_model import FlightSaveDB
 
@@ -116,11 +117,13 @@ def save_flight(full_info: FlightSaveDB, db: Session = None) -> Dict[str, str]:
 
     if existing_saved_flight:
         logger.info(f"User {full_info.user_id} has already saved flight {flight_info.flight_id}")
-        return {"message": "User has already saved this flight"}
+        # return {"message": "User has already saved this flight"}
+        return SaveUnsaveResponse(user_id=full_info.user_id, status=False, message="User already saved flight")
     
     db.add(SavedFlight(user_id=full_info.user_id, flight_id=flight_info.flight_id))
     db.commit()
-    return {"message": "Flight saved successfully"}
+    # return {"message": "Flight saved successfully"}
+    return SaveUnsaveResponse(user_id=full_info.user_id, status=True, message="Flight saved successfully")
 
 
 @db_operation
@@ -137,14 +140,16 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
     
     if not saved_flight:
         logger.warning(f"Flight {flight_id} not found saved for user {user_id}")
-        return {"message": "User does not have this flight saved"}
+        # return {"message": "User does not have this flight saved"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="User does not have this flight saved")
     
     # retrieve flight info before deleting saved flight
     flight_info = db.query(FlightInfo).filter_by(flight_id=flight_id).one_or_none()
     
     if not flight_info:
         logger.warning(f"Record for flight {flight_id} not found")
-        return {"message": "Flight does not exist"}
+        # return {"message": "Flight does not exist"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="Flight does not exist")
 
     # [2] delete from user saved flights
     db.delete(saved_flight)
@@ -185,7 +190,8 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
                 else:
                     logger.debug(f"Updated segment {segment_id} flight count to {segment_info.num_flights_saved}")
     
-    return {"message": "Flight successfully removed from saved"}
+    # return {"message": "Flight successfully removed from saved"}
+    return SaveUnsaveResponse(user_id=user_id, status=True, message="Flight successfully removed from saved")
 
 @db_operation
 def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str, Any]]]:
@@ -235,7 +241,9 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                     arrival_time = out_f.arrival_time,
                     duration = out_f.duration,
                     departure_airport = out_f.departure_airport,
+                    departure_city = out_f.departure_city,
                     destination_airport = out_f.destination_airport,
+                    destination_city = out_f.destination_city,
                     airline_code = out_f.airline_code,
                     flight_number = str(segment_order),
                     unique_id = out_f.segment_id
@@ -254,7 +262,9 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                     arrival_time = in_f.arrival_time,
                     duration = in_f.duration,
                     departure_airport = in_f.departure_airport,
+                    departure_city=in_f.destination_city,
                     destination_airport = in_f.destination_airport,
+                    destination_city=in_f.destination_city,
                     airline_code = in_f.airline_code,
                     flight_number = str(segment_order),
                     unique_id = in_f.segment_id
@@ -267,7 +277,8 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                 flight_id = flight.flight_id,
                 outbound = outbound_flights,
                 inbound = inbound_flights,
-                price_per_person = flight_info.price
+                price_per_person = flight_info.price_per_person,
+                total_price = flight_info.total_price
             )
         ))
             
@@ -302,10 +313,12 @@ def save_itinerary(user_id: str, city: str, activity_id: str, activity_name: str
     existing_saved_itinerary = db.query(SavedItinerary).filter_by(user_id=user_id, activity_id=activity_id).one_or_none()
     if existing_saved_itinerary:
         logger.info(f"User {user_id} has already saved itinerary {activity_id}")
-        return {"message": "User has already saved this itinerary"}
+        # return {"message": "User has already saved this itinerary"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="User already saved itinerary")
     
     db.add(SavedItinerary(user_id=user_id, activity_id=activity_id))
-    return {"message": "Itinerary saved successfully"}
+    # return {"message": "Itinerary saved successfully"}
+    return SaveUnsaveResponse(user_id=user_id, status=True, message="Itinerary saved successfully")
 
 @db_operation
 def unsave_itinerary(user_id: str, activity_id: str, db: Session = None) -> Dict[str, List[Dict[str, Any]]]:
@@ -321,8 +334,9 @@ def unsave_itinerary(user_id: str, activity_id: str, db: Session = None) -> Dict
 
     if not saved_itinerary:
         logger.warning(f"Itinerary {activity_id} not found saved for user {user_id}")
-        return {"message": "User does not have this itinerary saved"}
-    
+        # return {"message": "User does not have this itinerary saved"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="User does not have this itinerary saved")
+ 
     # [2] delete from user saved itineraries
     db.delete(saved_itinerary)
     db.flush()
@@ -342,7 +356,8 @@ def unsave_itinerary(user_id: str, activity_id: str, db: Session = None) -> Dict
     else:
         logger.warning(f"Itinerary information for {activity_id} not found")
     
-    return {"message": "Itinerary removed from saved"}
+    # return {"message": "Itinerary removed from saved"}
+    return SaveUnsaveResponse(user_id=user_id, status=True, message="Itinerary removed from saved")
 
 @db_operation
 def get_saved_itineraries(user_id: str, db: Session = None) -> Dict[str, List[Dict[str, Any]]]:    
