@@ -12,7 +12,7 @@ const AboutUs = () => {
         <Typography variant="h2" className="about-us-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, textAlign: 'center', marginBottom: 4, marginTop: 8, color: '#023641' }}>
           About Us
         </Typography>
-        <Card className="about-us-card" sx={{ borderRadius: 6, padding: 2, backgroundColor: "rgba(255, 255, 255, 0.6)" }}>
+        <Card className="about-us-card" sx={{ borderRadius: 6, padding: 2, backgroundColor: "rgba(255, 255, 255, 0.6)", borderTop: "6px solid #023641" }}>
           <CardContent className="about-us-card-content">
             <Typography variant="body1" className="about-us-description">
               Welcome to our app, your all-in-one travel companion! Inspired by our love for exploring new places, we created Tether — short for "Travel Together." 
