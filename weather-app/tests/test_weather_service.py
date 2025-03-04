@@ -132,9 +132,8 @@ def test_get_weather_incomplete_forecast(
         }
     }
 
-    response = get_weather("testuser2", "New York", "US")
-    # Because data is incomplete, your code sets forecast_list to [] or logs a warning
-    assert len(response.results["forecast"]) == 0
+    with pytest.raises(ValueError, match="Incomplete daily forecast data"):
+        get_weather("testuser2", "New York", "US")
 
 @patch("src.services.weather_service.get_weather_data")
 def test_get_weather_raises_exception_if_openweather_fails(mock_get_weather_data):
@@ -145,4 +144,4 @@ def test_get_weather_raises_exception_if_openweather_fails(mock_get_weather_data
 
     with pytest.raises(Exception) as exc:
         get_weather("exc_user", "SomeCity", "XX")
-    assert "OpenWeather error" in str(exc.value)
+    assert "Failed to fetch weather data from OpenWeather API" in str(exc.value)
