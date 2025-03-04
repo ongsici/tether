@@ -101,6 +101,24 @@ body {
     justify-content: flex-end;
     width: 100%;
   }
+  .city-text {
+    display: block;
+    font-size: 12px;
+    color: gray;
+    margin-top: 2px;
+  }
+  
 
+  .segment {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
 
- 
+  .flight-container {
+    width: 100%; 
+    max-width: 100%; 
+    margin: 10px 0; 
+    padding: 20px; 
+    box-sizing: border-box;
+}

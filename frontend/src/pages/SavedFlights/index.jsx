@@ -19,6 +19,8 @@ import {
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FlightIcon from "@mui/icons-material/Flight";
+import { Tooltip, IconButton } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 // import useFetchUser from "../../hooks/useFetchUser";
 import { getSavedDetails, removeFlight } from "../../utils/api";
 import Toast from '../../components/Toast';
@@ -113,36 +115,64 @@ function SavedFlights() {
               <div key={index} className="flight-container">
                 <Box className="flight-summary">
                   <Typography variant="h6" className="flight-summary-title">
-                    <div className="flight-route">
-                      {flight.FlightResponse.outbound.map((segment, idx, arr) => (
-                        <React.Fragment key={idx}>
-                          <span className="airport-text">{segment.SegmentResponse.departure_airport}</span>
-                          {idx < arr.length - 1 && (
-                            <div className="route-line">
-                              <FlightIcon className="flight-icon" />
-                            </div>
-                          )}
-                        </React.Fragment>
-                      ))}
-                      <div className="route-line">
-                        <FlightIcon className="flight-icon" />
-                      </div>
-                      <span className="airport-text">
-                        {
-                          flight.FlightResponse.outbound[
-                            flight.FlightResponse.outbound.length - 1
-                          ].SegmentResponse.destination_airport
-                        }
-                      </span>
+                  <div className="flight-route">
+                    {flight.FlightResponse.outbound.map((segment, idx, arr) => (
+                      <React.Fragment key={idx}>
+                        <div className="segment">
+                          <span className="airport-text">
+                            {`${segment.SegmentResponse.departure_airport} ${segment.SegmentResponse.departure_time}`}
+                          </span>
+                          <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                            {segment.SegmentResponse.departure_city}
+                          </Typography>
+                        </div>
+                        {idx < arr.length - 1 && (
+                          <div className="route-line">
+                            <FlightIcon className="flight-icon" />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                    <div className="route-line">
+                      <FlightIcon className="flight-icon" />
                     </div>
+                    <div className="segment">
+                      <span className="airport-text">
+                        {`${flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.destination_airport} ${flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.arrival_time}`}
+                      </span>
+                      <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                        {flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.destination_city}
+                      </Typography>
+                    </div>
+                  </div>
                   </Typography>
+
                   <Typography variant="body2" className="flight-details">
-                    {`Price: €${flight.FlightResponse.price_per_person}`}
+                  <Tooltip 
+                      title="Total price for the round-trip flight" 
+                      PopperProps={{
+                        modifiers: [
+                          {
+                            name: 'offset',
+                            options: {
+                              offset: [0, 5], // Adjust offset to position the tooltip appropriately
+                            },
+                          },
+                        ],
+                      }} 
+                      placement="top" 
+                    >
+                      <IconButton size="small" >
+                        <InfoOutlinedIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    {`Total Price: €${flight.FlightResponse.total_price}0`}
                   </Typography>
                   <Typography variant="body2" className="flight-details">
                     {`Passengers: ${flight.FlightResponse.outbound[0].SegmentResponse.num_passengers}`}
                   </Typography>
                 </Box>
+                
                 <Accordion className="flight-accordion">
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>Outbound Flight Details</Typography>
@@ -176,36 +206,45 @@ function SavedFlights() {
                 {/* Inbound flight section */}
                 <Box className="flight-summary">
                   <Typography variant="h6" className="flight-summary-title">
-                    <div className="flight-route">
-                      {flight.FlightResponse.inbound.map((segment, idx, arr) => (
-                        <React.Fragment key={idx}>
-                          <span className="airport-text">{segment.SegmentResponse.departure_airport}</span>
-                          {idx < arr.length - 1 && (
-                            <div className="route-line">
-                              <FlightIcon className="flight-icon" />
-                            </div>
-                          )}
-                        </React.Fragment>
-                      ))}
-                      <div className="route-line">
-                        <FlightIcon className="flight-icon" />
-                      </div>
-                      <span className="airport-text">
-                        {
-                          flight.FlightResponse.inbound[
-                            flight.FlightResponse.inbound.length - 1
-                          ].SegmentResponse.destination_airport
-                        }
-                      </span>
+                  <div className="flight-route">
+                    {flight.FlightResponse.inbound.map((segment, idx, arr) => (
+                      <React.Fragment key={idx}>
+                        <div className="segment">
+                          <span className="airport-text">
+                            {`${segment.SegmentResponse.departure_airport} ${segment.SegmentResponse.departure_time}`}
+                          </span>
+                          <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                            {segment.SegmentResponse.departure_city}
+                          </Typography>
+                        </div>
+                        {idx < arr.length - 1 && (
+                          <div className="route-line">
+                            <FlightIcon className="flight-icon" />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                    <div className="route-line">
+                      <FlightIcon className="flight-icon" />
                     </div>
+                    <div className="segment">
+                      <span className="airport-text">
+                        {`${flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.destination_airport} ${flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.arrival_time}`}
+                      </span>
+                      <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                        {flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.destination_city}
+                      </Typography>
+                    </div>
+                  </div>
                   </Typography>
-                  <Typography variant="body2" className="flight-details">
+                  {/* <Typography variant="body2" className="flight-details">
                     {`Duration: ${flight.FlightResponse.inbound[0].SegmentResponse.duration}`}
-                  </Typography>
-                  <Typography variant="body2" className="flight-details">
+                  </Typography> */}
+                  {/* <Typography variant="body2" className="flight-details">
                     {`Passengers: ${flight.FlightResponse.inbound[0].SegmentResponse.num_passengers}`}
-                  </Typography>
+                  </Typography> */}
                 </Box>
+                
                 <Accordion className="flight-accordion">
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>Inbound Flight Details</Typography>

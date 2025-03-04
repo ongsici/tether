@@ -226,5 +226,12 @@ body {
   display: block;
   font-size: 12px;
   color: gray;
+  margin-top: 2px;
+}
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 

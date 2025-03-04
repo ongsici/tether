@@ -65,25 +65,35 @@ const FlightResults = () => {
                   
                   <Typography variant="h6" className="flight-summary-title">
                   <div className="flight-route">
-                      {flight.FlightResponse.outbound.map((segment, idx, arr) => (
-                        <React.Fragment key={idx}>
-                          <span className="airport-text">{`${segment.SegmentResponse.departure_airport} ${segment.SegmentResponse.departure_time}`}</span>
-                          <Typography variant="body2" className="city-text">{segment.SegmentResponse.departure_city}</Typography>
-                          {idx < arr.length - 1 && (
-                            <div className="route-line">
-                              <FlightIcon className="flight-icon" />
-                            </div>
-                          )}
-                        </React.Fragment>
-                      ))}
-                      <div className="route-line">
-                        <FlightIcon className="flight-icon" />
-                      </div>
-                      <span className="airport-text">{`${flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.destination_airport} ${flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.arrival_time}`}</span>
-                      <Typography variant="body2" className="city-text">{flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.destination_city}</Typography>
+                    {flight.FlightResponse.outbound.map((segment, idx, arr) => (
+                      <React.Fragment key={idx}>
+                        <div className="segment">
+                          <span className="airport-text">
+                            {`${segment.SegmentResponse.departure_airport} ${segment.SegmentResponse.departure_time}`}
+                          </span>
+                          <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                            {segment.SegmentResponse.departure_city}
+                          </Typography>
+                        </div>
+                        {idx < arr.length - 1 && (
+                          <div className="route-line">
+                            <FlightIcon className="flight-icon" />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                    <div className="route-line">
+                      <FlightIcon className="flight-icon" />
+                    </div>
+                    <div className="segment">
+                      <span className="airport-text">
+                        {`${flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.destination_airport} ${flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.arrival_time}`}
+                      </span>
+                      <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                        {flight.FlightResponse.outbound[flight.FlightResponse.outbound.length - 1].SegmentResponse.destination_city}
+                      </Typography>
+                    </div>
                   </div>
-                   
-  
                   </Typography>
                   
                   <Typography variant="body2" className="flight-details">
@@ -105,15 +115,14 @@ const FlightResults = () => {
                         <InfoOutlinedIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    {`Total Price: €${flight.FlightResponse.total_price}`}
-                    
+                    {`Total Price: €${flight.FlightResponse.total_price}0`}
                   </Typography>
-
-
                   <Typography variant="body2" className="flight-details">
                     {`Passengers: ${flight.FlightResponse.outbound[0].SegmentResponse.num_passengers}`}
                   </Typography>
                 </Box>
+
+
                 <Accordion className="flight-accordion">
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography>Outbound Flight Details</Typography>
@@ -150,8 +159,14 @@ const FlightResults = () => {
                 <div className="flight-route">
                   {flight.FlightResponse.inbound.map((segment, idx, arr) => (
                     <React.Fragment key={idx}>
-                      <span className="airport-text">{`${segment.SegmentResponse.departure_airport} ${segment.SegmentResponse.departure_time}`}</span>
-                      <Typography variant="body2" className="city-text">{segment.SegmentResponse.departure_city}</Typography>
+                      <div className="segment">
+                        <span className="airport-text">
+                          {`${segment.SegmentResponse.departure_airport} ${segment.SegmentResponse.departure_time}`}
+                        </span>
+                        <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                          {segment.SegmentResponse.departure_city}
+                        </Typography>
+                      </div>
                       {idx < arr.length - 1 && (
                         <div className="route-line">
                           <FlightIcon className="flight-icon" />
@@ -162,10 +177,16 @@ const FlightResults = () => {
                   <div className="route-line">
                     <FlightIcon className="flight-icon" />
                   </div>
-                  <span className="airport-text">{`${flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.destination_airport} ${flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.arrival_time}`}</span>
-                  <Typography variant="body2" className="city-text">{flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.destination_city}</Typography>
+                  <div className="segment">
+                    <span className="airport-text">
+                      {`${flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.destination_airport} ${flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.arrival_time}`}
+                    </span>
+                    <Typography variant="body2" className="city-text" sx = {{ fontWeight: 500, color: '#023641' }}>
+                      {flight.FlightResponse.inbound[flight.FlightResponse.inbound.length - 1].SegmentResponse.destination_city}
+                    </Typography>
+                  </div>
                 </div>
-  
+                  
                   
                   </Typography>
                   {/* <Typography variant="body2" className="flight-details">

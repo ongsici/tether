@@ -59,7 +59,7 @@ function Weather() {
       <Box className="content-box">
       {user ? (
         <>
-          <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Plan Your Travel</Typography>
+          <Typography variant="h4" className="page-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700 }}>Know Before You Go: Weather That’s Worth Checking</Typography>
          
           <Box className="search-box" sx={{ width: "400px" }}>
             <Autocomplete
