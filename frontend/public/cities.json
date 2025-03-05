@@ -242,16 +242,6 @@
         ]
     },
     {
-        "city": "Delhi",
-        "country": "India",
-        "airports": [
-            "DEL"
-        ],
-        "airport_names": [
-            "Indira Gandhi International Airport"
-        ]
-    },
-    {
         "city": "Dhaka",
         "country": "Bangladesh",
         "airports": [
