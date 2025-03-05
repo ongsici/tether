@@ -68,7 +68,8 @@ def get_flights(origin_loc_code: str, destination_loc_code: str, num_passenger: 
             "outbound": outbound_segments,
             "inbound": inbound_segments,
             "price_per_person": price_per_person,
-            "total_price": str(round(float(price_per_person) * int(num_passenger), 2))
+            "total_price": f"{(float(price_per_person) * int(num_passenger)):.2f}"
+
         }
         flight_obj = FlightResponseObj(**flight_info)
 
