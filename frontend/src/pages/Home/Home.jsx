@@ -12,7 +12,7 @@ function Home() {
         <Grid container spacing={4} justifyContent="center" className="home-card-page">
           {/* Flight Card */}
           <Grid item xs={12} sm={4}>
-            <Card className="home-card">
+            <Card className="home-card" sx={{ borderTop: "4px solid #023641" }}>
               <CardActionArea component={Link} to="/flights">
                 <CardContent sx={{ textAlign: "center" }}>
                   <FlightTakeoff sx={{ fontSize: 50, color: "#023641" }} />
@@ -29,7 +29,7 @@ function Home() {
 
           {/* Itinerary Card */}
           <Grid item xs={12} sm={4}>
-            <Card className="home-card">
+            <Card className="home-card" sx={{ borderTop: "4px solid #023641" }}>
               <CardActionArea component={Link} to="/itinerary">
                 <CardContent sx={{ textAlign: "center" }}>
                   <Map sx={{ fontSize: 50, color: "#023641" }} />
@@ -46,7 +46,7 @@ function Home() {
 
           {/* Weather Card */}
           <Grid item xs={12} sm={4}>
-            <Card className="home-card">
+            <Card className="home-card" sx={{ borderTop: "4px solid #023641" }}>
               <CardActionArea component={Link} to="/weather">
                 <CardContent sx={{ textAlign: "center" }}>
                   <WbSunny sx={{ fontSize: 50, color: "#023641;" }} />

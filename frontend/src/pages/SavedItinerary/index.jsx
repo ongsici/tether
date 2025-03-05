@@ -23,7 +23,7 @@ function SavedItinerary() {
             };
             const itinerary = await getSavedDetails(requestBody);
             if (itinerary.user_id === user.userId) {
-                setSavedItinerary(itinerary.results);
+                setSavedItinerary(itinerary.itinerary);
                 } else {
                 setSavedItinerary([]); 
                 }
@@ -70,7 +70,7 @@ function SavedItinerary() {
       }
 
     return (
-        <Box className="itinerary-container">
+        <Box className="itinerary-container" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh' }}>
           <div className="background-overlay"></div>
 
           {toast.visible && (
@@ -93,7 +93,7 @@ function SavedItinerary() {
             <div className="results-box">
             <Grid container spacing={3} className="activities-grid">
               {savedItinerary?.map((activity) => (
-                <Grid item xs={12} sm={6} md={4} key={activity.activity_id} className="activity-card">
+                <Grid item xs={12} sm={6} md={4} lg={3} key={activity.activity_id} className="activity-card">
                   <Card className="card">
                       <CardMedia
                         component="img"
