@@ -93,7 +93,7 @@ function SavedItinerary() {
             <div className="results-box">
             <Grid container spacing={3} className="activities-grid">
               {savedItinerary?.map((activity) => (
-                <Grid item xs={12} sm={6} md={4} key={activity.activity_id} className="activity-card">
+                <Grid item xs={12} sm={6} md={4} lg={3} key={activity.activity_id} className="activity-card">
                   <Card className="card">
                       <CardMedia
                         component="img"
