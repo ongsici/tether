@@ -9,7 +9,8 @@ from ..utils.api_client import get_db
 from ..models.db_model import SavedFlight, FlightInfo, FlightSegments, SegmentInfo, SavedItinerary, ItineraryInfo
 from ..models.payload_model import (
     SegmentResponse, SegmentResponseWrapper, FlightResponseObj,
-    FlightResponseObjWrapper, FlightViewResponse, ItineraryDetails, ItineraryViewResponse
+    FlightResponseObjWrapper, FlightViewResponse, ItineraryDetails, ItineraryViewResponse,
+    SaveUnsaveResponse
 )
 from ..models.convert_model import FlightSaveDB
 
@@ -116,11 +117,13 @@ def save_flight(full_info: FlightSaveDB, db: Session = None) -> Dict[str, str]:
 
     if existing_saved_flight:
         logger.info(f"User {full_info.user_id} has already saved flight {flight_info.flight_id}")
-        return {"message": "User has already saved this flight"}
+        db_flight.num_users_saved -= 1
+        # return {"message": "User has already saved this flight"}
+        return SaveUnsaveResponse(user_id=full_info.user_id, status=False, message="User already saved flight")
     
     db.add(SavedFlight(user_id=full_info.user_id, flight_id=flight_info.flight_id))
-    db.commit()
-    return {"message": "Flight saved successfully"}
+    # return {"message": "Flight saved successfully"}
+    return SaveUnsaveResponse(user_id=full_info.user_id, status=True, message="Flight saved successfully")
 
 
 @db_operation
@@ -137,14 +140,15 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
     
     if not saved_flight:
         logger.warning(f"Flight {flight_id} not found saved for user {user_id}")
-        return {"message": "User does not have this flight saved"}
+        # return {"message": "User does not have this flight saved"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="User does not have this flight saved")
     
-    # retrieve flight info before deleting saved flight
     flight_info = db.query(FlightInfo).filter_by(flight_id=flight_id).one_or_none()
     
     if not flight_info:
         logger.warning(f"Record for flight {flight_id} not found")
-        return {"message": "Flight does not exist"}
+        # return {"message": "Flight does not exist"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="Flight does not exist")
 
     # [2] delete from user saved flights
     db.delete(saved_flight)
@@ -155,7 +159,7 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
     logger.debug(f"Updated flight {flight_id} users saved count to {flight_info.num_users_saved}")
 
     # [3] delete all related flight info if no other users saved it
-    if flight_info.num_users_saved == 0:
+    if flight_info.num_users_saved <= 0:
         logger.info(f"No users have saved flight {flight_id}, cleaning up flight data")
         
         segment_ids = [row[0] for row in db.query(FlightSegments.segment_id)
@@ -182,15 +186,21 @@ def unsave_flight(user_id: str, flight_id: str, db: Session = None) -> Optional[
                 if segment_info.num_flights_saved <= 0:
                     logger.debug(f"Deleting segment {segment_id}, which is no longer in use")
                     db.delete(segment_info)
+                    db.flush()
                 else:
                     logger.debug(f"Updated segment {segment_id} flight count to {segment_info.num_flights_saved}")
     
-    return {"message": "Flight successfully removed from saved"}
+    # return {"message": "Flight successfully removed from saved"}
+    return SaveUnsaveResponse(user_id=user_id, status=True, message="Flight successfully removed from saved")
 
 @db_operation
 def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str, Any]]]:
     # get all saved flights for user
-    saved_flights = db.query(SavedFlight).filter(SavedFlight.user_id == user).all()
+    saved_flights = (
+        db.query(SavedFlight)
+        .filter(SavedFlight.user_id == user)
+        .all()
+    )
     logger.debug(f"Found {len(saved_flights)} saved flights for user {user}")
 
     all_flights = []
@@ -207,8 +217,8 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
         outbound_segment_info = (
             db.query(SegmentInfo, FlightSegments.segment_order)
             .join(FlightSegments, SegmentInfo.segment_id == FlightSegments.segment_id)
-            .filter(FlightSegments.flight_id == flight.flight_id)
-            .filter(FlightSegments.bound == 'outbound')
+            .filter(FlightSegments.flight_id == flight.flight_id, FlightSegments.bound == 'outbound')
+            .order_by(FlightSegments.segment_order)
             .all()
         )
         
@@ -216,8 +226,8 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
         inbound_segment_info = (
             db.query(SegmentInfo, FlightSegments.segment_order)
             .join(FlightSegments, SegmentInfo.segment_id == FlightSegments.segment_id)
-            .filter(FlightSegments.flight_id == flight.flight_id)
-            .filter(FlightSegments.bound == 'inbound')
+            .filter(FlightSegments.flight_id == flight.flight_id, FlightSegments.bound == 'inbound')
+            .order_by(FlightSegments.segment_order)
             .all()
         )
 
@@ -235,9 +245,11 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                     arrival_time = out_f.arrival_time,
                     duration = out_f.duration,
                     departure_airport = out_f.departure_airport,
+                    departure_city = out_f.departure_city or "Unknown",
                     destination_airport = out_f.destination_airport,
+                    destination_city = out_f.destination_city or "Unknown",
                     airline_code = out_f.airline_code,
-                    flight_number = str(segment_order),
+                    flight_number = out_f.flight_code,
                     unique_id = out_f.segment_id
                 )
             ))
@@ -254,9 +266,11 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                     arrival_time = in_f.arrival_time,
                     duration = in_f.duration,
                     departure_airport = in_f.departure_airport,
+                    departure_city=in_f.destination_city or "Unknown",
                     destination_airport = in_f.destination_airport,
+                    destination_city=in_f.destination_city or "Unknown",
                     airline_code = in_f.airline_code,
-                    flight_number = str(segment_order),
+                    flight_number = in_f.flight_code,
                     unique_id = in_f.segment_id
                 )
             ))
@@ -267,13 +281,13 @@ def get_saved_flights(user: str, db: Session = None) -> Dict[str, List[Dict[str,
                 flight_id = flight.flight_id,
                 outbound = outbound_flights,
                 inbound = inbound_flights,
-                price_per_person = flight_info.price
+                price_per_person = flight_info.price_per_person or "",
+                total_price = flight_info.total_price or ""
             )
         ))
             
     logger.info(f"Successfully retrieved {len(all_flights)} flights for user {user}")
     response = FlightViewResponse(user_id=user, flights=all_flights)
-
     return response
 
 
@@ -302,10 +316,13 @@ def save_itinerary(user_id: str, city: str, activity_id: str, activity_name: str
     existing_saved_itinerary = db.query(SavedItinerary).filter_by(user_id=user_id, activity_id=activity_id).one_or_none()
     if existing_saved_itinerary:
         logger.info(f"User {user_id} has already saved itinerary {activity_id}")
-        return {"message": "User has already saved this itinerary"}
+        db_itinerary.num_users_saved -= 1
+        # return {"message": "User has already saved this itinerary"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="User already saved itinerary")
     
     db.add(SavedItinerary(user_id=user_id, activity_id=activity_id))
-    return {"message": "Itinerary saved successfully"}
+    # return {"message": "Itinerary saved successfully"}
+    return SaveUnsaveResponse(user_id=user_id, status=True, message="Itinerary saved successfully")
 
 @db_operation
 def unsave_itinerary(user_id: str, activity_id: str, db: Session = None) -> Dict[str, List[Dict[str, Any]]]:
@@ -321,8 +338,9 @@ def unsave_itinerary(user_id: str, activity_id: str, db: Session = None) -> Dict
 
     if not saved_itinerary:
         logger.warning(f"Itinerary {activity_id} not found saved for user {user_id}")
-        return {"message": "User does not have this itinerary saved"}
-    
+        # return {"message": "User does not have this itinerary saved"}
+        return SaveUnsaveResponse(user_id=user_id, status=False, message="User does not have this itinerary saved")
+ 
     # [2] delete from user saved itineraries
     db.delete(saved_itinerary)
     db.flush()
@@ -332,17 +350,19 @@ def unsave_itinerary(user_id: str, activity_id: str, db: Session = None) -> Dict
 
     if itinerary_info:
         # [a] decrement num_users_saved in the ItineraryInfo table
-        itinerary_info.num_users_saved = max(0, itinerary_info.num_users_saved - 1)
+        itinerary_info.num_users_saved -= 1
         logger.debug(f"Updated itinerary {activity_id} users saved count to {itinerary_info.num_users_saved}")
 
         # [b] delete entry if no users saved this itinerary
-        if itinerary_info.num_users_saved == 0:
+        if itinerary_info.num_users_saved <= 0:
             logger.info(f"No users have saved itinerary {activity_id}, deleting record")
             db.delete(itinerary_info)
+            db.flush()
     else:
         logger.warning(f"Itinerary information for {activity_id} not found")
     
-    return {"message": "Itinerary removed from saved"}
+    # return {"message": "Itinerary removed from saved"}
+    return SaveUnsaveResponse(user_id=user_id, status=True, message="Itinerary removed from saved")
 
 @db_operation
 def get_saved_itineraries(user_id: str, db: Session = None) -> Dict[str, List[Dict[str, Any]]]:    

@@ -24,12 +24,13 @@ curl -X 'POST' \
   }'
 
 VIEW:
-curl -X 'POST' \
+curl -X GET "http://127.0.0.1:8000/api/itineraries/get_saved?user_id=user12345"
+<!-- curl -X 'POST' \
   'http://127.0.0.1:8000/api/itineraries/get_saved' \
   -H 'Content-Type: application/json' \
   -d '{
     "user_id": "12345" 
-  }'
+  }' -->
 
 UNSAVE:
 curl -X 'POST' \
@@ -61,7 +62,9 @@ curl -X POST "http://127.0.0.1:8000/api/flights/save" \
                              "arrival_time": "14:00",
                              "duration": "4h",
                              "departure_airport": "JFK",
+                             "departure_city": "New York City",
                              "destination_airport": "LAX",
+                             "destination_city": "Los Angelos",
                              "airline_code": "AA",
                              "flight_number": "1234",
                              "unique_id": "abc123"
@@ -69,18 +72,20 @@ curl -X POST "http://127.0.0.1:8000/api/flights/save" \
                      }
                  ],
                  "inbound": [],
-                 "price_per_person": "500"
+                 "price_per_person": "500",
+                 "total_price": "500"
              }
          }
      }'
 
 VIEW:
-curl -X 'POST' \
+curl -X GET "http://127.0.0.1:8000/api/flights/get_saved?user_id=user123"
+<!-- curl -X 'POST' \
   'http://127.0.0.1:8000/api/flights/get_saved' \
   -H 'Content-Type: application/json' \
   -d '{
     "user_id": "123" 
-  }'
+  }' -->
 
 UNSAVE:
 curl -X 'POST' \

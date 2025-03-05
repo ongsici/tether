@@ -19,7 +19,8 @@ class FlightInfo(Base):
     __tablename__ = 'flight_info'
     flight_id = Column(String, primary_key=True)
     total_num_segments = Column(Integer)
-    price = Column(String)
+    price_per_person = Column(String)
+    total_price = Column(String)
     num_users_saved = Column(Integer, default=0)
 
 class FlightSegments(Base):
@@ -44,7 +45,9 @@ class SegmentInfo(Base):
     arrival_time = Column(String)
     duration = Column(String)
     departure_airport = Column(String)
+    departure_city = Column(String)
     destination_airport = Column(String)
+    destination_city = Column(String)
     num_flights_saved = Column(Integer, default=0)
 
 
