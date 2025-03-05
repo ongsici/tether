@@ -1,4 +1,4 @@
-/* Flights.css */
+
 body {
   background-image: url('../../assets/travel.jpg');
   background-repeat: no-repeat;
@@ -99,7 +99,7 @@ body {
   align-items: center; /* Centers the content horizontally */
   margin: 60px 0; /* Adds vertical space (top and bottom) */
   gap: 40px;
-  width: 70%;
+  width: 70% !important;
 }
 
 .results-box .MuiTypography-h5 {

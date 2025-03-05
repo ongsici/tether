@@ -142,6 +142,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 24px;
+  flex-wrap: wrap;
 }
 
 /* Individual activity card */

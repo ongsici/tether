@@ -43,7 +43,7 @@ function SavedFlights() {
         };
         const flights = await getSavedDetails(requestBody);
         if (flights.user_id === user.userId) {
-          setSavedFlights(flights.results);
+          setSavedFlights(flights.flights);
         } else {
           setSavedFlights([]); 
         }
