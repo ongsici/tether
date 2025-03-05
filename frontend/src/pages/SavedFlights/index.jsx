@@ -95,7 +95,7 @@ function SavedFlights() {
   }
 
   return (
-    <Container className="home-container">
+    <Container className="home-container" maxWidth="lg">
       <div className="background-overlay"></div>
 
       {toast.visible && (
