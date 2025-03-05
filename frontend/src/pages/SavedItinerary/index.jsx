@@ -35,7 +35,7 @@ function SavedItinerary() {
         };
 
         fetchItinerary();
-    });
+    }, [user.userId]);
 
     const handleRemoveItinerary = async (activity_id) => {
         setButtonLoading(true);
