@@ -17,16 +17,20 @@ function SavedItinerary() {
     useEffect(() => {
         const fetchItinerary = async () => {
             setLoading(true);
-            const requestBody = { 
-                user_id: user.userId,
-                type: "itinerary"
-            };
-            const itinerary = await getSavedDetails(requestBody);
-            if (itinerary.user_id === user.userId) {
+            const userId = user.userId;
+            const params = `user_id=${userId}&type=itinerary`;
+
+            try{
+              const itinerary = await getSavedDetails(params);
+              if (itinerary.user_id === user.userId) {
                 setSavedItinerary(itinerary.itinerary);
                 } else {
                 setSavedItinerary([]); 
                 }
+            } catch (error){
+              console.log("Error fetching itinerary: ", error);
+              setSavedItinerary([]); 
+            }
             setLoading(false);
         };
 

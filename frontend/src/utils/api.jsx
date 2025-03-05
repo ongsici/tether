@@ -156,16 +156,14 @@ export const removeItinerary = async (requestBody) => {
   }
 };
   
-export const getSavedDetails = async (requestBody) => {
+export const getSavedDetails = async (param) => {
 
   try {
-    const response = await fetch (`${APIM_RETRIEVE_URL}`, {
-      method: "POST",
+    const response = await fetch (`${APIM_RETRIEVE_URL}?${param}`, {
+      method: "GET",
       headers: {
-        "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": subscriptionKey
-      },
-      body: JSON.stringify(requestBody),
+      }
     });
     if (!response.ok) {
       throw new Error("Failed to retrieve saved details");

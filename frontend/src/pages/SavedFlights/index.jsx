@@ -37,15 +37,19 @@ function SavedFlights() {
   useEffect(() => {
     const fetchFlights = async () => {
         setLoading(true);
-        const requestBody = { 
-          user_id: user.userId,
-          type: "flights"
-        };
-        const flights = await getSavedDetails(requestBody);
-        if (flights.user_id === user.userId) {
-          setSavedFlights(flights.flights);
-        } else {
-          setSavedFlights([]); 
+        const userId = user.userId;
+        const params = `user_id=${userId}&type=flights`;
+
+        try {
+          const flights = await getSavedDetails(params);
+          if (flights.user_id === userId) {
+            setSavedFlights(flights.flights);
+          } else {
+            setSavedFlights([]);
+          }
+        } catch (error) {
+          console.error("Error fetching flights:", error);
+          setSavedFlights([]); // In case of error, set to empty array
         }
         setLoading(false);
       };
