@@ -4,14 +4,14 @@ import { Container, Typography, Button, TextField, Box, FormControl, InputLabel,
 import { Tooltip, IconButton } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import useFetchCities from "../../hooks/useFetchCities";
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import { searchTravel } from "../../utils/api";
 import { useItinerary } from "../../context/ItineraryProvider";
 import "./Itinerary.css";
 
 const Itinerary = () => {
-  const user = { userId: "abc123" };
-  // const user = useFetchUser();
+  // const user = { userId: "abc123" };
+  const user = useFetchUser();
   const cities = useFetchCities("/weather_cities.json"); 
   const navigate = useNavigate();
   const { setItinerary } = useItinerary();

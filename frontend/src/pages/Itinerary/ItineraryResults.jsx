@@ -4,12 +4,12 @@ import Toast from '../../components/Toast';
 import AddIcon from '@mui/icons-material/Add';
 import { useItinerary } from "../../context/ItineraryProvider";
 import { saveIitnerary } from '../../utils/api';
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import "./Itinerary.css";
 
 const ItineraryResults = () => {
-  // const user = useFetchUser();
-  const user = { userId: "abc123" };
+  const user = useFetchUser();
+  // const user = { userId: "abc123" };
   const { itinerary } = useItinerary();
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
   const [buttonLoading, setButtonLoading] = useState({});

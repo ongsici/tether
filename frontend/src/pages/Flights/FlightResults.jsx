@@ -5,15 +5,15 @@ import FlightIcon from '@mui/icons-material/Flight';
 import AddIcon from '@mui/icons-material/Add';
 import { Tooltip, IconButton } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import { saveFlight } from '../../utils/api';
 import Toast from '../../components/Toast';
 import { useFlights } from '../../context/FlightsProvider';
 import "./Flights.css";
 
 const FlightResults = () => {
-  // const user = useFetchUser();
-  const user = { userId: "abc123" };
+  const user = useFetchUser();
+  // const user = { userId: "abc123" };
   const { flights } = useFlights();
   const [toast, setToast] = useState({ message: '', type: '', visible: false });
   const [buttonLoading, setButtonLoading] = useState({});

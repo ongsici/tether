@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, Autocomplete, CircularProgress} from "@mui/material";
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
 import { searchTravel } from "../../utils/api";
 import "./Weather.css";
 
 function Weather() {
-  // const user = useFetchUser();
-  const user = { userId: "abc123" };
+  const user = useFetchUser();
+  // const user = { userId: "abc123" };
   const cities = useFetchCities("/weather_cities.json"); 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
