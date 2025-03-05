@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Card, CardMedia, CardContent, Grid, CircularProgress, Button, } from "@mui/material";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import { getSavedDetails, removeItinerary } from "../../utils/api";
 import Toast from '../../components/Toast';
 import "./SavedItinerary.css";
 
 function SavedItinerary() {
-    // const user = useFetchUser();
-    const user = { userId: "abc123"};
+    const user = useFetchUser();
+    // const user = { userId: "abc123"};
     const [savedItinerary, setSavedItinerary] = useState([]);
     const [loading, setLoading] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
@@ -35,7 +35,7 @@ function SavedItinerary() {
         };
 
         fetchItinerary();
-    }, [user.userId]);
+    });
 
     const handleRemoveItinerary = async (activity_id) => {
         setButtonLoading(true);

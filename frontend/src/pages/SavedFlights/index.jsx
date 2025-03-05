@@ -21,14 +21,14 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FlightIcon from "@mui/icons-material/Flight";
 import { Tooltip, IconButton } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import { getSavedDetails, removeFlight } from "../../utils/api";
 import Toast from '../../components/Toast';
 import "./SavedFlights.css";
 
 function SavedFlights() {
-  // const user = useFetchUser();
-  const user = { userId: "abc123"};
+  const user = useFetchUser();
+  // const user = { userId: "abc123"};
   const [savedFlights, setSavedFlights] = useState([]);
   const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -55,7 +55,7 @@ function SavedFlights() {
       };
 
     fetchFlights();
-}, [user.userId]); 
+}); 
 
   const handleRemoveFlight = async (flight_id) => {
     setButtonLoading(true);
