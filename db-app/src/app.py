@@ -107,11 +107,11 @@ def unsave_flight(flight: FlightUnsaveRequest):
     logger.info(f"Flight removed successfully for user {flight.user_id}")
     return result
 
-@app.post("/api/flights/get_saved", status_code=status.HTTP_200_OK)
+@app.get("/api/flights/get_saved", status_code=status.HTTP_200_OK)
 @handle_exceptions
-def get_saved_flights(user: UserRequest):
-    logger.info(f"Retrieving saved flights for user {user.user_id}")
-    result = db_service.get_saved_flights(user=user.user_id)
+def get_saved_flights(user_id: str):
+    logger.info(f"Retrieving saved flights for user {user_id}")
+    result = db_service.get_saved_flights(user=user_id)
     # logger.info(f"Retrieved {len(result) if result else 0} saved flights for user {user.user_id}")
     return result
 
@@ -145,11 +145,11 @@ def unsave_itinerary(itinerary: ItineraryUnsaveRequest):
     logger.info(f"Itinerary removed successfully for user {itinerary.user_id}")
     return result
 
-@app.post("/api/itineraries/get_saved", status_code=status.HTTP_200_OK)
+@app.get("/api/itineraries/get_saved", status_code=status.HTTP_200_OK)
 @handle_exceptions
-def get_saved_itineraries(user: UserRequest):
-    logger.info(f"Retrieving saved itineraries for user {user.user_id}")
-    result = db_service.get_saved_itineraries(user_id=user.user_id)
+def get_saved_itineraries(user_id: str):
+    logger.info(f"Retrieving saved itineraries for user {user_id}")
+    result = db_service.get_saved_itineraries(user_id=user_id)
     # logger.info(f"Retrieved {len(result) if result else 0} saved itineraries for user {user.user_id}")
     return result
 

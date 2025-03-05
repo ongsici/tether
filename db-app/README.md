@@ -24,12 +24,13 @@ curl -X 'POST' \
   }'
 
 VIEW:
-curl -X 'POST' \
+curl -X GET "http://127.0.0.1:8000/api/itineraries/get_saved?user_id=user12345"
+<!-- curl -X 'POST' \
   'http://127.0.0.1:8000/api/itineraries/get_saved' \
   -H 'Content-Type: application/json' \
   -d '{
     "user_id": "12345" 
-  }'
+  }' -->
 
 UNSAVE:
 curl -X 'POST' \
@@ -78,12 +79,13 @@ curl -X POST "http://127.0.0.1:8000/api/flights/save" \
      }'
 
 VIEW:
-curl -X 'POST' \
+curl -X GET "http://127.0.0.1:8000/api/flights/get_saved?user_id=user123"
+<!-- curl -X 'POST' \
   'http://127.0.0.1:8000/api/flights/get_saved' \
   -H 'Content-Type: application/json' \
   -d '{
     "user_id": "123" 
-  }'
+  }' -->
 
 UNSAVE:
 curl -X 'POST' \
