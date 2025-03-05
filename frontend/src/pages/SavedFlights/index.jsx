@@ -55,7 +55,7 @@ function SavedFlights() {
       };
 
     fetchFlights();
-}, [user.userId]); 
+}, [user]); 
 
   const handleRemoveFlight = async (flight_id) => {
     setButtonLoading(true);
