@@ -4,6 +4,7 @@ import { Container, Typography, Button, TextField, Box, FormControl, InputLabel,
 import { Tooltip, IconButton } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import useFetchCities from "../../hooks/useFetchCities";
+import Toast from '../../components/Toast';
 import useFetchUser from "../../hooks/useFetchUser";
 import { searchTravel } from "../../utils/api";
 import { useItinerary } from "../../context/ItineraryProvider";
@@ -16,6 +17,7 @@ const Itinerary = () => {
   const navigate = useNavigate();
   const { setItinerary } = useItinerary();
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState({ message: '', type: '', visible: false });
   const [searchParams, setSearchParams] = useState({
     destination: "",
     radius: "",
@@ -30,7 +32,16 @@ const Itinerary = () => {
     const destinationCity = searchParams.destination ? searchParams.destination.city : null;
     
     if (!destinationCity || !searchParams.radius || !searchParams.limit ) {
-      alert("Invalid search inputs");
+      setToast(
+        {
+          message: (
+          <>
+            Uh-oh! We can’t read your mind. <br /> Please fill in all the fields!
+          </>),
+          type: "error",
+          visible: true
+        }
+      );
       return;
     }
 
@@ -63,6 +74,15 @@ const Itinerary = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
+
+      {toast.visible && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ ...toast, visible: false })}
+        />
+      )}
+
       <Box className="content-box">
       {user ? (
         <>
