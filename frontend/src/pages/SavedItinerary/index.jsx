@@ -15,30 +15,27 @@ function SavedItinerary() {
     const [toast, setToast] = useState({ message: '', type: '', visible: false });
 
     useEffect(() => {
+        const fetchItinerary = async () => {
+            setLoading(true);
+            const userId = user.userId;
+            const params = `user_id=${userId}&type=itinerary`;
 
-      if (user) {
-          setLoading(true);
-          const fetchItinerary = async () => {
-              const userId = user.userId; 
-              const params = `user_id=${userId}&type=itinerary`;
+            try{
+              const itinerary = await getSavedDetails(params);
+              if (itinerary.user_id === user.userId) {
+                setSavedItinerary(itinerary.itinerary);
+                } else {
+                setSavedItinerary([]); 
+                }
+            } catch (error){
+              console.log("Error fetching itinerary: ", error);
+              setSavedItinerary([]); 
+            }
+            setLoading(false);
+        };
 
-              try {
-                  const itinerary = await getSavedDetails(params);
-                  if (itinerary && itinerary.user_id === user.userId) {
-                      setSavedItinerary(itinerary.itinerary);
-                  } else {
-                      setSavedItinerary([]);
-                  }
-              } catch (error) {
-                  console.error("Error fetching itinerary:", error);
-                  setSavedItinerary([]);
-              }
-              setLoading(false);
-          };
-
-          fetchItinerary();
-      }
-  }, [user]);
+        fetchItinerary();
+    }, [user]);
 
     const handleRemoveItinerary = async (activity_id) => {
         setButtonLoading(true);
