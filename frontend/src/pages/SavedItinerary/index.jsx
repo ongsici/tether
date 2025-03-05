@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Card, CardMedia, CardContent, Grid, CircularProgress, Button, } from "@mui/material";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import { getSavedDetails, removeItinerary } from "../../utils/api";
 import Toast from '../../components/Toast';
 import "./SavedItinerary.css";
 
 function SavedItinerary() {
-    // const user = useFetchUser();
-    const user = { userId: "abc123"};
+    const user = useFetchUser();
+    // const user = { userId: "abc123"};
     const [savedItinerary, setSavedItinerary] = useState([]);
     const [loading, setLoading] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
@@ -17,21 +17,25 @@ function SavedItinerary() {
     useEffect(() => {
         const fetchItinerary = async () => {
             setLoading(true);
-            const requestBody = { 
-                user_id: user.userId,
-                type: "itinerary"
-            };
-            const itinerary = await getSavedDetails(requestBody);
-            if (itinerary.user_id === user.userId) {
+            const userId = user.userId;
+            const params = `user_id=${userId}&type=itinerary`;
+
+            try{
+              const itinerary = await getSavedDetails(params);
+              if (itinerary.user_id === user.userId) {
                 setSavedItinerary(itinerary.itinerary);
                 } else {
                 setSavedItinerary([]); 
                 }
+            } catch (error){
+              console.log("Error fetching itinerary: ", error);
+              setSavedItinerary([]); 
+            }
             setLoading(false);
         };
 
         fetchItinerary();
-    }, [user.userId]);
+    }, [user]);
 
     const handleRemoveItinerary = async (activity_id) => {
         setButtonLoading(true);

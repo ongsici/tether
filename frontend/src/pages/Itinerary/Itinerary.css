@@ -105,6 +105,11 @@ body {
 /* Container for the itinerary */
 .itinerary-container {
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* Center children horizontally */
+  justify-content: center;
+  width: 100%;
 }
 
 /* Title of the itinerary page */
@@ -215,4 +220,11 @@ body {
 
 .input-field {
   background-color: white !important;
+}
+
+.results-box {
+  /* border: 2px solid red; */
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Ensure it spans the page */
 }

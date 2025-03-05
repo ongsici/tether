@@ -21,14 +21,14 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FlightIcon from "@mui/icons-material/Flight";
 import { Tooltip, IconButton } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import { getSavedDetails, removeFlight } from "../../utils/api";
 import Toast from '../../components/Toast';
 import "./SavedFlights.css";
 
 function SavedFlights() {
-  // const user = useFetchUser();
-  const user = { userId: "abc123"};
+  const user = useFetchUser();
+  // const user = { userId: "abc123"};
   const [savedFlights, setSavedFlights] = useState([]);
   const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -37,21 +37,25 @@ function SavedFlights() {
   useEffect(() => {
     const fetchFlights = async () => {
         setLoading(true);
-        const requestBody = { 
-          user_id: user.userId,
-          type: "flights"
-        };
-        const flights = await getSavedDetails(requestBody);
-        if (flights.user_id === user.userId) {
-          setSavedFlights(flights.flights);
-        } else {
-          setSavedFlights([]); 
+        const userId = user.userId;
+        const params = `user_id=${userId}&type=flights`;
+
+        try {
+          const flights = await getSavedDetails(params);
+          if (flights.user_id === userId) {
+            setSavedFlights(flights.flights);
+          } else {
+            setSavedFlights([]);
+          }
+        } catch (error) {
+          console.error("Error fetching flights:", error);
+          setSavedFlights([]); // In case of error, set to empty array
         }
         setLoading(false);
       };
 
     fetchFlights();
-}, [user.userId]); 
+}, [user]); 
 
   const handleRemoveFlight = async (flight_id) => {
     setButtonLoading(true);

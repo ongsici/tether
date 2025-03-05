@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useFlights } from "../../context/FlightsProvider";
 import { Container, Typography, Button, TextField, Box, Autocomplete, FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@mui/material";
-// import useFetchUser from "../../hooks/useFetchUser";
+import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
 import { getTodayDate, getAirportOptions } from "../../utils/helpers";
 import { searchTravel } from "../../utils/api";
 import "./Flights.css";
 
 const Flights = () => {
-  // const user = useFetchUser();
-  const user = { userId: "abc123" };
+  const user = useFetchUser();
+  // const user = { userId: "abc123" };
   const cities = useFetchCities("/cities.json");  
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
