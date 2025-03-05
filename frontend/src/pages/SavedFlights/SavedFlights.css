@@ -49,14 +49,14 @@ body {
 }
   
   /* Center the content within a container */
-  .home-container {
+  /* .home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 80vh;
     padding: 20px;
-  }
+  } */
   
   /* Page Title Styling */
   .page-title {

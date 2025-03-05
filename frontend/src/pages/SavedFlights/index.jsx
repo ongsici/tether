@@ -170,7 +170,7 @@ function SavedFlights() {
                         <InfoOutlinedIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    {`Total Price: €${flight.FlightResponse.total_price}0`}
+                    {`Total Price: €${flight.FlightResponse.total_price}`}
                   </Typography>
                   <Typography variant="body2" className="flight-details">
                     {`Passengers: ${flight.FlightResponse.outbound[0].SegmentResponse.num_passengers}`}
