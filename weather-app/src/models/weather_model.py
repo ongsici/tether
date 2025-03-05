@@ -25,11 +25,11 @@ class ForecastDay(BaseModel):
 # model for current weather
 class CurrentWeather(BaseModel):
     city: str
-    country_code: str
+    country: str
     weather_main: str
     weather_description: str
-    temperature: float
-    feels_like: float
+    temperature: int
+    feels_like: int
     pressure: int
     humidity: int
     wind_speed: float

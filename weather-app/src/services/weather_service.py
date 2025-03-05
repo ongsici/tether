@@ -1,8 +1,17 @@
 from ..utils.api_client import get_weather_data, get_weather_forecast
 from ..models.weather_model import ForecastDay, CurrentWeather, WeatherResponse
+from pathlib import Path
 import logging
+import json
 
 logger = logging.getLogger("weather_microservice")
+
+# country name mapping for OpenWeather
+BASE_DIR = Path(__file__).resolve().parent
+COUNTRY_FILE = BASE_DIR / "countries_data.json"
+
+with open(COUNTRY_FILE, "r", encoding="utf-8") as file:
+    country_mapping = {entry["country_code"]: entry["country"] for entry in json.load(file)}
 
 # weather code mapping for Open-Meteo
 WMO_code = {
@@ -32,6 +41,13 @@ def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherRes
     except Exception as e:
         # error logging in api_client.py
         raise RuntimeError("Failed to fetch weather data from OpenWeather API") from e
+    
+    try:
+        country_code = data["sys"]["country"] # extract country code
+        country_name = country_mapping.get(country_code, "Unknown")  # map onto country name
+    except KeyError as e:
+        logger.error(f"Missing country code: {e}")
+        raise KeyError("Missing country code in weather data") from e
 
     # [2] extract coordinates for Open-Meteo API
     try:
@@ -58,11 +74,11 @@ def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherRes
     try:
         current_weather = CurrentWeather(
             city=data["name"],
-            country_code=data["sys"]["country"],
+            country=country_name,
             weather_main=data["weather"][0]["main"],
             weather_description=data["weather"][0]["description"],
-            temperature=data["main"]["temp"],        # Celsius
-            feels_like=data["main"]["feels_like"],
+            temperature=round(data["main"]["temp"]),        # Celsius
+            feels_like=round(data["main"]["feels_like"]),
             pressure=data["main"]["pressure"],       # hPa
             humidity=data["main"]["humidity"],       # %
             wind_speed=data["wind"]["speed"],        # m/s
