@@ -53,7 +53,7 @@ const WeatherResults = () => {
       <div className="background-overlay"></div>
       <Typography variant="h4" className="city-header" 
           sx={{ marginTop: 2, fontFamily: 'Roboto, sans-serif', fontWeight: 'bold', fontSize: '32px', color: '#023641' }}>
-        {current.city}, {current.country_code}
+        {current.city}, {current.country}
       </Typography>
 
 

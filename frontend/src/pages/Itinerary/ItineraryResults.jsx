@@ -45,7 +45,7 @@ const ItineraryResults = () => {
         />
       )}
 
-      <Typography variant="h4" className="itinerary-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, mt: 5 }}>
+      <Typography variant="h4" className="itinerary-title" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: 700, mt: 5, justifyContent: "center" }}>
         Itinerary Suggestions
       </Typography>
       {user ? (
@@ -54,8 +54,8 @@ const ItineraryResults = () => {
             No activities found.
           </Typography>
         ) : (
-          <div className="results-box">
-            <Grid container spacing={3} className="activities-grid" sx={{ maxWidth: "100%", margin: "0 auto" }}>
+          <div className="results-box" style={{ display: "flex", justifyContent: "center"}} >
+            <Grid container spacing={3} className="activities-grid" sx={{ maxWidth: "100%", margin: "0 auto", justifyContent: "center" }}>
               {itinerary?.map((activity) => (
                 <Grid
                   item
