@@ -95,7 +95,7 @@ function SavedFlights() {
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
+    <Container className="home-container" maxWidth="lg">
       <div className="background-overlay"></div>
 
       {toast.visible && (
@@ -170,7 +170,7 @@ function SavedFlights() {
                         <InfoOutlinedIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    {`Total Price: €${flight.FlightResponse.total_price}0`}
+                    {`Total Price: €${flight.FlightResponse.total_price}`}
                   </Typography>
                   <Typography variant="body2" className="flight-details">
                     {`Passengers: ${flight.FlightResponse.outbound[0].SegmentResponse.num_passengers}`}

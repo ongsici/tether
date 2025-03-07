@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useFlights } from "../../context/FlightsProvider";
+import Toast from '../../components/Toast';
 import { Container, Typography, Button, TextField, Box, Autocomplete, FormControl, InputLabel, Select, MenuItem, CircularProgress } from "@mui/material";
 import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
@@ -15,6 +16,7 @@ const Flights = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setFlights } = useFlights();  
+  const [toast, setToast] = useState({ message: '', type: '', visible: false });
   const [searchParams, setSearchParams] = useState({
     source: "",
     destination: "",
@@ -32,7 +34,16 @@ const Flights = () => {
     const destinationAirport = searchParams.destination?.airportCode;
 
     if (!sourceAirport || !destinationAirport || !searchParams.departDate || !searchParams.returnDate || !searchParams.numTravellers) {
-      alert("Please select valid source and destination.");
+      setToast(
+        {
+          message: (
+          <>
+            Uh-oh! We can’t read your mind. <br /> Please fill in all the fields!
+          </>),
+          type: "error",
+          visible: true
+        }
+      );
       return;
     }
   
@@ -67,6 +78,15 @@ const Flights = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 6, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
+
+      {toast.visible && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ ...toast, visible: false })}
+        />
+      )}
+
       <Box className="content-box">
       {user ? (
         <>

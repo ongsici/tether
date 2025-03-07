@@ -110,7 +110,10 @@ function SavedItinerary() {
                       <Typography variant="h6" className="activity-name">
                         {activity.activity_name}
                       </Typography>
-                      <Typography variant="body2" className="activity-details">
+                      <Typography variant="h7" className="activity-details" >
+                        {activity.city}
+                      </Typography>
+                      <Typography variant="body2" className="activity-details" sx={{ mt: 2 }}>
                         {activity.activity_details}
                       </Typography>
                       {/* <Typography variant="subtitle1" className="activity-price">

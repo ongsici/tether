@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button, TextField, Box, Autocomplete, CircularProgress} from "@mui/material";
 import useFetchUser from "../../hooks/useFetchUser";
 import useFetchCities from "../../hooks/useFetchCities";
+import Toast from '../../components/Toast';
 import { searchTravel } from "../../utils/api";
 import "./Weather.css";
 
@@ -12,6 +13,7 @@ function Weather() {
   const cities = useFetchCities("/weather_cities.json"); 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState({ message: '', type: '', visible: false });
   const [searchParams, setSearchParams] = useState({
     destination: null
   });
@@ -25,7 +27,16 @@ function Weather() {
     const destinationCountryCode = searchParams.destination ? searchParams.destination.country_code : null;
       
     if (!destinationCity || !destinationCountryCode) {
-      alert("Please select destination.");
+      setToast(
+        {
+          message: (
+          <>
+            Uh-oh! We can’t read your mind. <br /> Please fill in all the fields!
+          </>),
+          type: "error",
+          visible: true
+        }
+      );
       return;
     }
     setLoading(true);
@@ -56,6 +67,14 @@ function Weather() {
     <Container maxWidth="xl" sx={{ mt: 10, textAlign: "center" }} className="home-container">
       <div className="background-overlay"></div>
       
+      {toast.visible && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast({ ...toast, visible: false })}
+        />
+      )}
+
       <Box className="content-box">
       {user ? (
         <>
