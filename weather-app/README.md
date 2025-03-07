@@ -36,12 +36,14 @@ uvicorn app:app --reload
 ### Running on Docker
 Alternatively, you can run by pulling an existing public Docker image:
 
-'''
+```
 docker pull ghcr.io/atchyuni/weather-app:latest
 docker run -d -p 8000:8000 -e OPENWEATHER_API_KEY="insert_key" ghcr.io/atchyuni/weather-app:latest
-'''
+```
 
 Here is a sample request when docker is running:
+
+```
 curl -X 'POST' \
   'http://127.0.0.1:8000/weather' \
   -H 'Content-Type: application/json' \
@@ -51,3 +53,4 @@ curl -X 'POST' \
       "city": "London"
     }
   }'
+```

@@ -52,7 +52,7 @@ uvicorn app:app --reload
 
 Alternatively, you can run by pulling an existing public Docker image (need database access):
 
-'''
+```
 docker pull ghcr.io/gphang/db-app:latest
 docker run -d \
   -e DB_HOST="insert_host" \
@@ -61,14 +61,14 @@ docker run -d \
   -e DB_PASSWORD="your_password" \
   -e DB_PORT=5432 \
   ghcr.io/gphang/db-app:latest
-'''
+```
 
 
 ### Example itinerary requests
 
 SAVE:
 
-'''
+```
 curl -X 'POST' \
   'http://127.0.0.1:8000/api/itineraries/save' \
   -H 'Content-Type: application/json' \
@@ -84,17 +84,17 @@ curl -X 'POST' \
       "pictures": "https://cdn.smartvel.com/ccpictures/buildings-gdda326066_640.jpg"
     }
   }'
-'''
+```
 
 VIEW:
 
-'''
+```
 curl -X GET "http://127.0.0.1:8000/api/itineraries/get_saved?user_id=user12345"
-'''
+```
 
 UNSAVE:
 
-'''
+```
 Here is a sample itinerary unsave request:
 curl -X 'POST' \
   'http://127.0.0.1:8000/api/itineraries/unsave' \
@@ -103,13 +103,13 @@ curl -X 'POST' \
     "user_id": "12345",
     "activity_id": "abc123"
   }'
-'''
+```
 
 ### Example flight requests
 
 SAVE:
 
-'''
+```
 curl -X POST "http://127.0.0.1:8000/api/flights/save" \
      -H "Content-Type: application/json" \
      -d '{
@@ -143,17 +143,17 @@ curl -X POST "http://127.0.0.1:8000/api/flights/save" \
              }
          }
      }'
-'''
+```
 
 VIEW:
 
-'''
+```
 curl -X GET "http://127.0.0.1:8000/api/flights/get_saved?user_id=user123"
-'''
+```
 
 UNSAVE:
 
-'''
+```
 curl -X 'POST' \
   'http://127.0.0.1:8000/api/flights/unsave' \
   -H 'Content-Type: application/json' \
@@ -161,4 +161,4 @@ curl -X 'POST' \
     "user_id": "123",
     "flight_id": "XYZ123"
   }'
-'''
+```

@@ -36,12 +36,14 @@ uvicorn app:app --reload
 ### Running on Docker
 Alternatively, you can run by pulling an existing public Docker image:
 
-'''
+```
 docker pull ghcr.io/gphang/itinerary-app:latest
 docker run -d -p 7000:7000 -e OPENWEATHER_KEY="insert_key" -e AMADEUS_KEY="insert_key" -e AMADEUS_SECRET="insert_secret" ghcr.io/gphang/itinerary-app:latest
-'''
+```
 
 Here is a sample request when docker is running:
+
+```
 curl -X 'POST' \
   'http://127.0.0.1:7000/itinerary' \
   -H 'Content-Type: application/json' \
@@ -53,3 +55,4 @@ curl -X 'POST' \
       "limit": 5
     }
   }'
+```

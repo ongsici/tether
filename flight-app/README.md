@@ -34,12 +34,14 @@ uvicorn app:app --reload
 ### Running on Docker
 Alternatively, you can run by pulling an existing public Docker image:
 
-'''
+```
 docker pull ghcr.io/zjx047/flight-app:latest
 docker run -d -p 9000:9000 -e AMAD_CLIENT_ID="insert_key" -e AMAD_CLIENT_SECRET="insert_secret" ghcr.io/zjx047/flight-app:latest
-'''
+```
 
 Here is a sample request when docker is running:
+
+```
 curl -X 'POST' \
   'http://127.0.0.1:9000/flight' \
   -H 'Content-Type: application/json' \
@@ -53,3 +55,4 @@ curl -X 'POST' \
         "num_passenger": "1"
     }
   }'
+```
