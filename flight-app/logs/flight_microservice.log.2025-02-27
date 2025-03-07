@@ -1,0 +1,388 @@
+2025-02-26 18:47:58,660 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:47:58,660 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:47:58,660 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:47:58,660 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:48:03,605 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 18:48:03,605 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 18:51:51,055 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:51:51,055 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:51:51,055 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:51:51,055 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:51:54,507 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 18:51:54,507 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 18:53:31,170 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:53:31,170 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:53:31,171 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:53:31,171 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:53:34,553 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 18:53:34,553 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 18:59:39,836 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:59:39,836 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 18:59:39,836 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:59:39,836 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 18:59:43,350 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 18:59:43,350 - flight_microservice - ERROR - Error fetching flight data: 11 validation errors for SegmentResponse
+num_passengers
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_date
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+arrival_time
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+duration
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+departure_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+destination_airport
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+airline_code
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+flight_number
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+segment_id
+  Field required [type=missing, input_value={'SegmentResponse': {'num...8022025-03-1012:50:00'}}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 19:01:55,924 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 19:01:55,924 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 19:01:55,925 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:01:55,925 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:01:59,430 - flight_microservice - ERROR - Error fetching flight data: 1 validation error for FlightResponse
+user_id
+  Field required [type=missing, input_value={'number_of_segments': 4,...e_per_person': '155.00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 19:01:59,430 - flight_microservice - ERROR - Error fetching flight data: 1 validation error for FlightResponse
+user_id
+  Field required [type=missing, input_value={'number_of_segments': 4,...e_per_person': '155.00'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.9/v/missing
+2025-02-26 19:02:54,307 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 19:02:54,307 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 19:02:54,307 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:02:54,307 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:02:58,882 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:02:58,882 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:02:58,882 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-26 19:02:58,882 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-26 19:04:34,141 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 19:04:34,141 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-26 19:04:34,141 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:04:34,141 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:04:38,426 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:04:38,426 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-26 19:04:38,426 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-26 19:04:38,426 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 18:36:42,951 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-02-23, return_date: 2025-02-26
+2025-02-27 18:36:42,951 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-02-23, return_date: 2025-02-26
+2025-02-27 18:36:42,952 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-02-23, return_date: 2025-02-26
+2025-02-27 18:36:42,952 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-02-23, return_date: 2025-02-26
+2025-02-27 18:36:42,953 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-02-23, return_date: 2025-02-26
+2025-02-27 19:14:28,121 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 19:14:28,121 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 19:14:28,122 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 19:14:28,122 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 19:14:33,099 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 19:14:33,099 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 19:14:33,099 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 19:14:33,099 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 20:15:55,629 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:15:55,630 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:15:55,630 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:15:55,630 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:22:06,315 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:22:06,315 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:22:06,316 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:22:06,316 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:22:06,316 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 20:22:06,316 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 20:22:06,317 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 20:31:01,370 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 20:31:01,370 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 20:31:01,370 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 20:31:01,370 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 20:31:01,372 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 20:31:01,372 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 20:31:01,372 - flight_microservice - ERROR - Error fetching flight data: Something went wrong
+2025-02-27 20:31:01,372 - flight_microservice - ERROR - Error fetching flight data: Something went wrong
+2025-02-27 20:31:01,374 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 20:31:01,374 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 20:31:01,374 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 20:31:01,374 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 21:02:49,344 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:02:49,344 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:02:49,345 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:02:49,345 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:02:49,346 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 21:02:49,346 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 21:02:49,346 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:02:49,347 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-01-01, return_date: 2025-01-05
+2025-02-27 21:02:49,347 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-01-01, return_date: 2025-01-05
+2025-02-27 21:04:06,914 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:04:06,915 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:04:06,915 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:04:06,915 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:04:06,916 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 21:04:06,916 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 21:04:06,916 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:04:06,917 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-01-01, return_date: 2025-01-05
+2025-02-27 21:04:06,917 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-01-01, return_date: 2025-01-05
+2025-02-27 21:11:31,643 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:11:31,643 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:11:31,643 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:11:31,643 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:11:31,644 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 21:11:31,644 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-04-01, return_date: 2025-04-10
+2025-02-27 21:11:31,644 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:11:31,645 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-01-01, return_date: 2025-01-05
+2025-02-27 21:11:31,645 - flight_microservice - INFO - Skipping a flight because it has an itinerary with more than 3 segments.
+2025-02-27 21:11:31,645 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-01-01, return_date: 2025-01-05
+2025-02-27 21:15:03,178 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 21:15:03,178 - flight_microservice - INFO - Fetching flight data from SYD to SIN from 2025-03-10 to 2025-03-17
+2025-02-27 21:15:03,179 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:15:03,179 - flight_microservice - INFO - Calling get_flight_data for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:15:06,649 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:15:06,649 - flight_microservice - INFO - get_flight_data successful for departure_date: 2025-03-10, return_date: 2025-03-17
+2025-02-27 21:15:06,649 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
+2025-02-27 21:15:06,649 - flight_microservice - INFO - Flight data fetched successfully from SYD to SIN
