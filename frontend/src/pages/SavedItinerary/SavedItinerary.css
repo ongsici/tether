@@ -142,6 +142,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 24px;
+  flex-wrap: wrap;
 }
 
 /* Individual activity card */
@@ -190,12 +191,36 @@ body {
   margin-bottom: 8px;
 }
 
-/* Activity price */
+/* Activity price
 .activity-price {
   font-size: 1rem;
   font-weight: bold;
   color: #007BFF;
-}
+} */
+ 
 .input-field {
   background-color: white !important;
 }
+
+.save-itinerary-button {
+  margin-top: 20px;
+  align-self: flex-end; 
+  display: flex;
+  justify-content: flex-end;
+  background-color: #023641 !important;
+}
+
+.save-itinerary-button:hover {
+  background-color: #037e96 !important; /* Darker shade on hover */
+}
+
+.save-button-container {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  justify-content: center;
+  align-items: center; 
+  width: 100%;
+}
+

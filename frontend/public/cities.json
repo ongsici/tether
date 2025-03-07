@@ -1,81 +1,806 @@
 [
     {
-      "city": "New York",
-      "country": "USA",
-      "airports": ["JFK", "LGA", "EWR"],
-      "airport_names": ["John F. Kennedy International Airport", "LaGuardia Airport", "Newark Liberty International Airport"]
+        "city": "Aberdeen",
+        "country": "Scotland",
+        "airports": [
+            "ABZ"
+        ],
+        "airport_names": [
+            "Aberdeen International Airport"
+        ]
     },
     {
-      "city": "London",
-      "country": "UK",
-      "airports": ["LHR", "LGW", "STN"],
-      "airport_names": ["Heathrow Airport", "Gatwick Airport", "Stansted Airport"]
+        "city": "Abu Dhabi",
+        "country": "United Arab Emirates",
+        "airports": [
+            "AUH"
+        ],
+        "airport_names": [
+            "Abu Dhabi International Airport"
+        ]
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
-      "airports": ["HND", "NRT"],
-      "airport_names": ["Haneda Airport", "Narita International Airport"]
+        "city": "Adelaide",
+        "country": "Australia",
+        "airports": [
+            "ADL"
+        ],
+        "airport_names": [
+            "Adelaide Airport"
+        ]
     },
     {
-      "city": "Paris",
-      "country": "France",
-      "airports": ["CDG", "ORY"],
-      "airport_names": ["Charles de Gaulle Airport", "Orly Airport"]
+        "city": "Amsterdam",
+        "country": "Netherlands",
+        "airports": [
+            "AMS"
+        ],
+        "airport_names": [
+            "Amsterdam Airport Schiphol"
+        ]
     },
     {
-      "city": "Berlin",
-      "country": "Germany",
-      "airports": ["TXL", "SXF"],
-      "airport_names": ["Tegel Airport", "Schönefeld Airport"]
+        "city": "Athens",
+        "country": "Greece",
+        "airports": [
+            "ATH"
+        ],
+        "airport_names": [
+            "Athens International Airport"
+        ]
     },
     {
-      "city": "Sydney",
-      "country": "Australia",
-      "airports": ["SYD"],
-      "airport_names": ["Sydney Kingsford Smith Airport"]
+        "city": "Auckland",
+        "country": "New Zealand",
+        "airports": [
+            "AKL"
+        ],
+        "airport_names": [
+            "Auckland International Airport"
+        ]
     },
     {
-      "city": "Rome",
-      "country": "Italy",
-      "airports": ["FCO", "CIA"],
-      "airport_names": ["Leonardo da Vinci International Airport", "Ciampino Airport"]
+        "city": "Austin",
+        "country": "United States",
+        "airports": [
+            "AUS"
+        ],
+        "airport_names": [
+            "Austin–Bergstrom International Airport"
+        ]
     },
     {
-      "city": "Beijing",
-      "country": "China",
-      "airports": ["PEK", "PKX"],
-      "airport_names": ["Beijing Capital International Airport", "Beijing Daxing International Airport"]
+        "city": "Bangkok",
+        "country": "Thailand",
+        "airports": [
+            "BKK",
+            "DMK"
+        ],
+        "airport_names": [
+            "Suvarnabhumi Airport",
+            "Don Mueang International Airport"
+        ]
     },
     {
-      "city": "Moscow",
-      "country": "Russia",
-      "airports": ["SVO", "DME"],
-      "airport_names": ["Sheremetyevo International Airport", "Domodedovo International Airport"]
+        "city": "Barcelona",
+        "country": "Spain",
+        "airports": [
+            "BCN"
+        ],
+        "airport_names": [
+            "Barcelona-El Prat Airport"
+        ]
     },
     {
-      "city": "Istanbul",
-      "country": "Turkey",
-      "airports": ["IST", "SAW"],
-      "airport_names": ["Istanbul Airport", "Sabiha Gökçen International Airport"]
+        "city": "Beijing",
+        "country": "China",
+        "airports": [
+            "PEK",
+            "PKX"
+        ],
+        "airport_names": [
+            "Beijing Capital International Airport",
+            "Beijing Daxing International Airport"
+        ]
     },
     {
-      "city": "Cairo",
-      "country": "Egypt",
-      "airports": ["CAI"],
-      "airport_names": ["Cairo International Airport"]
+        "city": "Belfast",
+        "country": "Northern Ireland",
+        "airports": [
+            "BFS",
+            "BHD"
+        ],
+        "airport_names": [
+            "Belfast International Airport",
+            "George Best Belfast City Airport"
+        ]
     },
     {
-      "city": "Cape Town",
-      "country": "South Africa",
-      "airports": ["CPT"],
-      "airport_names": ["Cape Town International Airport"]
+        "city": "Berlin",
+        "country": "Germany",
+        "airports": [
+            "TXL",
+            "SXF"
+        ],
+        "airport_names": [
+            "Tegel Airport",
+            "Schönefeld Airport"
+        ]
     },
     {
-      "city": "Rio de Janeiro",
-      "country": "Brazil",
-      "airports": ["GIG", "SDU"],
-      "airport_names": ["Rio de Janeiro/Galeão International Airport", "Santos Dumont Airport"]
+        "city": "Bogotá",
+        "country": "Colombia",
+        "airports": [
+            "BOG"
+        ],
+        "airport_names": [
+            "El Dorado International Airport"
+        ]
+    },
+    {
+        "city": "Bucharest",
+        "country": "Romania",
+        "airports": [
+            "OTP"
+        ],
+        "airport_names": [
+            "Henri Coandă International Airport"
+        ]
+    },
+    {
+        "city": "Budapest",
+        "country": "Hungary",
+        "airports": [
+            "BUD"
+        ],
+        "airport_names": [
+            "Budapest Ferenc Liszt International Airport"
+        ]
+    },
+    {
+        "city": "Buenos Aires",
+        "country": "Argentina",
+        "airports": [
+            "EZE",
+            "AEP"
+        ],
+        "airport_names": [
+            "Ministro Pistarini International Airport",
+            "Aeroparque Jorge Newbery"
+        ]
+    },
+    {
+        "city": "Cairo",
+        "country": "Egypt",
+        "airports": [
+            "CAI"
+        ],
+        "airport_names": [
+            "Cairo International Airport"
+        ]
+    },
+    {
+        "city": "Cancun",
+        "country": "Mexico",
+        "airports": [
+            "CUN"
+        ],
+        "airport_names": [
+            "Cancun International Airport"
+        ]
+    },
+    {
+        "city": "Cape Town",
+        "country": "South Africa",
+        "airports": [
+            "CPT"
+        ],
+        "airport_names": [
+            "Cape Town International Airport"
+        ]
+    },
+    {
+        "city": "Cardiff",
+        "country": "Wales",
+        "airports": [
+            "CWL"
+        ],
+        "airport_names": [
+            "Cardiff Airport"
+        ]
+    },
+    {
+        "city": "Casablanca",
+        "country": "Morocco",
+        "airports": [
+            "CMN"
+        ],
+        "airport_names": [
+            "Mohammed V International Airport"
+        ]
+    },
+    {
+        "city": "Chicago",
+        "country": "USA",
+        "airports": [
+            "ORD",
+            "MDW"
+        ],
+        "airport_names": [
+            "O'Hare International Airport",
+            "Midway International Airport"
+        ]
+    },
+    {
+        "city": "Copenhagen",
+        "country": "Denmark",
+        "airports": [
+            "CPH"
+        ],
+        "airport_names": [
+            "Copenhagen Airport"
+        ]
+    },
+    {
+        "city": "Dhaka",
+        "country": "Bangladesh",
+        "airports": [
+            "DAC"
+        ],
+        "airport_names": [
+            "Hazrat Shahjalal International Airport"
+        ]
+    },
+    {
+        "city": "Doha",
+        "country": "Qatar",
+        "airports": [
+            "DOH"
+        ],
+        "airport_names": [
+            "Hamad International Airport"
+        ]
+    },
+    {
+        "city": "Dubai",
+        "country": "UAE",
+        "airports": [
+            "DXB",
+            "DWC"
+        ],
+        "airport_names": [
+            "Dubai International Airport",
+            "Al Maktoum International Airport"
+        ]
+    },
+    {
+        "city": "Dublin",
+        "country": "Ireland",
+        "airports": [
+            "DUB"
+        ],
+        "airport_names": [
+            "Dublin Airport"
+        ]
+    },
+    {
+        "city": "Edinburgh",
+        "country": "Scotland",
+        "airports": [
+            "EDI"
+        ],
+        "airport_names": [
+            "Edinburgh Airport"
+        ]
+    },
+    {
+        "city": "Florence",
+        "country": "Italy",
+        "airports": [
+            "FLR"
+        ],
+        "airport_names": [
+            "Florence Airport"
+        ]
+    },
+    {
+        "city": "Glasgow",
+        "country": "Scotland",
+        "airports": [
+            "GLA",
+            "PIK"
+        ],
+        "airport_names": [
+            "Glasgow International Airport",
+            "Glasgow Prestwick Airport"
+        ]
+    },
+    {
+        "city": "Helsinki",
+        "country": "Finland",
+        "airports": [
+            "HEL"
+        ],
+        "airport_names": [
+            "Helsinki-Vantaa Airport"
+        ]
+    },
+    {
+        "city": "Hong Kong",
+        "country": "China",
+        "airports": [
+            "HKG"
+        ],
+        "airport_names": [
+            "Hong Kong International Airport"
+        ]
+    },
+    {
+        "city": "Istanbul",
+        "country": "Turkey",
+        "airports": [
+            "IST",
+            "SAW"
+        ],
+        "airport_names": [
+            "Istanbul Airport",
+            "Sabiha Gökçen International Airport"
+        ]
+    },
+    {
+        "city": "Jakarta",
+        "country": "Indonesia",
+        "airports": [
+            "CGK",
+            "HLP"
+        ],
+        "airport_names": [
+            "Soekarno-Hatta International Airport",
+            "Halim Perdanakusuma Airport"
+        ]
+    },
+    {
+        "city": "Johannesburg",
+        "country": "South Africa",
+        "airports": [
+            "JNB"
+        ],
+        "airport_names": [
+            "O.R. Tambo International Airport"
+        ]
+    },
+    {
+        "city": "Kraków",
+        "country": "Poland",
+        "airports": [
+            "KRK"
+        ],
+        "airport_names": [
+            "John Paul II Kraków–Balice International Airport"
+        ]
+    },
+    {
+        "city": "Kuala Lumpur",
+        "country": "Malaysia",
+        "airports": [
+            "KUL"
+        ],
+        "airport_names": [
+            "Kuala Lumpur International Airport"
+        ]
+    },
+    {
+        "city": "Lagos",
+        "country": "Nigeria",
+        "airports": [
+            "LOS"
+        ],
+        "airport_names": [
+            "Murtala Muhammed International Airport"
+        ]
+    },
+    {
+        "city": "Las Vegas",
+        "country": "United States",
+        "airports": [
+            "LAS"
+        ],
+        "airport_names": [
+            "McCarran International Airport"
+        ]
+    },
+    {
+        "city": "Lima",
+        "country": "Peru",
+        "airports": [
+            "LIM"
+        ],
+        "airport_names": [
+            "Jorge Chávez International Airport"
+        ]
+    },
+    {
+        "city": "Lisbon",
+        "country": "Portugal",
+        "airports": [
+            "LIS"
+        ],
+        "airport_names": [
+            "Humberto Delgado Airport"
+        ]
+    },
+    {
+        "city": "London",
+        "country": "UK",
+        "airports": [
+            "LHR",
+            "LGW",
+            "STN"
+        ],
+        "airport_names": [
+            "Heathrow Airport",
+            "Gatwick Airport",
+            "Stansted Airport"
+        ]
+    },
+    {
+        "city": "Los Angeles",
+        "country": "USA",
+        "airports": [
+            "LAX"
+        ],
+        "airport_names": [
+            "Los Angeles International Airport"
+        ]
+    },
+    {
+        "city": "Madrid",
+        "country": "Spain",
+        "airports": [
+            "MAD"
+        ],
+        "airport_names": [
+            "Adolfo Suárez Madrid-Barajas Airport"
+        ]
+    },
+    {
+        "city": "Manila",
+        "country": "Philippines",
+        "airports": [
+            "MNL"
+        ],
+        "airport_names": [
+            "Ninoy Aquino International Airport"
+        ]
+    },
+    {
+        "city": "Mexico City",
+        "country": "Mexico",
+        "airports": [
+            "MEX"
+        ],
+        "airport_names": [
+            "Benito Juárez International Airport"
+        ]
+    },
+    {
+        "city": "Miami",
+        "country": "USA",
+        "airports": [
+            "MIA"
+        ],
+        "airport_names": [
+            "Miami International Airport"
+        ]
+    },
+    {
+        "city": "Milan",
+        "country": "Italy",
+        "airports": [
+            "MXP"
+        ],
+        "airport_names": [
+            "Milan Malpensa Airport"
+        ]
+    },
+    {
+        "city": "Moscow",
+        "country": "Russia",
+        "airports": [
+            "SVO",
+            "DME"
+        ],
+        "airport_names": [
+            "Sheremetyevo International Airport",
+            "Domodedovo International Airport"
+        ]
+    },
+    {
+        "city": "Mumbai",
+        "country": "India",
+        "airports": [
+            "BOM"
+        ],
+        "airport_names": [
+            "Chhatrapati Shivaji International Airport"
+        ]
+    },
+    {
+        "city": "Munich",
+        "country": "Germany",
+        "airports": [
+            "MUC"
+        ],
+        "airport_names": [
+            "Munich Airport"
+        ]
+    },
+    {
+        "city": "New Delhi",
+        "country": "India",
+        "airports": [
+            "DEL"
+        ],
+        "airport_names": [
+            "Indira Gandhi International Airport"
+        ]
+    },
+    {
+        "city": "New York",
+        "country": "USA",
+        "airports": [
+            "JFK",
+            "LGA",
+            "EWR"
+        ],
+        "airport_names": [
+            "John F. Kennedy International Airport",
+            "LaGuardia Airport",
+            "Newark Liberty International Airport"
+        ]
+    },
+    {
+        "city": "Oslo",
+        "country": "Norway",
+        "airports": [
+            "OSL"
+        ],
+        "airport_names": [
+            "Oslo Gardermoen Airport"
+        ]
+    },
+    {
+        "city": "Paris",
+        "country": "France",
+        "airports": [
+            "CDG",
+            "ORY"
+        ],
+        "airport_names": [
+            "Charles de Gaulle Airport",
+            "Orly Airport"
+        ]
+    },
+    {
+        "city": "Porto",
+        "country": "Portugal",
+        "airports": [
+            "OPO"
+        ],
+        "airport_names": [
+            "Francisco Sá Carneiro Airport"
+        ]
+    },
+    {
+        "city": "Prague",
+        "country": "Czech Republic",
+        "airports": [
+            "PRG"
+        ],
+        "airport_names": [
+            "Václav Havel Airport Prague"
+        ]
+    },
+    {
+        "city": "Quebec City",
+        "country": "Canada",
+        "airports": [
+            "YQB"
+        ],
+        "airport_names": [
+            "Québec City Jean Lesage International Airport"
+        ]
+    },
+    {
+        "city": "Reykjavik",
+        "country": "Iceland",
+        "airports": [
+            "KEF",
+            "RKV"
+        ],
+        "airport_names": [
+            "Keflavik International Airport",
+            "Reykjavik Airport"
+        ]
+    },
+    {
+        "city": "Rio de Janeiro",
+        "country": "Brazil",
+        "airports": [
+            "GIG",
+            "SDU"
+        ],
+        "airport_names": [
+            "Rio de Janeiro/Galeão International Airport",
+            "Santos Dumont Airport"
+        ]
+    },
+    {
+        "city": "Rome",
+        "country": "Italy",
+        "airports": [
+            "FCO",
+            "CIA"
+        ],
+        "airport_names": [
+            "Leonardo da Vinci International Airport",
+            "Ciampino Airport"
+        ]
+    },
+    {
+        "city": "Salzburg",
+        "country": "Austria",
+        "airports": [
+            "SZG"
+        ],
+        "airport_names": [
+            "Salzburg Airport"
+        ]
+    },
+    {
+        "city": "San Francisco",
+        "country": "United States",
+        "airports": [
+            "SFO"
+        ],
+        "airport_names": [
+            "San Francisco International Airport"
+        ]
+    },
+    {
+        "city": "Seoul",
+        "country": "South Korea",
+        "airports": [
+            "ICN"
+        ],
+        "airport_names": [
+            "Incheon International Airport"
+        ]
+    },
+    {
+        "city": "Seville",
+        "country": "Spain",
+        "airports": [
+            "SVQ"
+        ],
+        "airport_names": [
+            "Seville Airport"
+        ]
+    },
+    {
+        "city": "Singapore",
+        "country": "Singapore",
+        "airports": [
+            "SIN"
+        ],
+        "airport_names": [
+            "Changi Airport"
+        ]
+    },
+    {
+        "city": "Stockholm",
+        "country": "Sweden",
+        "airports": [
+            "ARN"
+        ],
+        "airport_names": [
+            "Stockholm Arlanda Airport"
+        ]
+    },
+    {
+        "city": "Sydney",
+        "country": "Australia",
+        "airports": [
+            "SYD"
+        ],
+        "airport_names": [
+            "Sydney Kingsford Smith Airport"
+        ]
+    },
+    {
+        "city": "São Paulo",
+        "country": "Brazil",
+        "airports": [
+            "GRU",
+            "CGH"
+        ],
+        "airport_names": [
+            "São Paulo/Guarulhos International Airport",
+            "Congonhas Airport"
+        ]
+    },
+    {
+        "city": "Tokyo",
+        "country": "Japan",
+        "airports": [
+            "HND",
+            "NRT"
+        ],
+        "airport_names": [
+            "Haneda Airport",
+            "Narita International Airport"
+        ]
+    },
+    {
+        "city": "Toronto",
+        "country": "Canada",
+        "airports": [
+            "YYZ",
+            "YTZ"
+        ],
+        "airport_names": [
+            "Toronto Pearson International Airport",
+            "Billy Bishop Toronto City Airport"
+        ]
+    },
+    {
+        "city": "Vancouver",
+        "country": "Canada",
+        "airports": [
+            "YVR"
+        ],
+        "airport_names": [
+            "Vancouver International Airport"
+        ]
+    },
+    {
+        "city": "Venice",
+        "country": "Italy",
+        "airports": [
+            "VCE"
+        ],
+        "airport_names": [
+            "Venice Marco Polo Airport"
+        ]
+    },
+    {
+        "city": "Vienna",
+        "country": "Austria",
+        "airports": [
+            "VIE"
+        ],
+        "airport_names": [
+            "Vienna International Airport"
+        ]
+    },
+    {
+        "city": "Vilnius",
+        "country": "Lithuania",
+        "airports": [
+            "VNO"
+        ],
+        "airport_names": [
+            "Vilnius International Airport"
+        ]
+    },
+    {
+        "city": "Zurich",
+        "country": "Switzerland",
+        "airports": [
+            "ZRH"
+        ],
+        "airport_names": [
+            "Zurich Airport"
+        ]
     }
-  ]
-  
+]

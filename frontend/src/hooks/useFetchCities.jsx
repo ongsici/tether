@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 
-const useFetchCities = () => {
+const useFetchCities = (url) => {
     const [cities, setCities] = useState([]);
   
     useEffect(() => {
-      fetch("/cities.json")
+      if (!url) return; 
+  
+      fetch(url)
         .then((response) => response.json())
-        .then((data) => {
-          setCities(data);
-        })
+        .then((data) => setCities(data))
         .catch((error) => console.error("Error fetching cities:", error));
-    }, []);
+    }, [url]); 
   
     return cities;
   };

@@ -5,6 +5,8 @@ from ..models.flight_model import (
 )
 import logging
 import uuid
+import json
+import os
 
 logger = logging.getLogger("flight_microservice")
 
@@ -89,9 +91,15 @@ def get_flights(
             for segment in itinerary.get("segments", []):
                 try:
                     dep_date, dep_time = segment["departure"]["at"].split('T')
+                    dep_time = dep_time[:5]
                     arr_date, arr_time = segment["arrival"]["at"].split('T')
+                    arr_time = arr_time[:5]
                     airline_code = segment["carrierCode"]
                     flight_code = segment["number"]
+                    dep_airport = segment["departure"]["iataCode"]
+                    arr_airport = segment["arrival"]["iataCode"]
+                    dep_city = get_city_from_airport(dep_airport)
+                    arr_city = get_city_from_airport(arr_airport)
                 except (KeyError, ValueError) as e:
                     logger.error(
                         f"    Skipping segment due to missing or invalid data: {segment}. Error: {e}",
@@ -105,9 +113,11 @@ def get_flights(
                     "departure_date": dep_date,
                     "arrival_date": arr_date,
                     "arrival_time": arr_time,
-                    "duration": segment["duration"][2:],  # Remove "PT" prefix from duration
-                    "departure_airport": segment["departure"]["iataCode"],
-                    "destination_airport": segment["arrival"]["iataCode"],
+                    "duration": segment["duration"][2:], 
+                    "departure_airport": dep_airport,
+                    "departure_city": dep_city,
+                    "destination_airport": arr_airport,
+                    "destination_city": arr_city,
                     "airline_code": airline_code,
                     "flight_number": flight_code,
                     "unique_id": airline_code + flight_code + departure_date + dep_time
@@ -129,7 +139,9 @@ def get_flights(
             "flight_id": str(uuid.uuid4()),
             "outbound": outbound_segments,
             "inbound": inbound_segments,
-            "price_per_person": price_per_person
+            "price_per_person": price_per_person,
+            "total_price": f"{(float(price_per_person) * int(num_passenger)):.2f}"
+
         }
 
         flight_obj = FlightResponseObj(**flight_info)
@@ -150,6 +162,20 @@ def get_flights(
 
     return flights_response
     
+
+def get_city_from_airport(airport: str):
+    current_dir = os.path.dirname(__file__)
+
+    file_path = os.path.join(current_dir, "airport_to_city.json")
+
+    with open(file_path, "r") as file:
+        data = json.load(file)
+    
+    for entry in data:
+        if airport in entry["airports"]:
+            return entry["city"]
+    
+    return "Unknown"
 
 # def extract_flight_info(flights: FlightResponse):
 #     segments = flights.segment_info

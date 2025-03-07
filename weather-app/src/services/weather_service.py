@@ -1,10 +1,17 @@
 from ..utils.api_client import get_weather_data, get_weather_forecast
 from ..models.weather_model import ForecastDay, CurrentWeather, WeatherResponse
-from ..utils.logging import configure_logging
+from pathlib import Path
 import logging
+import json
 
-configure_logging()
 logger = logging.getLogger("weather_microservice")
+
+# country name mapping for OpenWeather
+BASE_DIR = Path(__file__).resolve().parent
+COUNTRY_FILE = BASE_DIR / "countries_data.json"
+
+with open(COUNTRY_FILE, "r", encoding="utf-8") as file:
+    country_mapping = {entry["country_code"]: entry["country"] for entry in json.load(file)}
 
 # weather code mapping for Open-Meteo
 WMO_code = {
@@ -19,33 +26,82 @@ WMO_code = {
     99: "Thunderstorm with heavy hail"
 }
 
+"""
+KeyError when expected key is missing
+ValueError when data is incomplete
+RuntimeError for general failures (e.g. API call failures)
+"""
 def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherResponse:
-    logger.info(f"Calling get_weather_data for city: {city}, country_code: {country_code}")
-    data = get_weather_data(city, country_code)             # [1] fetch weather data from OpenWeather API
-    lat, lon = data["coord"]["lat"], data["coord"]["lon"]   # [2] extract coordinates for Open-Meteo API
-    forecast_data = get_weather_forecast(lat, lon)          # [3] fetch forecast data from Open-Meteo API
+    logger.info("Fetching weather data...")
 
-    current_weather = CurrentWeather(
-        city=data["name"],
-        country_code=data["sys"]["country"],
-        weather_main=data["weather"][0]["main"],
-        weather_description=data["weather"][0]["description"],
-        temperature=data["main"]["temp"],        # Celsius
-        feels_like=data["main"]["feels_like"],
-        pressure=data["main"]["pressure"],       # hPa
-        humidity=data["main"]["humidity"],       # %
-        wind_speed=data["wind"]["speed"],        # m/s
-        cloudiness=data["clouds"]["all"],        # % cloudiness
-        timestamp=data["dt"],                    # UTC
-        sunrise=data["sys"]["sunrise"],
-        sunset=data["sys"]["sunset"],
-        latitude=lat,
-        longitude=lon
-    )
+    # [1] fetch weather data from OpenWeather API
+    try:
+        data = get_weather_data(city, country_code)
+        logger.info("Successful call to OpenWeather API")
+    except Exception as e:
+        # error logging in api_client.py
+        raise RuntimeError("Failed to fetch weather data from OpenWeather API") from e
+    
+    try:
+        country_code = data["sys"]["country"] # extract country code
+        country_name = country_mapping.get(country_code, "Unknown")  # map onto country name
+    except KeyError as e:
+        logger.error(f"Missing country code: {e}")
+        raise KeyError("Missing country code in weather data") from e
 
-    daily_data = forecast_data.get("daily", {})
+    # [2] extract coordinates for Open-Meteo API
+    try:
+        lat, lon = data["coord"]["lat"], data["coord"]["lon"]
+        logger.debug(f"Extracted coordinates: lat={lat}, lon={lon}")
+    except KeyError as e:
+        logger.error(f"Missing coordinate data: {e}")
+        raise KeyError("Missing lat/lon in weather data") from e
+
+    # [3] fetch forecast data from Open-Meteo API
+    try:
+        forecast_data = get_weather_forecast(lat, lon)
+        if not forecast_data or "daily" not in forecast_data:            
+            logger.warning(f"No forecast data found for lat={lat}, lon={lon}")
+            raise ValueError("No forecast data available")
+        logger.info(f"Successful call to Open-Meteo API")
+    except ValueError:
+        raise
+    except Exception as e:
+        # error logging in api_client.py
+        raise RuntimeError("Failed to fetch forecast data from Open-Meteo API") from e
+
+    # [4] process current weather data
+    try:
+        current_weather = CurrentWeather(
+            city=data["name"],
+            country=country_name,
+            weather_main=data["weather"][0]["main"],
+            weather_description=data["weather"][0]["description"],
+            temperature=round(data["main"]["temp"]),        # Celsius
+            feels_like=round(data["main"]["feels_like"]),
+            pressure=data["main"]["pressure"],       # hPa
+            humidity=data["main"]["humidity"],       # %
+            wind_speed=data["wind"]["speed"],        # m/s
+            cloudiness=data["clouds"]["all"],        # % cloudiness
+            timestamp=data["dt"],                    # UTC
+            sunrise=data["sys"]["sunrise"],
+            sunset=data["sys"]["sunset"],
+            latitude=lat,
+            longitude=lon
+        )
+        logger.debug(f"Current weather data processed successfully for {city}, temperature: {current_weather.temperature}°C")
+    except KeyError as e:
+        logger.error(f"Missing key in current weather data: {e}")
+        raise KeyError("Incomplete or missing current weather data") from e
+
+    # [5] process forecast data
     forecast_list = []
-    if daily_data and all(len(daily_data[key]) == len(daily_data["time"]) for key in daily_data):
+    try:
+        daily_data = forecast_data["daily"]
+        if not all(len(daily_data[key]) == len(daily_data["time"]) for key in daily_data):
+            logger.warning("Incomplete daily forecast data")
+            raise ValueError("Incomplete daily forecast data")
+            
         for i in range(1, len(daily_data["time"])):
             weather_code = daily_data["weather_code"][i]
             weather_description = WMO_code.get(weather_code, "Unknown") # map WMO code to description
@@ -61,8 +117,10 @@ def get_weather(user_id: str, city: str, country_code: str = None) -> WeatherRes
                 precipitation_probability_max=daily_data["precipitation_probability_max"][i],
                 wind_speed_max=daily_data["wind_speed_10m_max"][i]
             ))
-    else:
-        logger.warning("Incomplete or missing daily forecast data")
+            
+        logger.info(f"Forecast data processed successfully for {len(forecast_list)} days")
+    except KeyError as e:
+        logger.error("Missing key in forecast data: {e}")
+        raise KeyError("Incomplete or missing forecast data") from e
 
-    logger.info(f"get_weather_data successful for city: {city}")
     return WeatherResponse(user_id=user_id, results={"current": current_weather, "forecast": forecast_list})

@@ -23,7 +23,9 @@ class SegmentResponse(BaseModel):
     arrival_time: str
     duration: str
     departure_airport: str
+    departure_city: str
     destination_airport: str
+    destination_city: str
     airline_code: str
     flight_number: str
     unique_id: str
@@ -39,6 +41,7 @@ class FlightResponseObj(BaseModel):
     outbound: List[SegmentResponseWrapper] = []
     inbound: List[SegmentResponseWrapper] = []
     price_per_person: str
+    total_price: str
 
 
 class FlightResponseObjWrapper(BaseModel):

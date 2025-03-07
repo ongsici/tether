@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 
 # If your FastAPI app is in src/app.py with 'app = FastAPI()', do:
 from src.app import app
-from src.models.weather_model import WeatherRequest
+from src.models.weather_model import WeatherResponse
 
 @pytest.fixture
 def client():
@@ -30,9 +30,9 @@ def mock_weather_response():
     Example WeatherResponse-shaped dict for a single current weather + empty forecast
     (just enough for demonstration).
     """
-    return {
-        "user_id": "testuser123",
-        "results": {
+    return WeatherResponse(
+        user_id = "testuser123",
+        results = {
             "current": {
                 "city": "London",
                 "country_code": "GB",
@@ -52,7 +52,7 @@ def mock_weather_response():
             },
             "forecast": []
         }
-    }
+    )
 
 @patch("src.app.get_weather")
 def test_fetch_weather_success(mock_get_weather, client, valid_weather_request_payload):
@@ -88,7 +88,7 @@ def test_fetch_weather_raises_400_on_exception(mock_get_weather, client, valid_w
 
     response = client.post("/weather", json=valid_weather_request_payload)
     assert response.status_code == 400
-    assert response.json()["detail"] == "Some weather error"
+    assert "Some weather error" in response.json()["detail"]
     mock_get_weather.assert_called_once()
 
 def test_fetch_weather_validation_error(client):
