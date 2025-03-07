@@ -1,4 +1,4 @@
-# Itinerary Microservice
+# Flight Microservice
 
 This microservice uses the Amadeus Flight Offers API to find the cheapest flight for a given itinerary (between 2 cities, with departure & return dates & number of passengers).
 

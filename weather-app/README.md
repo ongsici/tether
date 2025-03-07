@@ -4,6 +4,7 @@ This microservice uses two APIs:
 1. OpenWeather: gets weather data
 2. Open-Meteo: gets weather forecast
 
+
 ## Website images
 
 ![Weather search](./web_images/weather_search.png)

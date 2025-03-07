@@ -1,4 +1,4 @@
-# Itinerary Microservice
+# Database Handler Microservice
 
 This microservice connects to Azure's PostgreSQL Database Server to perform the following actions:
 1. Save a flight (from flight results page)
@@ -17,7 +17,7 @@ This microservice connects to Azure's PostgreSQL Database Server to perform the 
 
 ## Endpoints
 The API specification can be found here:
-[Flight OpenAPI JSON Specification](./docs/openapi.json)
+[Database OpenAPI JSON Specification](./docs/openapi.json)
 
 
 ## Local Usage and Development

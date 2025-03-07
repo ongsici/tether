@@ -4,6 +4,7 @@ This microservice uses two APIs:
 1. OpenWeather: gets the longitude and latitude of a city from the name
 2. Amadeus Tours and Activities: gets a list of activities around a given latitude and longitude
 
+
 ## Website images
 
 ![Itinerary search](./web_images/itinerary_search.png)
@@ -13,6 +14,7 @@ This microservice uses two APIs:
 ## Endpoints
 The API specification can be found here:
 [Itinerary OpenAPI JSON Specification](./docs/openapi.json)
+
 
 ## Local Usage and Development
 First create an environment (conda or venv):
